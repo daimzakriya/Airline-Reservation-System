@@ -1,0 +1,53 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F7931E;stop-opacity:1" />
+    </linearGradient>
+    <!-- Stars/bokeh overlay -->
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(0,0,0,0.3);stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <!-- Background gradient -->
+  <rect width="600" height="400" fill="url(#grad)" />
+  <rect width="600" height="400" fill="url(#glow)" />
+  
+  <!-- Decorative city silhouette -->
+  <rect x="0" y="280" width="600" height="120" fill="rgba(0,0,0,0.3)" />
+  <rect x="20" y="240" width="40" height="80" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="70" y="220" width="30" height="100" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="110" y="250" width="50" height="70" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="170" y="200" width="35" height="120" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="215" y="230" width="25" height="90" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="250" y="210" width="60" height="110" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="320" y="225" width="40" height="95" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="370" y="245" width="30" height="75" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="410" y="205" width="50" height="115" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="470" y="235" width="35" height="85" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="515" y="220" width="40" height="100" rx="2" fill="rgba(0,0,0,0.4)" />
+  <rect x="560" y="260" width="40" height="60" rx="2" fill="rgba(0,0,0,0.4)" />
+
+  <!-- Bokeh circles -->
+  <circle cx="100" cy="80" r="40" fill="rgba(255,255,255,0.05)" />
+  <circle cx="300" cy="60" r="60" fill="rgba(255,255,255,0.05)" />
+  <circle cx="500" cy="100" r="35" fill="rgba(255,255,255,0.05)" />
+  <circle cx="450" cy="30" r="20" fill="rgba(255,255,255,0.08)" />
+  <circle cx="150" cy="40" r="15" fill="rgba(255,255,255,0.08)" />
+
+  <!-- Airport code big text -->
+  <text x="50%" y="130" font-family="Arial, sans-serif" font-size="72" font-weight="900" fill="rgba(255,255,255,0.95)" text-anchor="middle" letter-spacing="8">MAA</text>
+  
+  <!-- City name -->
+  <text x="50%" y="175" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="rgba(255,255,255,0.9)" text-anchor="middle">Chennai, India</text>
+  
+  <!-- Tagline -->
+  <text x="50%" y="210" font-family="Arial, sans-serif" font-size="15" font-weight="400" fill="rgba(255,255,255,0.7)" text-anchor="middle">City of Temples</text>
+
+  <!-- Horizontal rule -->
+  <line x1="200" y1="225" x2="400" y2="225" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+
+  <!-- Wing Mate branding -->
+  <text x="50%" y="370" font-family="Arial, sans-serif" font-size="13" fill="rgba(255,255,255,0.5)" text-anchor="middle">✈ Wing Mate Airlines</text>
+</svg>

@@ -1,210 +1,169 @@
-<!-- header-section start -->
-<%- include('_header',{user}) %>
-<!-- header-section end -->
-<!-- register-section start -->
-<%- include('_signup',{user,registrationError}) %>
-<!-- register-section end -->
-<!-- login-section start -->
-<%- include('_login',{user}) %>
-<!-- login-section end -->
+<%- include('_header', {user}) %>
 
-
-<form class="header-form">
-    <div class="skip"><i class="fas fa-times"></i></div>
-    <div class="header-form-area">
-        <input type="text" placeholder="Search Here">
-        <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
+<!-- Hero Banner Section -->
+<section class="wm-hero" style="min-height: 50vh; padding-top: 140px; padding-bottom: 60px;">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content" style="max-width: 800px;">
+    <div class="wm-hero-pill">
+      <span class="wm-hero-pill-dot"></span>
+      Travel History
     </div>
-</form>
-
-
-<!-- banner-section start -->
-<section class="inner-banner-section pt-120 pb-120">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <div class="inner-banner-content">
-                    <h2 class="title">previous bookings</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px;">My Bookings</h1>
+    <p style="margin-bottom: 0;">
+      Review your previous reservation records, boarding status, and print e-tickets.
+    </p>
+  </div>
 </section>
-<!-- banner-section end -->
 
-
-<!-- breadcrumb-section start -->
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Previous Bookings</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+<!-- Breadcrumb -->
+<div style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0;">
+  <div class="wm-container">
+    <div style="display: flex; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+      <a href="/" style="color: var(--primary-light); hover:text-decoration: underline;">Home</a>
+      <span>/</span>
+      <span style="color: var(--text-primary);">Booking History</span>
     </div>
+  </div>
 </div>
-<!-- breadcrumb-section end -->
 
+<!-- Main Table Area -->
+<section class="wm-section-sm">
+  <div class="wm-container">
+    
+    <% if(typeof bookingsDetails !== 'undefined' && bookingsDetails && bookingsDetails.length != 0) { %>
+      <div class="wm-section-header" style="margin-bottom: 32px; text-align: left;">
+        <span class="wm-eyebrow" style="justify-content: flex-start; margin-left: 0;">History Directory</span>
+        <h2>Booking Records</h2>
+      </div>
 
-<a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
-<br><br><br>
+      <div class="wm-table-wrap">
+        <table class="wm-table">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Flight</th>
+              <th>Date of Booking</th>
+              <th>Origin</th>
+              <th>Takeoff (UTC)</th>
+              <th>Destination</th>
+              <th>Landing (UTC)</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bookingsDetails.forEach(function(booking){ %>
+              <tr>
+                <td>
+                  <strong style="color: var(--text-primary);">#00<%= booking.booking_id %></strong>
+                </td>
+                <td>
+                  <span class="wm-badge wm-badge-primary"><%= booking.route_id %></span>
+                </td>
+                <td>
+                  <%= (booking.date_of_booking).toString().substring(0, 15) %>
+                </td>
+                <td>
+                  <strong style="color: var(--text-primary);"><%= booking.origin %></strong>
+                </td>
+                <td>
+                  <%= (booking.departure_date).toString().substring(0, 15) %> <span style="color: var(--primary-light); margin-left: 6px;"><%= booking.departure_time_utc %></span>
+                </td>
+                <td>
+                  <strong style="color: var(--text-primary);"><%= booking.destination %></strong>
+                </td>
+                <td>
+                  <%= (booking.arrival_date).toString().substring(0, 15) %> <span style="color: var(--accent); margin-left: 6px;"><%= booking.arrival_time_utc %></span>
+                </td>
+                <td>
+                  <strong style="color: var(--text-primary); font-size: 0.95rem;">$<%= booking.final_price %></strong>
+                </td>
+                <td>
+                  <% if(booking.state && booking.state.toLowerCase() === 'paid') { %>
+                    <span class="wm-badge wm-badge-success"><%= booking.state %></span>
+                  <% } else if(booking.state && booking.state.toLowerCase() === 'cancelled') { %>
+                    <span class="wm-badge wm-badge-danger"><%= booking.state %></span>
+                  <% } else { %>
+                    <span class="wm-badge wm-badge-warning"><%= booking.state %></span>
+                  <% } %>
+                </td>
+                <td style="text-align: right;">
+                  <form action="/booking/previous" method="POST" style="display: inline-block;">
+                    <input type="hidden" name="booking_id" value="<%= booking.booking_id %>">
+                    <button type="submit" class="wm-btn wm-btn-ghost wm-btn-sm">
+                      <i class="fas fa-info-circle"></i> Info
+                    </button>
+                  </form>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
 
-<!-- flight-table-area start -->
-<div class="flight-table-area pb-120">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12 col-lg-12">
-                <div class="table-area">
-                    <table class="table table-striped table-bordered table-hover">
-                        <% if(bookingsDetails && bookingsDetails.length!=0) {%>
-                            <thead>
-                            <tr>
-                                <th scope="col"><b>BOOKING ID</b></th>
-                                <th scope="col"><b>FLIGHT</b></th>
-                                <th scope="col"><b>DATE OF BOOKING</b></th>
-                                <th scope="col"><b>FROM</b></th>
-                                <th scope="col"><b>TAKEOFF (UTC TIME)</b></th>
-                                <th scope="col"><b>TO</b></th>
-                                <th scope="col"><b>LANDING (UTC TIME)</b></th>
-                                <th scope="col"><b>FINAL PRICE</b></th>
-                                <th scope="col"><b>PAID STATE</b></th>
-                                <th scope="col"><b>MORE INFO</b></th>
+    <% } else { %>
+      <div class="wm-card" style="padding: 40px; text-align: center; border-color: var(--border);">
+        <div style="width: 56px; height: 56px; background: var(--bg-elevated); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--text-secondary); margin: 0 auto 20px;">
+          <i class="fas fa-ticket-alt"></i>
+        </div>
+        <h3 style="font-size: 1.3rem; margin-bottom: 8px; color: var(--text-primary);">No Booking Records Found</h3>
+        <p style="color: var(--text-secondary); max-width: 440px; margin: 0 auto 20px;">
+          You haven't made any flight reservations yet. Look up upcoming flights and start planning your next journey.
+        </p>
+        <a href="/customer/viewFlights" class="wm-btn wm-btn-primary wm-btn-sm">Search Flights Now</a>
+      </div>
+    <% } %>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <% bookingsDetails.forEach(function(booking){%>
+    <!-- Upcoming Flights Grid -->
+    <% if(typeof upcomingFlights !== 'undefined' && upcomingFlights && upcomingFlights.length != 0) { %>
+      <div class="wm-section" id="upcomingFlights" style="padding-top: 64px; border-top: 1px solid var(--border); margin-top: 56px;">
+        <div class="wm-section-header">
+          <span class="wm-eyebrow">Aviation Schedules</span>
+          <h2>Explore Upcoming Flights</h2>
+          <p>Book another trip with our exclusive member discount pricing models.</p>
+        </div>
 
-                            <tr>
-                                <td>
-                                    <%=booking.booking_id%>
-                                </td>
-                                <td>
-                                    <%=booking.route_id%>
-                                </td>
-                                <td>
-                                    <%=(booking.date_of_booking).toString().substring(0,15)%>
-                                </td>
-                                <td>
-                                    <%=booking.origin%>
-                                </td>
-                                <td>
-                                    <%= (booking.departure_date).toString().substring(0,15)+" "+booking.departure_time_utc %>
-                                </td>
-                                <td>
-                                    <%=booking.destination%>
-                                </td>
-                                <td>
-                                    <%=(booking.arrival_date).toString().substring(0,15)+" "+booking.arrival_time_utc%>
-                                </td>
-                                <td>
-                                    $<%=booking.final_price%>
-                                </td>
-                                <td>
-                                    <%=booking.state%>
-                                </td>
-                                <td>
-                                    <form action='/booking/previous' method=post>
-                                        <div class="single-input  col-rt-in-3" style="justify-content: center;">
-                                            <button type='submit'
-                                                    class="cmn-btn" style="font-size: smaller;"
-                                                    name='more-info-button'>INFO</button><input type='hidden'
-                                                                                                  name='booking_id' value='<%=booking.booking_id%>'></div></form>
-
-
-
-                                </td>
-
-                            </tr>
-                            <%});%>
-                            </tbody>
-                    </table>
+        <div class="wm-grid-3">
+          <% upcomingFlights.forEach(function(flight){ %>
+            <div class="wm-flight-card">
+              <div class="wm-flight-card-thumb">
+                <img src="<%= flight.destination_image %>" alt="<%= flight.destination %>" onerror="this.src='/assets/images/Logo/w1.png'">
+                <div class="wm-flight-card-price">from $<%= flight.price %></div>
+              </div>
+              <div class="wm-flight-card-body">
+                <div class="wm-flight-route">
+                  <div class="wm-flight-city"><%= flight.origin %></div>
+                  <div class="wm-flight-arrow"><i class="fas fa-plane"></i></div>
+                  <div class="wm-flight-city"><%= flight.destination %></div>
                 </div>
 
-                <% }else{ %>
-                <div class=" alert alert-danger text-center">
-                    <strong><h4>No Previous Bookings</h4></strong>
+                <div class="wm-flight-meta">
+                  <div class="wm-flight-meta-item">
+                    <i class="fas fa-clock"></i> 
+                    <span><%= flight.departure_time_utc %> - <%= flight.arrival_time_utc %> UTC</span>
+                  </div>
+                  <div class="wm-flight-meta-item">
+                    <i class="fas fa-calendar-alt"></i> 
+                    <span><%= (flight.departure_date).toString().substring(0, 10) %></span>
+                  </div>
                 </div>
-                <%}%>
-                <br><br>
 
-                <!-- flight-table-area end -->
-
-
-                <!-- flight-section start -->
-                <% if(upcomingFlights && upcomingFlights.length!=0) {%>
-                <section class="flight-section pt-120 pb-120" id="upcomingFlights">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-6 text-center">
-                                <div class="section-header">
-                                    <h2 class="section-title">Upcoming Flights</h2>
-                                    <span class="title-border title-border-center"></span>
-                                    <p> Augue eros ultrices amet, viverra nec nunc massa magna. Sit a,
-                                        lacus mattis odio sem placerat ante, lacus aliquam sit id ligula
-                                        est ante fringilla </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-30-none">
-                            <% upcomingFlights.forEach(function(flight){%>
-
-
-                            <div class="col-lg-4 col-md-6 col-sm-8 mb-30">
-                                <div class="flight-item">
-                                    <div class="flight-thumb">
-                                        <img src="<%= flight.destination_image %>" alt="image">
-                                        <h3 class="flight-overlay">from$<%=flight.price%>
-                                        </h3>
-                                    </div>
-                                    <div class="flight-details">
-
-                                        <form action="/booking" method="post">
-                                            <input type="hidden" name="schedule_id" value="<%=flight.schedule_id%>"/>
-
-                                            <button type="submit" style="background-color: white;">
-                                                <a>
-                                                    <h3 class="title">
-                                                        <%=flight.origin%>
-                                                    </h3>
-                                                    <i class="flaticon-exchange"></i>
-                                                    <h3 class="title">
-                                                        <%=flight.destination%>
-                                                    </h3>
-                                                </a>
-                                            </button>
-                                        </form>
-                                        <ul class="flight-content">
-                                            <li><i class="flaticon-clock"></i>
-                                                <%=flight.departure_time_utc.toString()+'-----'+flight.arrival_time_utc.toString()%>
-                                            </li>
-                                            <li><i class="flaticon-calendar"></i>
-                                                <%=flight.departure_date.toString().substring(0,15)+'-'+flight.arrival_date.toString().substring(0,15)%>
-                                            </li>
-                                            <li><i class="flaticon-plane"></i> B Airways</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <%});%>
-                        </div>
-                        <% }else{ %>
-                            <div class="alert alert-warning text-center">
-                                <strong>No Flights available</strong>
-                            </div>
-                        <%}%>
-
-                        <!-- flight-section end -->
-
-                    </div>
-                </section>
+                <form action="/booking" method="POST" style="margin-top: auto;">
+                  <input type="hidden" name="schedule_id" value="<%= flight.schedule_id %>">
+                  <button type="submit" class="wm-btn wm-btn-primary wm-btn-full">
+                    Book Flight
+                  </button>
+                </form>
+              </div>
             </div>
+          <% }); %>
         </div>
-    </div>
-</div>
-<%- include('_footer',{user}) %>
+      </div>
+    <% } %>
+
+  </div>
+</section>
+
+<%- include('_footer', {user}) %>

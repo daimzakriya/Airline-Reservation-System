@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creator — Wing Mate</title>
+  <meta name="description" content="Meet Daim Bin Zakriya, the developer behind Wing Mate airline reservation system.">
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<%- include('_header', {user}) %>
+
+<section class="wm-page-hero">
+  <div class="wm-container">
+    <span class="wm-badge wm-badge-primary" style="margin-bottom:20px;display:inline-flex;"><i class="fas fa-code" style="margin-right:6px;"></i> Creator</span>
+    <h1>Daim Bin Zakriya</h1>
+    <p>Full-Stack Developer · Aviation Systems · GIKI Computer Engineering</p>
+  </div>
+</section>
+
+<section class="wm-section" style="padding-top:40px;">
+  <div class="wm-container">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;">
+
+      <!-- Profile Card -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        <div class="wm-card" style="text-align:center;">
+          <!-- Real photo -->
+          <div style="width:130px;height:130px;border-radius:50%;overflow:hidden;border:3px solid var(--border-accent);margin:0 auto 20px;box-shadow:0 0 0 6px rgba(79,110,247,0.12);">
+            <img src="/assets/images/GOATs/daim.jpg" alt="Daim Bin Zakriya" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+          </div>
+          <h2 style="font-size:1.3rem;margin-bottom:4px;">Daim Bin Zakriya</h2>
+          <p style="color:var(--primary-light);font-size:0.88rem;font-weight:600;margin-bottom:16px;">Full-Stack Architect</p>
+          <div style="display:flex;flex-direction:column;gap:10px;text-align:left;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text-secondary);">
+              <i class="fas fa-university" style="color:var(--primary-light);width:16px;"></i>
+              GIKI — Computer Engineering
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text-secondary);">
+              <i class="fas fa-map-marker-alt" style="color:var(--primary-light);width:16px;"></i>
+              Topi, KPK, Pakistan
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text-secondary);">
+              <i class="fas fa-envelope" style="color:var(--primary-light);width:16px;"></i>
+              daimzakriya@gmail.com
+            </div>
+            <a href="https://www.linkedin.com/in/daim-zakriya-990157292" target="_blank" rel="noopener noreferrer"
+              style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:#0A66C2;text-decoration:none;font-weight:600;padding:8px 12px;background:rgba(10,102,194,0.1);border-radius:8px;border:1px solid rgba(10,102,194,0.25);transition:background 0.2s;"
+              onmouseover="this.style.background='rgba(10,102,194,0.2)'" onmouseout="this.style.background='rgba(10,102,194,0.1)'">
+              <i class="fab fa-linkedin" style="font-size:1rem;width:16px;"></i>
+              Connect on LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="wm-card">
+          <h3 style="font-size:0.88rem;margin-bottom:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;">Tech Stack</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <% ['Node.js','Express.js','PostgreSQL','Neon DB','EJS','HTML5','CSS3','JavaScript','Git'].forEach(function(t) { %>
+              <span class="wm-badge wm-badge-primary"><%= t %></span>
+            <% }); %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div style="display:flex;flex-direction:column;gap:24px;">
+
+        <!-- About -->
+        <div class="wm-card">
+          <h3 style="font-size:1rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;"><i class="fas fa-user" style="color:var(--primary-light);"></i> About</h3>
+          <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:12px;">
+            I'm a Computer Engineering student at GHULAM ISHAQ KHAN Institute of Engineering Sciences and Technology (GIKI), passionate about building full-stack web applications that solve real-world problems.
+          </p>
+          <p style="color:var(--text-secondary);line-height:1.8;">
+            Wing Mate is a full-stack airline reservation system built as part of a database systems course. It features a PostgreSQL backend with complex stored procedures, a Node.js/Express API layer, and a server-side rendered EJS frontend — now migrated to a production-grade Neon serverless database.
+          </p>
+        </div>
+
+        <!-- Project Highlights -->
+        <div class="wm-card">
+          <h3 style="font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><i class="fas fa-star" style="color:var(--warning);"></i> Wing Mate Highlights</h3>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <% [
+              {icon:'fas fa-database', label:'Complex PostgreSQL schema with 15+ tables, views, triggers, and stored procedures'},
+              {icon:'fas fa-shield-alt', label:'Session-based authentication with bcrypt password hashing'},
+              {icon:'fas fa-plane', label:'Dynamic flight scheduling with cascade delay propagation logic'},
+              {icon:'fas fa-ticket-alt', label:'Full booking flow: search → seat selection → payment → e-ticket'},
+              {icon:'fas fa-users', label:'3-tier staff role system: Admin, Manager, and General Staff portals'},
+              {icon:'fas fa-cloud', label:'Deployed on Neon serverless PostgreSQL with production-ready schema'}
+            ].forEach(function(item) { %>
+            <div style="display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--bg-elevated);border-radius:10px;">
+              <div style="width:32px;height:32px;background:rgba(79,110,247,0.15);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="<%= item.icon %>" style="color:var(--primary-light);font-size:0.85rem;"></i>
+              </div>
+              <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.6;margin:0;"><%= item.label %></p>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="wm-card">
+          <h3 style="font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><i class="fas fa-history" style="color:var(--accent2);"></i> Development Timeline</h3>
+          <div style="display:flex;flex-direction:column;gap:0;">
+            <% [
+              {date:'2024 Q1', title:'Project Kickoff', desc:'Initial schema design and project planning'},
+              {date:'2024 Q2', title:'Core Backend', desc:'Express.js API, PostgreSQL procedures, session auth'},
+              {date:'2024 Q3', title:'Frontend & Booking Flow', desc:'EJS views, seat selection, payment integration'},
+              {date:'2024 Q4', title:'Staff Portals', desc:'Admin, Manager, General Staff dashboards'},
+              {date:'2026', title:'Production Migration', desc:'Neon serverless DB, full UI redesign, deployment'}
+            ].forEach(function(item, i, arr) { %>
+            <div style="display:flex;gap:16px;padding:14px 0;border-bottom:<%= i < arr.length-1 ? '1px solid var(--border)' : 'none' %>;">
+              <div style="min-width:70px;font-size:0.75rem;font-weight:700;color:var(--primary-light);padding-top:2px;"><%= item.date %></div>
+              <div>
+                <div style="font-weight:600;font-size:0.9rem;margin-bottom:3px;"><%= item.title %></div>
+                <div style="font-size:0.82rem;color:var(--text-muted);"><%= item.desc %></div>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('_footer', {user}) %>
+</body>
+</html>

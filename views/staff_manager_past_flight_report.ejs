@@ -1,78 +1,66 @@
-<%- include('_staff_header',{user}) %>
-<div class="container py-4">
-    <div class="text-center">
-        <h3>Past Flight Details</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Past Flight Report — Wing Mate Manager</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-staff-layout">
+  <aside class="wm-sidebar">
+    <div class="wm-sidebar-logo"><span class="logo-icon">✈</span>Wing Mate</div>
+    <a href="/staff/manager" class="wm-sidebar-link" id="sidebar-home"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/staff/manager/all_flights" class="wm-sidebar-link" id="sidebar-flights"><i class="fas fa-plane"></i> All Flights</a>
+    <a href="/staff/manager/all_general_staff" class="wm-sidebar-link" id="sidebar-staff"><i class="fas fa-users"></i> Staff Directory</a>
+    <a href="/staff/manager/reports" class="wm-sidebar-link active" id="sidebar-reports"><i class="fas fa-chart-bar"></i> Reports</a>
+    <a href="/staff/edit_profile" class="wm-sidebar-link" id="sidebar-profile"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    <div class="wm-sidebar-bottom"><a href="/staff/logout" class="wm-sidebar-link" id="sidebar-logout" style="color:var(--danger);"><i class="fas fa-sign-out-alt"></i> Log Out</a></div>
+  </aside>
+  <main class="wm-staff-content">
+    <div class="wm-staff-topbar">
+      <div>
+        <h1>Past Flight Report</h1>
+        <p style="color:var(--text-muted);font-size:0.88rem;margin-top:4px;">Route: <strong style="color:var(--primary-light);"><%= origin %> → <%= destination %></strong></p>
+        <a href="/staff/manager/reports" style="color:var(--text-muted);font-size:0.85rem;"><i class="fas fa-arrow-left" style="margin-right:6px;"></i>Back to Reports</a>
+      </div>
     </div>
-    <div class="text-center">
-        <div class="row mt-3">
-            <div class="col-sm-6 col-xs-12">
-                <h4><i class="fas fa-plane-departure mt-1 text-black-50 "></i> Origin - <%=origin%></h4>
-            </div>
-            <div class="col-sm-6 col-xs-12">
-               <h4> <i class="fas fa-plane-arrival  mt-1 text-black-50 "></i> Destination - <%=destination%></h4>
-            </div>
-        </div>
 
+    <div class="wm-card" style="padding:0;overflow:hidden;">
+      <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+        <i class="fas fa-history" style="color:var(--warning);"></i>
+        <h3 style="font-size:0.9rem;">Completed Flights — <%= origin %> to <%= destination %></h3>
+        <span class="wm-badge wm-badge-muted"><%= flights ? flights.length : 0 %> flights</span>
+      </div>
+      <% if (!flights || flights.length === 0) { %>
+        <div style="text-align:center;padding:60px;color:var(--text-muted);">
+          <i class="fas fa-search" style="font-size:2rem;display:block;margin-bottom:14px;opacity:0.3;"></i>
+          No past flights found for this route
+        </div>
+      <% } else { %>
+      <div class="wm-table-wrap" style="border:none;border-radius:0;">
+        <table class="wm-table">
+          <thead><tr><th>Schedule ID</th><th>Departure</th><th>Actual Departure</th><th>Arrival</th><th>Actual Arrival</th><th>Status</th></tr></thead>
+          <tbody>
+            <% flights.forEach(function(f) { %>
+            <tr>
+              <td><code style="background:var(--bg-elevated);padding:2px 8px;border-radius:4px;font-size:0.8rem;">#<%= f.schedule_id %></code></td>
+              <td style="font-size:0.82rem;color:var(--text-muted);"><%= new Date(f.departure_date).toLocaleDateString() %> <%= f.departure_time_utc %></td>
+              <td style="font-size:0.82rem;color:var(--text-muted);"><%= f.actual_departed ? new Date(f.actual_departed).toLocaleString() : '—' %></td>
+              <td style="font-size:0.82rem;color:var(--text-muted);"><%= new Date(f.arrival_date).toLocaleDateString() %> <%= f.arrival_time_utc %></td>
+              <td style="font-size:0.82rem;color:var(--text-muted);"><%= f.actual_arrival ? new Date(f.actual_arrival).toLocaleString() : '—' %></td>
+              <td><span class="wm-badge wm-badge-success"><i class="fas fa-check" style="font-size:0.6em;"></i> Landed</span></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
     </div>
-    <hr>
-    <% if (error) {%>
-        <div class="alert alert-danger text-center" role="alert">
-            <%=error%>
-        </div>
-    <% } %>
-    <% if (success) {%>
-        <div class="alert alert-success text-center" role="alert">
-            <%=success%>
-        </div>
-    <% } %>
-    
-    <%if(flights && flights.length>0){%>
-        <% flights.forEach(function(flight) { %>
-                                
-            <!--flights start-->
-            <div class="col-lg-12 mb-30">
-                <div class="card p-3 mt-3 border border-warning shadow">
-                    <div class="row"><!--row start-->
-                        <div class="col-lg-3 mb-30"><!--new 1st div-->
-                            <div>
-                                <div class=" card-title">
-                                    <i class="fa fa-plane" aria-hidden="true"></i><h5 class="title">Schedule ID: <%= flight.schedule_id %></h5>
-                                </div>
-                                <div>
-                                    <h6>
-                                        Passenger Count - <%=flight.passenger_count.length<2?'0'+flight.passenger_count:flight.passenger_count%>     
-                                    </h6>
-                                </div>
-                                <div>
-                                    <h6>
-                                        State - <%=flight.flight_state%>
-                                    </h6>
-                                </div>
-                                
-                                
-                            </div>
-                        </div><!--new 1st div end-->
-                        <div class="col-lg-9 mb-30"><!--new 2nd div-->
-                            <br/>
-                            <h6>Scheduled Departed DateTime -  <%= flight.departure_date %> <%= flight.departure_time_utc %> </h6>
-                            <h6>Scheduled Arrival DateTime - <%= flight.arrival_date %>  <%= flight.arrival_time_utc %></h6>
-                            <h6>Actual Departed DateTime -  <%= flight.actual_departed %></h6>
-                            <h6>Actual Arrival DateTime - <%= flight.actual_arrival %></h6>
-                            
-                        </div><!--new 2nd div-->
-                </div><!--raw end-->
-                </div>
-            </div>
-            <!--flights end-->
-
-        <% }) %>
-
-    <%}else{%>
-        <div class="text-center alert alert-warning">
-            There No Past Flights Between These Two Airports
-        </div>
-    <%}%>
+  </main>
 </div>
-
-
-<%- include('_staff_footer') %>
+</body>
+</html>

@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 /* setup middleware and configs */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+const dotenv = require('dotenv').config()
 /* setup static files */
 app.use(express.static('./public'));
 
@@ -27,16 +27,18 @@ app.use(express.static('./public'));
 app.use(session({
     store: new (pgConnect(session))({ conString: process.env.DATABASE_URL }),
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
 }));
 /* setup routes */
 app.use(require('./routes'));
 
 /* Listen on the port for requests */
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Express server listening on port %d in %s mode', process.env.PORT, app.settings.env);
-});
+if (process.env.NODE_ENV !== 'production' || process.env.PORT) {
+    app.listen(process.env.PORT || 3000, () => {
+        console.log('Express server listening on port %d', process.env.PORT || 3000);
+    });
+}
 
 module.exports = app;

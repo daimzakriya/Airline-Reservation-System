@@ -1,86 +1,90 @@
-<!-- footer-section start -->
-<footer class="footer-section pt-120 pb-120">
-    <div class="container">
-        <div class="row mb-30-none">
-            <div class="col-lg-3 col-sm-6 mb-30">
-                <div class="footer-widget widget-menu">
-                    <h3 class="widget-title">company</h3>
-                    <ul>
-                        <li><a href="/about"><i class="fas fa-angle-double-right"></i>About</a></li>
-                        <li><a href="/customer/ViewFlights"><i class="fas fa-angle-double-right"></i>Booking</a></li>
-                        <li><a href="/contact"><i class="fas fa-angle-double-right"></i>Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 mb-30">
-                <div class="footer-widget widget-menu">
-                    <h3 class="widget-title">legal</h3>
-                    <ul>
-                        <li><a href="/privacy"><i class="fas fa-angle-double-right"></i>Terms & Conditions</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6 mb-30">
-                <div class="footer-widget widget-menu">
-                    <h3 class="widget-title">about us</h3>
-                    <p>We are B Airways a subsidiary of Virgin Airlines. Some people just know how to fly.</p>
-                </div>
-            </div>
+<!-- Footer -->
+<footer class="wm-footer">
+  <div class="wm-container">
+    <div class="wm-footer-grid">
+      <!-- Brand -->
+      <div class="wm-footer-brand">
+        <div class="wm-logo" style="margin-bottom:14px;">
+          <span class="wm-logo-icon">✈</span>
+          Wing Mate
         </div>
+        <p>One of the fastest-growing airlines in the world. We operate across 10 countries, delivering an experience that goes beyond flying.</p>
+        <div style="margin-top:20px;">
+          <a href="https://www.linkedin.com/in/daim-zakriya-990157292" target="_blank" rel="noopener noreferrer"
+            style="display:inline-flex;align-items:center;gap:10px;padding:10px 20px;background:#0A66C2;border-radius:10px;color:#fff;font-size:0.88rem;font-weight:600;text-decoration:none;transition:background 0.2s,transform 0.2s;letter-spacing:0.02em;"
+            onmouseover="this.style.background='#004182';this.style.transform='translateY(-2px)';"
+            onmouseout="this.style.background='#0A66C2';this.style.transform='translateY(0)';">
+            <i class="fab fa-linkedin" style="font-size:1.1rem;"></i>
+            Connect on LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- Company -->
+      <div class="wm-footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>About Us</a></li>
+          <li><a href="/customer/viewFlights"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Book a Flight</a></li>
+          <li><a href="/aircraftDetails"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Our Fleet</a></li>
+          <li><a href="/contact"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Contact Us</a></li>
+          <li><a href="/creator"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Creator</a></li>
+        </ul>
+      </div>
+
+      <!-- Support -->
+      <div class="wm-footer-col">
+        <h4>Passenger</h4>
+        <ul>
+          <% if (user && user.type !== 'guest') { %>
+            <li><a href="/booking/previous-bookings"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>My Bookings</a></li>
+            <li><a href="/customer/editProfile"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Edit Profile</a></li>
+            <li><a href="/customer/createReview"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Leave a Review</a></li>
+            <li><a href="/customer/logout"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Log Out</a></li>
+          <% } else { %>
+            <li><a href="#" onclick="openModal('login-modal')"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Log In</a></li>
+            <li><a href="#" onclick="openModal('signup-modal')"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Create Account</a></li>
+          <% } %>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="wm-footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Terms & Conditions</a></li>
+          <li><a href="/privacy"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Privacy Policy</a></li>
+        </ul>
+        <div style="margin-top:24px;">
+          <h4>Staff Portal</h4>
+          <ul>
+            <li><a href="/staff/login"><i class="fas fa-angle-right" style="margin-right:6px;font-size:0.7em;"></i>Staff Login</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
+
+    <div class="wm-footer-bottom">
+      <p>© 2026 Wing Mate Airlines. All rights reserved.</p>
+      <p>Built with ♥ by <a href="/creator" style="color:var(--primary-light);">Daim Bin Zakriya</a></p>
+    </div>
+  </div>
 </footer>
-<div class="privacy-area wow fadeIn" data-wow-duration="0.5" data-wow-delay="0.5s">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <p>Copyright  © DBMS 2021. All rights reserved </p>
-            </div>
-        </div>
-    </div>
-</div>   
-<!-- footer-section end -->
 
-
-
-
-<!-- jquery -->
+<!-- Scripts -->
 <script src="/assets/js/jquery-3.3.1.min.js"></script>
-<!-- migarate-jquery -->
 <script src="/assets/js/jquery-migrate-3.0.0.js"></script>
-<!-- bootstrap js -->
 <script src="/assets/js/bootstrap.min.js"></script>
-<!-- magnific-popup js -->
-<script src="/assets/js/jquery.magnific-popup.js"></script>
-<!-- isotope -->
-<script src="/assets/js/isotope.pkgd.min.js"></script>
-<!-- nice-select js-->
-<script src="/assets/js/jquery.nice-select.js"></script>
-<!-- swipper js -->
 <script src="/assets/js/swiper.min.js"></script>
-<!-- waypoints js link -->
-<script src="/assets/js/jquery.waypoints.min.js"></script>
-<!-- counterup js -->
-<script src="/assets/js/jquery.counterup.min.js"></script>
-<!-- paroller js -->
-<script src="/assets/js/jquery.paroller.min.js"></script>
-<!-- datepicker js -->
 <script src="/assets/js/datepicker.min.js"></script>
-<!-- datepicker js -->
 <script src="/assets/js/datepicker.en.js"></script>
-
-
 <script src="/assets/js/booking.js"></script>
 <script src="/assets/js/createBooking.js"></script>
 <script src="/assets/js/editProfile.js"></script>
 <script src="/assets/js/changePassword.js"></script>
-
-<!-- main -->
 <script src="/assets/js/main.js"></script>
-<!--register js-->
 <script src="/assets/js/register.js"></script>
-<!--auto pop js-->
 <script src="/assets/js/autopop.js"></script>
-
 <script src="/assets/js/seats.js"></script>
 
 </body>

@@ -1,183 +1,131 @@
-<%- include('_staff_header',{user}) %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Registration — Wing Mate</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-auth-wrap" style="padding:60px 24px;">
+  <div class="wm-auth-card" style="max-width:580px;">
+    <div class="wm-auth-logo">
+      <div class="logo" style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">✈ Wing Mate</div>
+      <div style="margin-top:6px;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);font-weight:600;">Staff Portal</div>
+    </div>
 
- <div class="container py-4">
-     <script>
-        function showAirportField(that) {
-            console.log(document.getElementById("airport").value)
-            if (that.value == "general") {
-                document.getElementById("airport-field").style.display ="block";
-            } else {
-                document.getElementById("airport").value = "";
-                document.getElementById("airport-field").style.display = "none";
-            }
-        }
-     </script>
-     <div class="card  rounded shadow-lg">
-        <div class="card-body">
-            
-            
-            
-                <h3 class="text-center">Register as Staff Member</h3>
-                <form method="POST" action="/staff/register">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 text-center align-self-center">
-                            <img src="https://image.freepik.com/free-vector/add-user-concept-illustration_114360-458.jpg" alt="Login"
-                                width="90%" />
-                            <br>
-                        </div>
-                        <div class="col-md-6 col-sm-12 align-self-center">
-                            <% if (error) {%>
-                                <div class="alert alert-danger" role="alert">
-                                    <%=error%>
-                                </div>
-                            <% } %>
-                            <% if (success) {%>
-                                <div class="alert alert-danger" role="alert">
-                                    <%=success%>
-                                </div>
-                            <% } %>
-                            <div class="form-group">
-                                <label for="firstName">First Name</label>
-                                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name" required value="<%=firstName%>" maxlength="50" style="text-transform: capitalize;">
-                            </div>
-                            <div class="form-group">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name" required value="<%=lastName%>" maxlength="50" style="text-transform: capitalize;">
-                            </div>
-                            <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select id="gender" class="form-control" name="gender" required>
-                                    <option  selected>Choose...</option>
-                                    <% if( gender=='Male') { %>
-                                        <option value="Male" selected>Male</option>
-                                    <% }else{  %>
-                                        <option value="Male">Male</option>
-                                    <% } %>
-                                    <% if( gender=='Female') { %>
-                                        <option value="Female" selected>Female</option>
-                                    <% }else{  %>
-                                        <option value="Female">Female</option>
-                                    <% } %>
-                                    <% if( gender=='Other') { %>
-                                        <option value="Other" selected>Other</option>
-                                    <% }else{  %>
-                                        <option value="Other">Other</option>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="dob">Date of Birth</label>
-                                <input type="date" id="dob" name="dob"  class="form-control" required value="<%=dob%>">
-                            </div>
-                            <div class="form-group">
-                                <label for="empId">Employee ID <small class="text-secondary"> (Bxxxxx) </small></label>
-                                <input type="empId" class="form-control" id="empId" name="empId" placeholder="Employee ID" required value="<%=empId%>" maxlength="6">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="category">Staff Category</label>
-                                <select id="category" class="form-control" name="category" required onchange="showAirportField(this);">
-                                    <option  selected>Choose...</option>
-                                    <% if( category=='admin') { %>
-                                        <option value="admin" selected>Admin</option>
-                                    <% }else{  %>
-                                        <option value="admin">Admin</option>
-                                    <% } %>
-                                    <% if( category=='manager') { %>
-                                        <option value="manager" selected>Manager</option>
-                                    <% }else{  %>
-                                        <option value="manager">Manager</option>
-                                    <% } %>
-                                    <% if( category=='general') { %>
-                                        <option value="general" selected>General</option>
-                                    <% }else{  %>
-                                        <option value="general">General</option>
-                                    <% } %>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group" id="airport-field" style="display: block;">
-                                <label for="airport">Assigned Airport<small class="text-secondary"> (only if General Staff)</small></label>
-                                <select id="airport" class="form-control" name="airport">
-                                    <option  selected value="">Choose...</option>
-                                    <% if(airportCodes && airportCodes.length>0){ %>
-                                        <% airportCodes.forEach(function(code){ %>
-                                            <% if( airport==code.airport_code ) { %>
-                                                <option value='<%=code.airport_code%>' selected><%=code.airport_code%></option>
-                                            <% }else{  %>
-                                                <option value='<%=code.airport_code%>' ><%=code.airport_code%></option>
-                                            <% } %>
-                                        <% }); %>
-                                    <% } %> 
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required value="<%=email%>" maxlength="50">
-                            </div>
-                            
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="contactNO">Contact Number</label>
-                                <input type="text" class="form-control" id="contactNo" name="contactNo" placeholder="Contact Number" required value="<%=contactNo%>" maxlength="15">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="country">Country</label>
-                                <input type="text" class="form-control" id="country" name="country" placeholder="Country" required value="<%=country%>" maxlength="50" style="text-transform: capitalize;">
-                            </div>
-                            
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="password">Password <small class="text-secondary">(must be more than 5 less than 20 characters)</small></label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required >
-                            </div>
-                        </div>
+    <h2>Staff Registration</h2>
+    <p class="sub">Create your employee account — admin accounts are auto-verified</p>
 
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="wm-alert wm-alert-error"><i class="fas fa-exclamation-circle"></i> <%= error %></div>
+    <% } %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="wm-alert wm-alert-success"><i class="fas fa-check-circle"></i> <%= success %></div>
+    <% } %>
 
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="confirmPassword">Confirmation  Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-                            </div>
-        
-                            
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <div class="form-group">
-                                <label for="securityKey">Enter the Security Key<small class="text-secondary"> (Required only if catrgory is Admin)</small></label>
-                                <input type="text" class="form-control" id="securityKey" name="securityKey" placeholder="Security key" value="<%=securityKey%>" maxlength="80">
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                    </div>
-                </form>
-       
-            
+    <form action="/staff/register" method="POST">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>First Name</label>
+          <input class="wm-input" type="text" name="firstName" placeholder="John" value="<%= typeof firstName !== 'undefined' ? firstName : '' %>" required>
         </div>
+        <div class="wm-form-group">
+          <label>Last Name</label>
+          <input class="wm-input" type="text" name="lastName" placeholder="Doe" value="<%= typeof lastName !== 'undefined' ? lastName : '' %>" required>
+        </div>
+      </div>
 
-     </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Employee ID</label>
+          <input class="wm-input" type="text" name="empId" placeholder="EMP001" value="<%= typeof empId !== 'undefined' ? empId : '' %>" required>
+        </div>
+        <div class="wm-form-group">
+          <label>Staff Category</label>
+          <select class="wm-select" name="category" required>
+            <option value="">Select role</option>
+            <option value="manager" <%= typeof category !== 'undefined' && category === 'manager' ? 'selected' : '' %>>Manager</option>
+            <option value="general" <%= typeof category !== 'undefined' && category === 'general' ? 'selected' : '' %>>General Staff</option>
+          </select>
+        </div>
+      </div>
 
- </div>
+      <div class="wm-form-group">
+        <label>Email Address</label>
+        <input class="wm-input" type="email" name="email" placeholder="staff@wingmate.com" value="<%= typeof email !== 'undefined' ? email : '' %>" required>
+      </div>
 
-<%- include('_staff_footer') %>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Password</label>
+          <input class="wm-input" type="password" name="password" placeholder="Min 8 characters" required>
+        </div>
+        <div class="wm-form-group">
+          <label>Confirm Password</label>
+          <input class="wm-input" type="password" name="confirmPassword" placeholder="Repeat password" required>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Contact Number</label>
+          <input class="wm-input" type="tel" name="contactNo" placeholder="+1-555-0100" value="<%= typeof contactNo !== 'undefined' ? contactNo : '' %>" required>
+        </div>
+        <div class="wm-form-group">
+          <label>Date of Birth</label>
+          <input class="wm-input" type="date" name="dob" value="<%= typeof dob !== 'undefined' ? dob : '' %>" required>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Gender</label>
+          <select class="wm-select" name="gender" required>
+            <option value="">Select gender</option>
+            <option value="Male" <%= typeof gender !== 'undefined' && gender === 'Male' ? 'selected' : '' %>>Male</option>
+            <option value="Female" <%= typeof gender !== 'undefined' && gender === 'Female' ? 'selected' : '' %>>Female</option>
+            <option value="Other" <%= typeof gender !== 'undefined' && gender === 'Other' ? 'selected' : '' %>>Other</option>
+          </select>
+        </div>
+        <div class="wm-form-group">
+          <label>Country</label>
+          <input class="wm-input" type="text" name="country" placeholder="Pakistan" value="<%= typeof country !== 'undefined' ? country : '' %>" required>
+        </div>
+      </div>
+
+      <div class="wm-form-group">
+        <label>Assigned Airport</label>
+        <select class="wm-select" name="airport">
+          <option value="">Select airport (optional)</option>
+          <% if (typeof airportCodes !== 'undefined' && airportCodes) { %>
+            <% airportCodes.forEach(function(ap) { %>
+              <option value="<%= ap.airport_code %>" <%= typeof airport !== 'undefined' && airport === ap.airport_code ? 'selected' : '' %>>
+                <%= ap.airport_code %> — <%= ap.name %>
+              </option>
+            <% }); %>
+          <% } %>
+        </select>
+      </div>
+
+
+
+      <button type="submit" class="wm-btn wm-btn-primary wm-btn-full" id="staff-register-btn">
+        <i class="fas fa-user-plus"></i> Create Staff Account
+      </button>
+    </form>
+
+    <div class="wm-auth-footer">
+      Already registered? <a href="/staff/login">Sign in</a>
+    </div>
+    <div class="wm-auth-footer" style="margin-top:10px;">
+      <a href="/" style="color:var(--text-muted);">← Back to main site</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -15,25 +15,25 @@
                 <div class="seat-row">
                     <% cols1.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols2.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols3.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%}
                     }); %>
                 </div>
@@ -46,17 +46,17 @@
                 <div class="seat-row">
                     <% cols1.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols2.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                 </div>
@@ -78,25 +78,25 @@
                 <div class="seat-row">
                     <% cols1.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols2.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols3.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                 </div>
@@ -109,17 +109,17 @@
                 <div class="seat-row">
                     <% cols1.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols2.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                 </div>
@@ -142,25 +142,25 @@
                 <div class="seat-row">
                     <% cols1.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols2.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols3.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                 </div>
@@ -173,25 +173,25 @@
                 <div class="seat-row">
                     <% cols1.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols2.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols3.forEach(function (column) {
                     if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                     <%}else{%>
-                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                        <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                     <%  }
                     }); %>
                 </div>
@@ -204,17 +204,17 @@
                 <div class="seat-row">
                     <% cols1.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                     <div class="aisle"><span class="aisle-number"><%= row%></span></div>
                     <% cols2.forEach(function (column) {
                         if (booked_seats.some(seat => seat.seat_id === row+column)) {%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="radio" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>" disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
                         <%}else{%>
-                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="" data-seat="<%= row+column%>"disabled="disabled"/><span class="seat-label"><%= column%></span></label></div>
+                            <div class="seat one"><label class="label" for="seat-<%= row+column%>"><input id="seat-<%= row+column%>" type="checkbox" class="seat-check visuallyhidden" name="seat-assignment" value="<%= row+column%>" data-seat="<%= row+column%>"/><span class="seat-label"><%= column%></span></label></div>
                         <%  }
                     }); %>
                 </div>

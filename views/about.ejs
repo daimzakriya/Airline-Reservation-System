@@ -1,168 +1,134 @@
-<!-- header-section start -->
-<%- include('_header',{user}) %>
-<!-- header-section end -->
-<!-- register-section start -->
-<%- include('_signup',{user,registrationError}) %>
-<!-- register-section end -->
-<!-- login-section start -->
-<%- include('_login',{user}) %>
-<!-- login-section end -->
+<%- include('_header', {user}) %>
 
-
-    <form class="header-form">
-        <div class="skip"><i class="fas fa-times"></i></div>
-        <div class="header-form-area">
-            <input type="text" placeholder="Search Here">
-            <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
-        </div>
-    </form>
-
-
-    <!-- banner-section start -->
-    <section class="inner-banner-section pt-120 pb-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <div class="inner-banner-content">
-                        <h2 class="title">About Us</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- banner-section end -->
-
-
-    <!-- breadcrumb-section start -->
-    <div class="breadcrumb-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">About Us</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+<!-- Hero Banner Section -->
+<section class="wm-hero" style="min-height: 50vh; padding-top: 140px; padding-bottom: 60px;">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content" style="max-width: 800px;">
+    <div class="wm-hero-pill">
+      <span class="wm-hero-pill-dot"></span>
+      About Wing Mate
     </div>
-    <!-- breadcrumb-section end -->
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px;">Redefining Modern Aviation</h1>
+    <p style="margin-bottom: 0;">
+      Learn about our vision, our standards, and why we are trusted by thousands of travelers worldwide.
+    </p>
+  </div>
+</section>
 
+<!-- Breadcrumb -->
+<div style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0;">
+  <div class="wm-container">
+    <div style="display: flex; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+      <a href="/" style="color: var(--primary-light); hover:text-decoration: underline;">Home</a>
+      <span>/</span>
+      <span style="color: var(--text-primary);">About Us</span>
+    </div>
+  </div>
+</div>
 
-    <a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+<!-- Services Grid Section -->
+<section class="wm-section">
+  <div class="wm-container">
+    <div class="wm-section-header">
+      <span class="wm-eyebrow">Services</span>
+      <h2>Designed For Your Convenience</h2>
+      <p>We combine cutting-edge technology with world-class hospitality to make flying a breeze.</p>
+    </div>
 
-
-    <!-- service-section start -->
-    <section class="service-section pt-120">
-        <div class="container">
-            <div class="row justify-content-center mb-60-none">
-                <div class="col-lg-4 col-md-6 col-sm-8 text-center mb-60">
-                    <div class="service-item service-item--style mt-30">
-                        <div class="service-icon">
-                            <i class="flaticon-startup"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title"><a href="#0">fast & easy booking</a></h3>
-                            <p>Search for a flight, pick the seats as you wish, complete the payment. It's that easy!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-8 text-center mb-60">
-                    <div class="service-item service-item--style mt-30">
-                        <div class="service-icon">
-                            <i class="flaticon-internet"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title"><a href="#0">any time any where</a></h3>
-                            <p>Taking you to destinations all around the globe everyday. We’re Going Places!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-8 text-center mb-60">
-                    <div class="service-item service-item--style mt-30">
-                        <div class="service-icon">
-                            <i class="flaticon-audio-headset-of-auriculars-with-microphone-included"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title"><a href="#0">24/7 support</a></h3>
-                            <p>24/7 online support for your questions and concerns.More than just flying!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="wm-grid-3">
+      <!-- Fast & Easy Booking -->
+      <div class="wm-service-card">
+        <div class="wm-service-icon">
+          <i class="fas fa-bolt"></i>
         </div>
-    </section>
-    <!-- service-section end -->
-<br><br><br>
+        <h3>Fast & Easy Booking</h3>
+        <p>Search for a flight, pick the seats as you wish, and complete the payment in seconds.</p>
+      </div>
 
-    <!-- offer-section start -->
-    <section class="offer-section">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 pl-0 pr-0">
-                    <div class="offer-thunb">
-                        <img src="/assets/images/about_image.jpg" alt="image">
-                    </div>
-                </div>
-            </div>
+      <!-- Global Network -->
+      <div class="wm-service-card">
+        <div class="wm-service-icon">
+          <i class="fas fa-globe"></i>
         </div>
-    </section>
-    <!-- offer-section end -->
+        <h3>Anytime, Anywhere</h3>
+        <p>Taking you to destinations all around the globe every day. We're going places together.</p>
+      </div>
 
-
-    <!-- choose-us-section start -->
-    <section class="choose-us-section choose-us-section--style pt-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 text-center">
-                    <div class="section-header">
-                        <h2 class="section-title">why we are the best in the game</h2>
-                        <span class="title-border title-border-center"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row mb-30-none">
-                <div class="col-lg-6 mb-30">
-                    <div class="choose-us-content choose-us-content--style">
-                        <div class="faq-left-content">
-                            <div class="faq-wrapper">
-                                <div class="faq-item active open">
-                                    <h3 class="faq-title"><span class="title">fast and easy service</span><span class="right-icon"></span></h3>
-                                    <div class="faq-content">
-                                        <p>We have made the booking process simple and fast.Search for a flight , pick the seats as you wish, complete the payment. It's that easy!</p>
-                                    </div>
-                                </div>
-                                <div class="faq-item">
-                                    <h3 class="faq-title"><span class="title">why online booking</span><span class="right-icon"></span></h3>
-                                    <div class="faq-content">
-                                        <p>Why not? In modern times everything is made easier using internet. So why not book you ticket online?</p>
-                                    </div>
-                                </div>
-                                <div class="faq-item">
-                                    <h3 class="faq-title"><span class="title">24 hours customer support</span><span class="right-icon"></span></h3>
-                                    <div class="faq-content">
-                                        <p>24/7 online support for your questions and concerns.We are more than just flying.</p>
-                                    </div>
-                                </div>
-                                <div class="faq-item">
-                                    <h3 class="faq-title"><span class="title">Recent Awards</span><span class="right-icon"></span></h3>
-                                    <div class="faq-content">
-                                        <p>We are proud to share with you that B Airways was awarded the "Most Personal Service" award by BIA-Colombo.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 mb-30">
-                    <img src="/assets/images/b_airways_logo_big.png" alt="site-logo">
-                </div>
-            </div>
+      <!-- 24/7 Support -->
+      <div class="wm-service-card">
+        <div class="wm-service-icon">
+          <i class="fas fa-headset"></i>
         </div>
-    </section>
-    <!-- choose-us-section end -->
-<br><br><br><br>
+        <h3>24/7 Support</h3>
+        <p>Our online support desk is available around the clock to answer your questions and concerns.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<%- include('_footer',{user}) %>
+<!-- Why Choose Us Section -->
+<section class="wm-section" style="background: var(--bg-card2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="wm-container">
+    <div class="wm-grid-2" style="align-items: center;">
+      <div>
+        <div class="wm-section-header" style="text-align: left; margin-bottom: 32px;">
+          <span class="wm-eyebrow" style="justify-content: flex-start; margin-left: 0;">Why Wing Mate</span>
+          <h2 style="margin-left: 0; text-align: left;">Why We Are The Best In The Game</h2>
+          <p style="margin-left: 0; text-align: left;">We focus on seamless digital-first workflows and absolute reliability.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Card 1 -->
+          <div class="wm-card" style="padding: 20px;">
+            <h4 style="display: flex; align-items: center; gap: 10px; font-size: 1.05rem; margin-bottom: 8px;">
+              <i class="fas fa-rocket" style="color: var(--primary-light);"></i> Fast & Frictionless Service
+            </h4>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+              We have streamlined the booking process. Select flights, choose seats dynamically, and pay without hassle.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="wm-card" style="padding: 20px;">
+            <h4 style="display: flex; align-items: center; gap: 10px; font-size: 1.05rem; margin-bottom: 8px;">
+              <i class="fas fa-laptop" style="color: var(--accent);"></i> Dynamic Online Seat Selection
+            </h4>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+              View and interact with real-time aircraft seat maps. No guest work, pick the window or aisle seat of your choice.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="wm-card" style="padding: 20px;">
+            <h4 style="display: flex; align-items: center; gap: 10px; font-size: 1.05rem; margin-bottom: 8px;">
+              <i class="fas fa-award" style="color: var(--accent2);"></i> Recognized Industry Standard
+            </h4>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+              Wing Mate is proud to be recognized as the "Best Flight Service" platform by leading industry experts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Visual Component -->
+      <div style="display: flex; justify-content: center; position: relative;">
+        <!-- Premium Abstract Badge Panel -->
+        <div class="wm-card" style="width: 100%; max-width: 440px; padding: 40px; background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated)); text-align: center; border: 1px solid var(--border-accent);">
+          <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: linear-gradient(135deg, var(--primary), var(--accent2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white;">
+            ✈
+          </div>
+          <h3 style="font-size: 1.6rem; margin-bottom: 12px; font-family: var(--font-display);">Wing Mate Premium</h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">
+            A professional SaaS-grade aviation reservation and staff coordination platform designed for travelers and airline operators alike.
+          </p>
+          <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: rgba(16,185,129,0.15); color: var(--success); border-radius: 50px; font-size: 0.8rem; font-weight: 600;">
+            <i class="fas fa-check-circle"></i> Neon & Express Powered
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('_footer', {user}) %>

@@ -1,98 +1,106 @@
-<%- include('_staff_header',{user}) %>
-<div class="container py-4">
-    <div class="text-center">
-        <h3>All General Staff Members</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Directory — Wing Mate Manager</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-staff-layout">
+  <aside class="wm-sidebar">
+    <div class="wm-sidebar-logo"><span class="logo-icon">✈</span>Wing Mate</div>
+    <a href="/staff/manager" class="wm-sidebar-link" id="sidebar-home"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/staff/manager/all_flights" class="wm-sidebar-link" id="sidebar-flights"><i class="fas fa-plane"></i> All Flights</a>
+    <a href="/staff/manager/all_general_staff" class="wm-sidebar-link active" id="sidebar-staff"><i class="fas fa-users"></i> Staff Directory</a>
+    <a href="/staff/manager/reports" class="wm-sidebar-link" id="sidebar-reports"><i class="fas fa-chart-bar"></i> Reports</a>
+    <a href="/staff/edit_profile" class="wm-sidebar-link" id="sidebar-profile"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    <div class="wm-sidebar-bottom"><a href="/staff/logout" class="wm-sidebar-link" id="sidebar-logout" style="color:var(--danger);"><i class="fas fa-sign-out-alt"></i> Log Out</a></div>
+  </aside>
+  <main class="wm-staff-content">
+    <div class="wm-staff-topbar">
+      <div><h1>Staff Directory</h1><p style="color:var(--text-muted);font-size:0.88rem;margin-top:4px;">Manage verified general staff members</p></div>
+      <div class="wm-user-pill">
+        <div class="wm-user-avatar"><%= user.staffData.first_name.charAt(0).toUpperCase() %></div>
+        <span class="wm-user-name"><%= user.staffData.first_name %></span>
+      </div>
     </div>
-    <hr>
-    <div>
-        <% if (error) {%>
-            <div class="alert alert-danger text-center" role="alert">
-                <%=error%>
-            </div>
-        <% } %>
-        <% if (success) {%>
-            <div class="alert alert-success text-center" role="alert">
-                <%=success%>
-            </div>
-        <% } %>
-    </div>
-    <div class="text-center align-items-center mb-3">
-        <input type="search" name="search" class="form-control" placeholder="Search by Name" autocomplete="off" id="search" style="border-color: black;text-transform:capitalize;">
-    </div>
-    <div id="match-list">
-        <% if(staffMembers && staffMembers.length>0) {%>
-            <% staffMembers.forEach(function(staff){%>
-                <div class="card mb-2 shadow rounded border-secondary">
-                    <div class="card-body">
-                            <h5 class="card-title">
-                                <%=staff.first_name%> <%=staff.last_name%>
-                                <small>
-                                    (<%=staff.emp_id%>)
-                                </small>
-                            </h5>  
-                            <div class="row text-black" style="letter-spacing: 3;">
-                                <div class="col-md-4 col-xs-12">
-                                    <p class="card-text"><i class="fas fa-plane-departure" style="margin-right: 6px;"></i>Assigned Airport: <%=staff.assigned_airport%></p>
-                                </div>
-                                <div class="col-md-4 col-xs-12">
-                                    <p class="card-text"><i class="fas fa-phone" style="margin-right: 6px;"></i>Contact No: <%=staff.contact_no%></p>
-                                </div>
-                                <div class="col-md-4 col-xs-12">
-                                    <p class="card-text"><i class="fas fa-envelope" style="margin-right: 6px;"></i>Email: <%=staff.email%> %> </p>
-                                </div>
-                            </div>
-                            <br>
-                            <div>
-                                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#airportUpdateModal<%=staff.emp_id%>">
-                                    Change Assigned Airport
-                                </button>
-                                <!-- Modal -->
-                                <div class="modal fade" id="airportUpdateModal<%=staff.emp_id%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Change Assigned Airport</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Select an airport from the dropdown below
-                                            </div>
-                                            <form class="p-3 text-left" method="POST" action="/staff/manager/change_airport/<%=staff.emp_id%>">
-                                                <div>
-                                                    <div class="form-group" id="airport-field" style="display: block;">
-                                                        <label for="airport">Select Airport</label>
-                                                        <select id="airport" class="form-control" name="airport">
-                                                            <option  selected value="">Choose...</option>
-                                                            <% if(airportCodes && airportCodes.length>0){ %>
-                                                                <% airportCodes.forEach(function(code){ %>
-                                                                    <option value='<%=code.airport_code%>' ><%=code.airport_code%></option>         
-                                                                <% }); %>
-                                                            <% } %> 
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                    </div>
-                </div>
-            <%});%>
+    <% if (typeof error !== 'undefined' && error) { %><div class="wm-alert wm-alert-error"><i class="fas fa-exclamation-circle"></i> <%= error %></div><% } %>
+    <% if (typeof success !== 'undefined' && success) { %><div class="wm-alert wm-alert-success"><i class="fas fa-check-circle"></i> <%= success %></div><% } %>
 
-        <%}else {%>
-            <div class="alert alert-warning text-center">
-                No Verified General Staff Members
-            </div>
-        <%}%>
+    <!-- Search -->
+    <div class="wm-card" style="padding:16px 20px;margin-bottom:20px;">
+      <div style="display:flex;gap:12px;align-items:center;">
+        <input class="wm-input" type="text" id="staff-search-input" placeholder="Search by name..." style="max-width:300px;" oninput="searchStaff(this.value)">
+        <span style="font-size:0.82rem;color:var(--text-muted);" id="staff-count"><%= staffMembers ? staffMembers.length : 0 %> staff members</span>
+      </div>
     </div>
-    <div id="match-list-error"></div>
+
+    <div class="wm-card" style="padding:0;overflow:hidden;">
+      <% if (!staffMembers || staffMembers.length === 0) { %>
+        <div style="text-align:center;padding:60px;color:var(--text-muted);">No verified general staff found</div>
+      <% } else { %>
+      <div class="wm-table-wrap" style="border:none;border-radius:0;">
+        <table class="wm-table" id="staff-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Contact</th><th>Country</th><th>Airport</th><th>Action</th></tr></thead>
+          <tbody>
+            <% staffMembers.forEach(function(s) { %>
+            <tr>
+              <td><code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:0.78rem;"><%= s.emp_id %></code></td>
+              <td><strong><%= s.first_name %> <%= s.last_name %></strong></td>
+              <td style="color:var(--text-muted);font-size:0.82rem;"><%= s.email %></td>
+              <td style="color:var(--text-muted);font-size:0.82rem;"><%= s.contact_no %></td>
+              <td><%= s.country %></td>
+              <td>
+                <form action="/staff/manager/change_airport/<%= s.emp_id %>" method="POST" style="margin:0;display:flex;gap:6px;">
+                  <select class="wm-select" name="airport" style="padding:6px 10px;font-size:0.8rem;height:32px;min-width:100px;">
+                    <option value="">Unassigned</option>
+                    <% if (airportCodes) { airportCodes.forEach(function(ap) { %>
+                      <option value="<%= ap.airport_code %>" <%= s.assigned_airport === ap.airport_code ? 'selected' : '' %>><%= ap.airport_code %></option>
+                    <% }); } %>
+                  </select>
+                  <button type="submit" class="wm-btn wm-btn-ghost wm-btn-sm" id="save-airport-<%= s.emp_id %>" title="Save airport"><i class="fas fa-save"></i></button>
+                </form>
+              </td>
+              <td>
+                <form action="/staff/manager/delete_staff" method="POST" style="margin:0;" onsubmit="return confirm('Remove this staff member?')">
+                  <input type="hidden" name="empId" value="<%= s.emp_id %>">
+                  <button type="submit" class="wm-btn wm-btn-danger wm-btn-sm" id="delete-staff-<%= s.emp_id %>"><i class="fas fa-trash-alt"></i></button>
+                </form>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <% } %>
+    </div>
+  </main>
 </div>
-<%- include('_staff_footer') %>
+<script>
+async function searchStaff(query) {
+  try {
+    const res = await fetch('/staff/manager/search_general_staff?query=' + encodeURIComponent(query));
+    const data = await res.json();
+    if (!data.success) return;
+    const tbody = document.querySelector('#staff-table tbody');
+    document.getElementById('staff-count').textContent = data.staffMembers.length + ' staff members';
+    tbody.innerHTML = data.staffMembers.map(s => `
+      <tr>
+        <td><code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:0.78rem;">${s.emp_id}</code></td>
+        <td><strong>${s.first_name} ${s.last_name}</strong></td>
+        <td style="color:var(--text-muted);font-size:0.82rem;">${s.email}</td>
+        <td style="color:var(--text-muted);font-size:0.82rem;">${s.contact_no}</td>
+        <td>${s.country}</td>
+        <td>${s.assigned_airport || '—'}</td>
+        <td>—</td>
+      </tr>
+    `).join('');
+  } catch(e) { console.error(e); }
+}
+</script>
+</body>
+</html>

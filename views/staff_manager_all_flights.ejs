@@ -1,221 +1,118 @@
-<%- include('_staff_header_general',{user}) %>
-<div class="container py-4">
-    <div class="text-center">
-        <h3>Flights</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Flights — Wing Mate Manager</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-staff-layout">
+  <aside class="wm-sidebar">
+    <div class="wm-sidebar-logo"><span class="logo-icon">✈</span>Wing Mate</div>
+    <div class="wm-sidebar-section-title">Manager</div>
+    <a href="/staff/manager" class="wm-sidebar-link" id="sidebar-home"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/staff/manager/all_flights" class="wm-sidebar-link active" id="sidebar-flights"><i class="fas fa-plane"></i> All Flights</a>
+    <a href="/staff/manager/all_general_staff" class="wm-sidebar-link" id="sidebar-staff"><i class="fas fa-users"></i> Staff Directory</a>
+    <a href="/staff/manager/reports" class="wm-sidebar-link" id="sidebar-reports"><i class="fas fa-chart-bar"></i> Reports</a>
+    <a href="/staff/edit_profile" class="wm-sidebar-link" id="sidebar-profile"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    <div class="wm-sidebar-bottom"><a href="/staff/logout" class="wm-sidebar-link" id="sidebar-logout" style="color:var(--danger);"><i class="fas fa-sign-out-alt"></i> Log Out</a></div>
+  </aside>
+  <main class="wm-staff-content">
+    <div class="wm-staff-topbar">
+      <div><h1>All Flights</h1><p style="color:var(--text-muted);font-size:0.88rem;margin-top:4px;">Network-wide flight status overview</p></div>
+      <div class="wm-user-pill">
+        <div class="wm-user-avatar"><%= user.staffData.first_name.charAt(0).toUpperCase() %></div>
+        <span class="wm-user-name"><%= user.staffData.first_name %></span>
+      </div>
     </div>
-    <br>
-    <% if (error) {%>
-        <div class="alert alert-danger text-center" role="alert">
-            <%=error%>
-        </div>
-    <% } %>
-    <% if (success) {%>
-        <div class="alert alert-success text-center" role="alert">
-            <%=success%>
-        </div>
-    <% } %>
 
-
-    <!--nav tabs starting-->
-    <div>
-        <div class="nav-tabs-boxed">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#ongoingflights" role="tab"
-                        aria-controls="ongoingflights" aria-selected="true">All ongoing Flights</a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#departingflights" role="tab"
-                    aria-controls="departingflights" aria-selected="false">All upcoming Flights</a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#arrivedflights" role="tab"
-                    aria-controls="departingflights" aria-selected="false">All arrived Flights</a></li>
-            </ul>
-        </div>
-        <div class="tab-content">
-            <div class="tab-pane active" role="tabpanel" id="ongoingflights">
-                <div class="card mt-3" style="background-color: #eff5f5;"><!--card1 start-->
-                    <div class="card-header">
-                      <h3 class="card-title">All ongoing Flights</h3>
-                    </div>
-                    <div class="card-body">
-                
-                        <% if (ongoingAllFlights && ongoingAllFlights.length > 0){ %>
-                            <% for (var i = 0; i < ongoingAllFlights.length; i++) { %>
-                            
-                                <!--ongoing flights start-->
-                                <div class="col-lg-12 mb-30 ">
-                                    <div class="flight-search-box border border-dark">
-                                        <div class="row"><!--row start-->
-                                            <div class="col-lg-4 mb-30"><!--new 1st div-->
-                                                <div class="flight-search-item d-flex flex-wrap">
-                                                    <div class="flight-search-thumb">
-                                                        <i class="fa fa-plane" aria-hidden="true"></i>
-                                                    </div>
-                                                    <div class="flight-search-title">
-                                                        <h5 class="title">Schedule ID: <%= ongoingAllFlights[i].schedule_id %></h5>
-                                                        <%if (ongoingAllFlights[i].flight_state=="Delayed-Departure") { %>
-                                                            <h5><span class="badge badge-danger ">delayed departure</span></h5>
-                                                        <% }else if (ongoingAllFlights[i].flight_state=="Scheduled"){ %>
-                                                            <h5><span class="badge badge-info ">Pending</span></h5>
-                                                        <% }else{ %>
-                                                            <h5><span class="badge badge-success ">Departed on-time</span></h5>
-                                                        <% } %>
-                                                    </div>
-                                                </div>
-                                                <div class="flight-search-body">
-                                                    <h5 class="flight-start"><%= ongoingAllFlights[i].departure_time_utc %></h5>
-                                                    <h5 class="flight-middle"><%= ("0"+ongoingAllFlights[i].duration.hours).slice(-2) %>h<%=  ("0"+ongoingAllFlights[i].duration.minutes).slice(-2) %></h5>
-                                                    <h5 class="flight-end"> <%= ongoingAllFlights[i].arrival_time_utc %></h5>
-                                                </div>
-                                                <div class="flight-place">
-                                                    <p><span class="start-place">Departed at</span></p>
-                                                </div>
-                                            </div><!--new 1st div end-->
-                                            <div class="col-lg-8 mb-30"><!--new 2nd div-->
-                                                <br/><h6>From:  <%= ongoingAllFlights[i].origin %></br> Departure date: <%= ongoingAllFlights[i].departure_date %></h6>
-                                                <h6>To:  <%= ongoingAllFlights[i].destination %> </br> Arrival date: <%= ongoingAllFlights[i].arrival_date %></h6>
-                                                <h6>Aircraft ID: <%= ongoingAllFlights[i].aircraft_id %> </h6>
-                                            
-                                            </div><!--new 2nd div-->
-                                    </div><!--raw end-->
-                                    </div>
-                                </div>
-                                <!--ongoing flights end-->
-        
-                            <% } %>
-                        <% } else { %>
-                            <div class="alert alert-warning text-center" role="alert" style="background-color: #fff3cd; color:#a08330;">
-                                No ongoing Flights Available
-                            </div>
-                        <% } %>
-        
-                    </div>
-                </div><!--card1 end-->
-            </div>
-            <div class="tab-pane" role="tabpanel" id="departingflights">
-                <!--card2 start-->
-                    <div class="card mt-3" style="background-color: #f4fae3;">
-                        <div class="card-header">
-                        <h3 class="card-title">All upcoming Flights</h3>
-                        </div>
-                        
-                        <div class="card-body">
-                            
-                            <% if (allUpcomingFlights && allUpcomingFlights.length > 0){ %>
-                                <% for (var i = 0; i < allUpcomingFlights.length; i++) { %>
-                                
-                                    <!--ongoing flights start-->
-                                    <div class="col-lg-12 mb-30">
-                                        <div class="flight-search-box border border-warning">
-                                            <div class="row"><!--row start-->
-                                                <div class="col-lg-4 mb-30"><!--new 1st div-->
-                                                    <div class="flight-search-item d-flex flex-wrap">
-                                                        <div class="flight-search-thumb">
-                                                            <i class="fa fa-plane" aria-hidden="true"></i>
-                                                            
-                                                        </div>
-                                                        <div class="flight-search-title">
-                                                            <h5 class="title">Schedule ID: <%= allUpcomingFlights[i].schedule_id %></h5>
-                                    
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="flight-search-body">
-                                                        <h5 class="flight-start"><%= allUpcomingFlights[i].departure_time_utc %></h5>
-                                                        <h5 class="flight-middle"><%= ("0"+allUpcomingFlights[i].duration.hours).slice(-2) %>h<%=  ("0"+allUpcomingFlights[i].duration.minutes).slice(-2) %></h5>
-                                                        <h5 class="flight-end"> <%= allUpcomingFlights[i].arrival_time_utc %></h5>
-                                                    </div>
-                                                    <div class="flight-place">
-                                                        <p><span class="start-place">Scheduled time:</span></p>
-                                                    </div>
-                                                </div><!--new 1st div end-->
-                                                <div class="col-lg-8 mb-30"><!--new 2nd div-->
-                                                    <br/>
-                                                    
-                                                    <h6>From:  <%= allUpcomingFlights[i].origin %></br> Departing date: <%= allUpcomingFlights[i].departure_date %></h6>
-                                                    <h6>To:  <%= allUpcomingFlights[i].destination %> </br> Arrival date: <%= allUpcomingFlights[i].arrival_date %></h6>
-                                                    <h6>Aircraft ID: <%= allUpcomingFlights[i].aircraft_id %> </h6>
-                                                    
-                                                </div><!--new 2nd div-->
-                                        </div><!--raw end-->
-                                        </div>
-                                    </div>
-                                    <!--ongoing flights end-->
-
-                                <% } %>
-                            <% } else { %>
-                                <div class="alert alert-warning text-center" role="alert" style="background-color: #fff3cd; color:#a08330;">
-                                    No Upcoming Flights Available
-                                </div>
-                            <% } %>
-                        </div>
-                    </div><!--card2 end-->
-            </div>
-
-
-            <div class="tab-pane" role="tabpanel" id="arrivedflights">
-                <!--card2 start-->
-                    <div class="card mt-3" style="background-color: #e3f3fa;">
-                        <div class="card-header">
-                        <h3 class="card-title">All Arrived Flights</h3>
-                        </div>
-                        
-                        <div class="card-body">
-                            
-                            <% if (allArrivedFlights && allArrivedFlights.length > 0){ %>
-                                <% for (var i = 0; i < allArrivedFlights.length; i++) { %>
-                                
-                                    <!--ongoing flights start-->
-                                    <div class="col-lg-12 mb-30">
-                                        <div class="flight-search-box border border-primary">
-                                            <div class="row"><!--row start-->
-                                                <div class="col-lg-4 mb-30"><!--new 1st div-->
-                                                    <div class="flight-search-item d-flex flex-wrap">
-                                                        <div class="flight-search-thumb">
-                                                            <i class="fa fa-plane" aria-hidden="true"></i>
-                                                            
-                                                        </div>
-                                                        <div class="flight-search-title">
-                                                            <h5 class="title">Schedule ID: <%= allArrivedFlights[i].schedule_id %></h5>
-                                    
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="flight-search-body">
-                                                        <h5 class="flight-start"><%= allArrivedFlights[i].departure_time_utc %></h5>
-                                                        <h5 class="flight-middle"><%= ("0"+allArrivedFlights[i].duration.hours).slice(-2) %>h<%=  ("0"+allArrivedFlights[i].duration.minutes).slice(-2) %></h5>
-                                                        <h5 class="flight-end"> <%= allArrivedFlights[i].arrival_time_utc %></h5>
-                                                    </div>
-                                                    <div class="flight-place">
-                                                        <p><span class="start-place">Scheduled time:</span></p>
-                                                    </div>
-                                                </div><!--new 1st div end-->
-                                                <div class="col-lg-8 mb-30"><!--new 2nd div-->
-                                                    <br/>
-                                                    <h6 class="text-success">Actual Arrival : <%= allArrivedFlights[i].actual_arrival %> </h6>
-                                                    <h6>From:  <%= allArrivedFlights[i].origin %></br>Scheduled Departing date: <%= allArrivedFlights[i].departure_date %></h6>
-                                                    <h6>To:  <%= allArrivedFlights[i].destination %> </br> Scheduled Arrival date: <%= allArrivedFlights[i].arrival_date %></h6>
-                                                    <h6>Aircraft ID: <%= allArrivedFlights[i].aircraft_id %> </h6>
-                                                    
-                                                </div><!--new 2nd div-->
-                                        </div><!--raw end-->
-                                        </div>
-                                    </div>
-                                    <!--ongoing flights end-->
-
-                                <% } %>
-                            <% } else { %>
-                                <div class="alert alert-warning text-center" role="alert" style="background-color: #fff3cd; color:#a08330;">
-                                    No Arrived Flights Available
-                                </div>
-                            <% } %>
-                        </div>
-                    </div><!--card2 end-->
-            </div>
-
-
-
-
-        </div>
+    <!-- Tabs -->
+    <div class="wm-tabs" id="flight-tabs">
+      <div class="wm-tab active" onclick="showTab('upcoming')" id="tab-upcoming">Upcoming (<%= allUpcomingFlights ? allUpcomingFlights.length : 0 %>)</div>
+      <div class="wm-tab" onclick="showTab('ongoing')" id="tab-ongoing">In-Air (<%= ongoingAllFlights ? ongoingAllFlights.length : 0 %>)</div>
+      <div class="wm-tab" onclick="showTab('arrived')" id="tab-arrived">Arrived (<%= allArrivedFlights ? allArrivedFlights.length : 0 %>)</div>
     </div>
-    <!--nav tabs ending-->
 
+    <!-- Upcoming -->
+    <div id="tab-content-upcoming">
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <% if (!allUpcomingFlights || allUpcomingFlights.length === 0) { %>
+          <div style="text-align:center;padding:48px;color:var(--text-muted);">No upcoming flights</div>
+        <% } else { %>
+        <table class="wm-table"><thead><tr><th>#</th><th>Route</th><th>Departure Date</th><th>Departure Time</th><th>Aircraft</th><th>Status</th></tr></thead>
+        <tbody>
+          <% allUpcomingFlights.forEach(function(f) { %>
+          <tr>
+            <td><code style="background:var(--bg-elevated);padding:2px 8px;border-radius:4px;font-size:0.8rem;">#<%= f.schedule_id %></code></td>
+            <td><strong><%= f.origin %></strong> → <strong><%= f.destination %></strong></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;"><%= new Date(f.departure_date).toLocaleDateString() %></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;"><%= f.departure_time_utc %></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;">#<%= f.aircraft_id %></td>
+            <td><span class="wm-badge wm-badge-primary">Scheduled</span></td>
+          </tr>
+          <% }); %>
+        </tbody></table>
+        <% } %>
+      </div>
+    </div>
 
-<%- include('_staff_footer') %>
+    <!-- Ongoing (In-Air) -->
+    <div id="tab-content-ongoing" class="wm-hidden">
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <% if (!ongoingAllFlights || ongoingAllFlights.length === 0) { %>
+          <div style="text-align:center;padding:48px;color:var(--text-muted);">No flights currently in-air</div>
+        <% } else { %>
+        <table class="wm-table"><thead><tr><th>#</th><th>Route</th><th>Departed</th><th>Status</th></tr></thead>
+        <tbody>
+          <% ongoingAllFlights.forEach(function(f) { %>
+          <tr>
+            <td><code style="background:var(--bg-elevated);padding:2px 8px;border-radius:4px;font-size:0.8rem;">#<%= f.schedule_id %></code></td>
+            <td><strong><%= f.origin %></strong> → <strong><%= f.destination %></strong></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;"><%= f.actual_departed ? new Date(f.actual_departed).toLocaleString() : '—' %></td>
+            <td><span class="wm-badge wm-badge-warning"><i class="fas fa-circle" style="font-size:0.5em;"></i> In-Air</span></td>
+          </tr>
+          <% }); %>
+        </tbody></table>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Arrived -->
+    <div id="tab-content-arrived" class="wm-hidden">
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <% if (!allArrivedFlights || allArrivedFlights.length === 0) { %>
+          <div style="text-align:center;padding:48px;color:var(--text-muted);">No arrived flights</div>
+        <% } else { %>
+        <table class="wm-table"><thead><tr><th>#</th><th>Route</th><th>Arrival Date</th><th>Actual Arrival</th><th>Status</th></tr></thead>
+        <tbody>
+          <% allArrivedFlights.forEach(function(f) { %>
+          <tr>
+            <td><code style="background:var(--bg-elevated);padding:2px 8px;border-radius:4px;font-size:0.8rem;">#<%= f.schedule_id %></code></td>
+            <td><strong><%= f.origin %></strong> → <strong><%= f.destination %></strong></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;"><%= new Date(f.arrival_date).toLocaleDateString() %></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;"><%= f.actual_arrival ? new Date(f.actual_arrival).toLocaleString() : '—' %></td>
+            <td><span class="wm-badge wm-badge-success"><i class="fas fa-check" style="font-size:0.6em;"></i> Landed</span></td>
+          </tr>
+          <% }); %>
+        </tbody></table>
+        <% } %>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+function showTab(tab) {
+  ['upcoming','ongoing','arrived'].forEach(t => {
+    document.getElementById('tab-content-' + t).classList.add('wm-hidden');
+    document.getElementById('tab-' + t).classList.remove('active');
+  });
+  document.getElementById('tab-content-' + tab).classList.remove('wm-hidden');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,173 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>B Airways</title>
-    <!-- fontawesome css link -->
-    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
-    <!-- flaticon css -->
-    <link rel="stylesheet" href="/assets/font/flaticon.css">
-    <!-- magnific popup -->
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-    <!-- nice-select css -->
-    <link rel="stylesheet" href="/assets/css/nice-select.css">
-    <!-- bootstrap css link -->
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <!-- swipper css link -->
-    <link rel="stylesheet" href="/assets/css/swiper.min.css">
-    <!-- favicon -->
-    <link rel="shortcut icon" href="/assets/images/b_x_icon.png" type="image/x-icon">
-    <!-- animate.css -->
-    <link rel="stylesheet" href="/assets/css/animate.css">
-    <!-- datepicker.css -->
-    <link rel="stylesheet" href="/assets/css/datepicker.min.css">
-    <!-- main style css link -->
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <!-- responsive css link -->
-    <link rel="stylesheet" href="/assets/css/responsive.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Wing Mate — Book Your Flight Easy & Fast</title>
+  <meta name="description" content="Wing Mate is a premier airline reservation platform. Search, compare, and book flights across 10+ countries with exclusive member discounts.">
+  <meta name="keywords" content="airline, flight booking, wing mate, cheap flights, aviation">
+  <meta property="og:title" content="Wing Mate — Premier Airline Reservation">
+  <meta property="og:description" content="Book your air ticket easy and fast. Wing Mate — flying made better.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://wingmate.app/">
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
 
-    <!-- seat scss link -->
-    <link rel="stylesheet" href="/assets/css/seats.css">
-    <style>
-        li.lowercase {
-            text-transform: lowercase;
-        }
-        span.lowercase {
-            text-transform: lowercase;
-        }
-    </style>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <!-- Flaticon -->
+  <link rel="stylesheet" href="/assets/font/flaticon.css">
+  <!-- Swiper -->
+  <link rel="stylesheet" href="/assets/css/swiper.min.css">
+  <!-- Datepicker -->
+  <link rel="stylesheet" href="/assets/css/datepicker.min.css">
+  <!-- Wing Mate Design System -->
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+  <!-- Seat CSS -->
+  <link rel="stylesheet" href="/assets/css/seats.css">
+  <!-- eTicket CSS -->
+  <link rel="stylesheet" href="/assets/css/eticket.css">
 </head>
 <body>
 
+<!-- Mobile Nav Overlay -->
+<div class="wm-mobile-nav" id="mobileNav">
+  <button class="wm-mobile-close" id="mobileNavClose" aria-label="Close menu">
+    <i class="fas fa-times"></i>
+  </button>
+  <a href="/" onclick="closeMobileNav()">Home</a>
+  <a href="/customer/viewFlights" onclick="closeMobileNav()">Search Flights</a>
+  <a href="/about" onclick="closeMobileNav()">About</a>
+  <a href="/contact" onclick="closeMobileNav()">Contact</a>
+  <% if (!user || user.type === 'guest') { %>
+    <a href="#login-modal" onclick="closeMobileNav(); openModal('login-modal')" style="color: var(--primary-light);">Log In</a>
+    <a href="#signup-modal" onclick="closeMobileNav(); openModal('signup-modal')" style="color: var(--primary-light);">Create Account</a>
+  <% } else { %>
+    <a href="/customer/logout" style="color: var(--danger);">Log Out</a>
+  <% } %>
+</div>
 
-    <!--Start Preloader-->
-    <div class="preloader">
-        <div class="d-table">
-            <div class="d-table-cell align-middle">
-                <div class="spinner">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
-                </div>
-            </div>
+<!-- Navbar -->
+<nav class="wm-navbar" id="mainNav">
+  <div class="wm-navbar-inner">
+    <!-- Logo -->
+    <a href="/" class="wm-logo">
+      <span class="wm-logo-icon">✈</span>
+      Wing Mate
+    </a>
+
+    <!-- Nav Links -->
+    <div class="wm-nav-links">
+      <a href="/" class="wm-nav-link">Home</a>
+      <div class="wm-nav-dropdown">
+        <a href="#" class="wm-nav-link">Flight <i class="fas fa-caret-down" style="font-size:0.7em;margin-left:3px;"></i></a>
+        <div class="wm-nav-dropdown-menu">
+          <a href="/customer/viewFlights"><i class="fas fa-search" style="margin-right:8px;color:var(--primary-light)"></i>Search Flights</a>
+          <a href="/aircraftDetails"><i class="fas fa-plane" style="margin-right:8px;color:var(--primary-light)"></i>Aircraft Details</a>
         </div>
+      </div>
+      <a href="/about" class="wm-nav-link">About</a>
+      <a href="/contact" class="wm-nav-link">Contact</a>
     </div>
-    <!--End Preloader-->
 
-    
-        <header class="header-section">
-            <div class="header-top d-none d-lg-block">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 pl-lg-0">
-                            <div class="header-socials">
-                                <ul class="social-links">
-                                    <li><a href="#0"></a></li>
-                                    <li><a href="#0"></a></li>
-                                    <li><a href="#0"></a></li>
-                                    <li><a href="#0"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 d-flex flex-wrap justify-content-end pr-lg-0">
-                            <div class="header-top-btn">
-                                <% if (!user || user.type=='guest') {%>
-                                    <a href="#login" class=" custom-btn-login">Log In</a>
-                                    <a href="#signup" class="custom-btn-register">Create an Account</a>
-                                <%} else{%>
-                                        <a href="/customer/createReview" class=" custom-btn">Add a Review</a>
-                                        <a href="/booking/previous-bookings" class=" custom-btn">Previous Bookings</a>
-                                        <a href="/customer/editProfile" class=" custom-btn">Edit Profile</a>
-                                        <a href="/customer/logout" class=" custom-btn">Log Out</a>
-                                <% } %>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="header-middle d-none d-xl-block" style="background-color: white">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-10 pl-lg-0">
-                            <div class="header-wrapper">
-                                <div class="header-info">
-                                    <div class="info-item">
-                                        <div class="info-thumb">
-                                            <i class="flaticon-clock"></i>
-                                        </div>
-                                        <div class="info-content">
-                                            <h6 class="title">working hours</h6>
-                                            <span>24/7 hours</span>
-                                        </div>
-                                    </div>
-                                    <div class="info-item">
-                                        <div class="info-thumb">
-                                            <i class="flaticon-pin"></i>
-                                        </div>
-                                        <div class="info-content">
-                                            <h6 class="title">location</h6>
-                                            <span> Melbourne, Victoria, Australia</span>
-                                        </div>
-                                    </div>
-                                    <div class="info-item">
-                                        <div class="info-thumb">
-                                            <i class="flaticon-mail"></i>
-                                        </div>
-                                        <div class="info-content">
-                                            <h6 class="title">email address</h6>
-                                            <span class="lowercase">info@bairways.com</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 pr-lg-0">
-                            <div class="header-action d-flex flex-wrap align-items-center justify-content-end">
-                                <a href="/customer/ViewFlights" class="cmn-btn-active">Book now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="header-bottom" style="background-color: white">
-                <div class="container">
-                    <div class="row header-border align-items-center justify-content-between">
-                        <a class="site-logo site-title" href="/"><img src="/assets/images/b_airways_logo.png" alt="site-logo"></a>
-                        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="fas fa-bars"></span>
-                        </button>
-                        <div class="header-bar d-lg-none">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </div>
-                        <div class="header-btn-group d-lg-none">
-                            <% if (!user || user.type=='guest') {%>
-                            <div class="header-top-btn">
-                                <a href="#login" class=" custom-btn-login">Log in</a>
-                                <a href="#signup" class="custom-btn-register">Create an account</a>
-                            </div>
-                            <%} else{%>
-                                <a href="/customer/logout" class=" custom-btn">Log Out</a>
-                            <% } %>
-                        </div>
-                        <nav class="navbar navbar-expand-lg p-0">
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="navbar-nav main-menu ml-auto">
-                                    <li class="menu_has_children"><a href="/">Home</a>
-                                    </li>
-                                    <li class="menu_has_children"><a href="#0">Flight<i class="fas fa-caret-down"></i></a>
-                                        <ul class="sub-menu">
-                                            <li><a href="/customer/ViewFlights">Search Flight</a></li>
-                                            <li><a href="/aircraftDetails">Aircraft Details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="/about">About</a></li>
-                                    <li><a href="/contact">Contact</a></li>
-                                </ul>
-                            </div>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <!-- Actions -->
+    <div class="wm-nav-actions">
+      <% if (!user || user.type === 'guest') { %>
+        <button class="wm-btn wm-btn-ghost wm-btn-sm" onclick="openModal('login-modal')" id="nav-login-btn">Log In</button>
+        <button class="wm-btn wm-btn-primary wm-btn-sm" onclick="openModal('signup-modal')" id="nav-register-btn">Create Account</button>
+      <% } else { %>
+        <div class="wm-nav-dropdown">
+          <div class="wm-user-pill" style="cursor:pointer">
+            <div class="wm-user-avatar"><%= user.userData ? user.userData.first_name.charAt(0).toUpperCase() : 'U' %></div>
+            <span class="wm-user-name"><%= user.userData ? user.userData.first_name : 'Account' %></span>
+            <i class="fas fa-caret-down" style="font-size:0.7em;color:var(--text-muted);margin-left:4px;"></i>
+          </div>
+          <div class="wm-nav-dropdown-menu" style="right:0;left:auto;transform:translateX(0);">
+            <a href="/customer/createReview"><i class="fas fa-star" style="margin-right:8px;color:var(--primary-light)"></i>Add Review</a>
+            <a href="/booking/previous-bookings"><i class="fas fa-ticket-alt" style="margin-right:8px;color:var(--primary-light)"></i>My Bookings</a>
+            <a href="/customer/editProfile"><i class="fas fa-user-edit" style="margin-right:8px;color:var(--primary-light)"></i>Edit Profile</a>
+            <div style="height:1px;background:var(--border);margin:6px 0;"></div>
+            <a href="/customer/logout" style="color:var(--danger)"><i class="fas fa-sign-out-alt" style="margin-right:8px;"></i>Log Out</a>
+          </div>
+        </div>
+      <% } %>
+      <!-- Mobile toggle -->
+      <div class="wm-mobile-toggle" id="mobileToggle" onclick="toggleMobileNav()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Navbar scroll effect
+  window.addEventListener('scroll', function() {
+    const nav = document.getElementById('mainNav');
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+  }
+  document.getElementById('mobileNavClose').addEventListener('click', closeMobileNav);
+
+  function openModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('open');
+  }
+  function closeModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('open');
+  }
+</script>

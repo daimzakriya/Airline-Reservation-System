@@ -11,6 +11,7 @@ router.get('/about', IndexController.getAbout);
 router.get('/contact', IndexController.getContact);
 router.get('/aircraftDetails', IndexController.getAircraftDetails);
 router.get('/privacy', IndexController.getPrivacy);
+router.get('/creator', IndexController.getCreator);
 
 router.use((req, res) => res.status(404).render('404'));
 

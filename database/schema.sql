@@ -96,16 +96,6 @@ CREATE TYPE registered_customer_category AS ENUM(
 'Gold'
 );
 
-CREATE TYPE staff_category AS ENUM(
-'admin',
-'manager',
-'general'
-);
-
-CREATE TYPE staff_account_state AS ENUM(
-'verified',
-'unverified'
-);
 
 /*
       _                       _           
@@ -252,7 +242,8 @@ DECLARE
 	bookedSeats varchar(10)[];
 	bookingID int;
 BEGIN
-	bookingIDs := ARRAY (SELECT booking_id FROM seat_booking WHERE schedule_id=val_schedule_id);
+	-- Only check PAID bookings; "Not paid" bookings don't block seats
+	bookingIDs := ARRAY (SELECT booking_id FROM seat_booking WHERE schedule_id=val_schedule_id AND state='Paid');
 
 	FOREACH bookingID in ARRAY bookingIDs
 	LOOP
@@ -451,7 +442,6 @@ CREATE TABLE Organizational_Info (
   address_1 varchar(100) NOT NULL,
   address_2 varchar(100) NOT NULL,
   address_3 varchar(100) NOT NULL,
-  airline_account_no varchar(30) NOT NULL,
   PRIMARY KEY (airline_name)
 );
 
@@ -625,22 +615,6 @@ CREATE TABLE Customer_Review (
 );
 
 
-CREATE TABLE Staff (
-  emp_id char(6) PRIMARY KEY, --Bxxxxx
-  category staff_category NOT NULL,
-  password varchar(255) NOT NULL,
-  first_name varchar(127) NOT NULL,
-  last_name varchar(127) NOT NULL,
-  contact_no varchar(15) NOT NULL,
-  email varchar(70) NOT NULL UNIQUE,
-  dob date NOT NULL,
-  gender gender_enum NOT NULL,
-  country varchar(30) NOT NULL,
-  assigned_airport varchar(10),
-  account_state staff_account_state NOT NULL DEFAULT 'unverified',
-  FOREIGN KEY(assigned_airport) REFERENCES Airport(airport_code) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE Guest_Customer(
   customer_id uuid4,
   name VARCHAR(50) NOT NULL,
@@ -652,6 +626,36 @@ CREATE TABLE Guest_Customer(
   email VARCHAR(127) NOT NULL,
   PRIMARY KEY (customer_id),
   FOREIGN KEY(customer_id) REFERENCES Customer(customer_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+/*
+  _____ _        __  __ 
+ / ____| |      / _|/ _|
+| (___ | |_ ___| |_| |_ 
+ \___ \| __/ _  |  _|  _|
+ ____) | || (_| | | | |  
+|_____/ \__\__,_|_| |_|  
+*/
+---------------------------------- STAFF TABLE SCHEMA ---------------------------------------------------------------------
+
+CREATE TYPE staff_category AS ENUM('admin', 'manager', 'general');
+CREATE TYPE staff_account_state AS ENUM('unverified', 'verified');
+
+CREATE TABLE Staff (
+  emp_id VARCHAR(20) NOT NULL,
+  category staff_category NOT NULL,
+  password varchar(255) NOT NULL,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  contact_no VARCHAR(15) NOT NULL,
+  email VARCHAR(127) NOT NULL UNIQUE,
+  dob DATE NOT NULL,
+  gender gender_enum NOT NULL,
+  country VARCHAR(30) NOT NULL,
+  assigned_airport varchar(10),
+  account_state staff_account_state NOT NULL DEFAULT 'unverified',
+  PRIMARY KEY (emp_id),
+  FOREIGN KEY(assigned_airport) REFERENCES Airport(airport_code) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
@@ -794,43 +798,6 @@ BEGIN
 END;
 $$;
 
--------------------------- Procedure to register staff member -------------------------------------
-CREATE OR REPLACE PROCEDURE registerStaff(
-  val_emp_id CHAR(6),
-  val_category staff_category,
-  val_password varchar(255),
-  val_first_name VARCHAR(30),
-  val_last_name VARCHAR(30),
-  val_contact_no VARCHAR(15),
-  val_email VARCHAR(127),
-  val_dob DATE,
-  val_gender gender_enum,
-  val_country VARCHAR(30),
-  val_airport VARCHAR(10)        
-)
-
-LANGUAGE plpgsql    
-AS $$
-DECLARE
-val_existing_employee  char(6) := (SELECT emp_id from staff where emp_id = val_emp_id);
-BEGIN
-    if (val_existing_employee is null) then
-        if (val_category='admin') then
-            INSERT INTO staff(emp_id,category,password,first_name,last_name,contact_no,email,dob,gender,country,account_state)
-            VALUES (val_emp_id,val_category,val_password,val_first_name,val_last_name,val_contact_no,val_email,val_dob,val_gender,val_country,'verified');
-        elsif(val_category='general') then
-            INSERT INTO staff(emp_id,category,password,first_name,last_name,contact_no,email,dob,gender,country,account_state,assigned_airport)
-            VALUES (val_emp_id,val_category,val_password,val_first_name,val_last_name,val_contact_no,val_email,val_dob,val_gender,val_country,'unverified',val_airport);
-        else
-            INSERT INTO staff(emp_id,category,password,first_name,last_name,contact_no,email,dob,gender,country,account_state)
-            VALUES (val_emp_id,val_category,val_password,val_first_name,val_last_name,val_contact_no,val_email,val_dob,val_gender,val_country,'unverified');
-        end if;
-    else
-        RAISE EXCEPTION 'Emmployee ID % is already registered', val_emp_id;
-    end if;
-END;
-$$;
-
 ----------Procedure to insert scheduled flights---------------
 CREATE OR REPLACE PROCEDURE scheduleFlights(val_route_id VARCHAR(10), val_aircraft_id int, val_departure_date date, val_departure_time_utc time)
 LANGUAGE plpgsql    
@@ -847,10 +814,10 @@ BEGIN
     departure_timestamp:=get_timestamp(val_departure_date,val_departure_time_utc);
     
 	
-	IF (departure_timestamp < CURRENT_TIMESTAMP at time zone 'utc'+INTERVAL '1 day') THEN
+	/* IF (departure_timestamp < CURRENT_TIMESTAMP at time zone 'utc'+INTERVAL '1 day') THEN
 		RAISE EXCEPTION 'Departure time has to be after % UTC ',current_timestamp at time zone 'utc'+INTERVAL '1 day';
 		RETURN;
-	END IF;	
+	END IF; */	
 
     SELECT * INTO rec FROM flight_schedule f WHERE aircraft_id = val_aircraft_id 
     ORDER BY get_timestamp(f.arrival_date,f.arrival_time_utc) DESC LIMIT 1;
@@ -1050,6 +1017,44 @@ BEGIN
 END;
 $$;
 
+---------------------PROCEDURE FOR REGISTERING STAFF---------------------------
+CREATE OR REPLACE PROCEDURE registerStaff(
+  val_emp_id VARCHAR(20),
+  val_category staff_category,
+  val_password varchar(255),
+  val_first_name VARCHAR(30),
+  val_last_name VARCHAR(30),
+  val_contact_no VARCHAR(15),
+  val_email VARCHAR(127),
+  val_dob DATE,
+  val_gender gender_enum,
+  val_country VARCHAR(30),
+  val_airport varchar(10)
+)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  var_existing_emp_id varchar(20) := (SELECT emp_id FROM staff WHERE emp_id = val_emp_id);
+  var_existing_email varchar(127) := (SELECT email FROM staff WHERE email = val_email);
+  val_account_state staff_account_state;
+BEGIN
+  IF (var_existing_emp_id IS NOT NULL) THEN
+    RAISE EXCEPTION 'Employee ID % is already registered', val_emp_id;
+  END IF;
+  IF (var_existing_email IS NOT NULL) THEN
+    RAISE EXCEPTION 'Email % is already registered', val_email;
+  END IF;
+  -- admins auto-verified, others need approval
+  IF (val_category = 'admin') THEN
+    val_account_state := 'verified';
+  ELSE
+    val_account_state := 'unverified';
+  END IF;
+  INSERT INTO Staff(emp_id, category, password, first_name, last_name, contact_no, email, dob, gender, country, assigned_airport, account_state)
+  VALUES (val_emp_id, val_category, val_password, val_first_name, val_last_name, val_contact_no, val_email, val_dob, val_gender, val_country, val_airport, val_account_state);
+END;
+$$;
+
 
 /*
   _           _                    
@@ -1087,8 +1092,6 @@ GRANT EXECUTE ON PROCEDURE public.handleflightarrival(val_schedule_id integer) T
 GRANT EXECUTE ON PROCEDURE public.handleflightdeparture(val_schedule_id integer) TO database_app;
 
 GRANT EXECUTE ON PROCEDURE public.registercustomer(val_email character varying, val_password character varying, val_first_name character varying, val_last_name character varying, val_dob date, val_gender gender_enum, val_contact_no character varying, val_passport_no character varying, val_address_line1 character varying, val_address_line2 character varying, val_city character varying, val_country character varying) TO database_app;
-
-GRANT EXECUTE ON PROCEDURE public.registerstaff(val_emp_id character, val_category staff_category, val_password character varying, val_first_name character varying, val_last_name character varying, val_contact_no character varying, val_email character varying, val_dob date, val_gender gender_enum, val_country character varying, val_airport character varying) TO database_app;
 
 GRANT EXECUTE ON PROCEDURE public.scheduleflights(val_route_id VARCHAR(10), val_aircraft_id integer, val_departure_date date, val_departure_time_utc time without time zone) TO database_app;
 
@@ -1143,7 +1146,6 @@ GRANT ALL ON TABLE public.passenger_seat TO database_app;
 
 GRANT ALL ON TABLE public.session TO database_app;
 
-GRANT ALL ON TABLE public.staff TO database_app;
 
 GRANT ALL ON TABLE public.traveller_class TO database_app;
 

@@ -1,111 +1,90 @@
-let bookingForm = $('#bookingForm');
+let selected = [];
 
-let start ='<div class="passengerCount"> <div class="booking-registration-form"> <div class="booking-form-area"> <h3 class="title">Passenger information</h3>'
-let end = '</div></div></div>'
+function generatePassengerCards(count) {
+    let container = $('#passenger-details-container');
+    container.empty();
+    if (!count) return;
 
-let passengerinfo = '<br><div class="form-group row">' +
-                        '<label class="col-lg-4 col-form-label">Full Name of Passenger</label>' +
-                        '<div class="col-lg-8">' +
-                            '<input type="text" class="form-control" name="passName[]" required>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group row">' +
-                        '<label class="col-lg-4 col-form-label">Passport Number</label>' +
-                        '<div class="col-lg-8">' +
-                            '<input type="text" class="form-control" name="passPassport[]" required>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group row">' +
-                        '<label class="col-lg-4 col-form-label">Date of Birth</label>' +
-                        '<div class="col-lg-8">' +
-                            '<input type="date" class="form-control" name="passDob[]" required>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="form-group row">' +
-                        '<label class="col-lg-4 col-form-label">Seat Number</label>' +
-                        '<div class="col-lg-8">' +
-                            '<select class="select-bar seatNumber" name="seatNo[]" id="seatNo" required>' +
+    for (let i = 1; i <= count; i++) {
+        let card = `
+            <div class="wm-card passenger-info-card" style="margin-bottom: 24px; padding: 32px;">
+              <h3 style="font-size: 1.3rem; margin-bottom: 24px; font-family: var(--font-display); border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-user" style="color: var(--accent);"></i> Passenger #${i} Details
+              </h3>
+              <div class="wm-form-group">
+                <label style="color: var(--text-secondary); font-weight: 500; display: block; margin-bottom: 8px;">Full Name</label>
+                <input type="text" class="wm-input" name="passName[]" placeholder="Enter full name" required>
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+                <div class="wm-form-group">
+                  <label style="color: var(--text-secondary); font-weight: 500; display: block; margin-bottom: 8px;">Passport Number</label>
+                  <input type="text" class="wm-input" name="passPassport[]" placeholder="Passport number" required>
+                </div>
+                <div class="wm-form-group">
+                  <label style="color: var(--text-secondary); font-weight: 500; display: block; margin-bottom: 8px;">Date of Birth</label>
+                  <input type="date" class="wm-input" name="passDob[]" required>
+                </div>
+              </div>
+              <div class="wm-form-group" style="margin-top: 16px; margin-bottom: 0;">
+                <label style="color: var(--text-secondary); font-weight: 500; display: block; margin-bottom: 8px;">Assigned Seat</label>
+                <select class="wm-select select-bar seatNumber" name="seatNo[]" required>
+                  <!-- Seat options populated by seat map selection -->
+                </select>
+              </div>
+            </div>
+        `;
+        container.append(card);
+    }
+}
 
-                            '</select>' +
-                        '</div>' +
-                    '</div><hr>'
-
-
-
-let selected;
-let dropdown;
-$(".seat-check").click(function () {
+function rebuildSeatDropdowns() {
     selected = [];
-    dropdown = '';
     $('.plane input:checked').each(function() {
         selected.push($(this).data('seat'));
     });
 
-    selected.forEach(function (item, index) {
-        let menuItem;
-        if (index === 0){
-            menuItem = '<option style="color: #0b0b0b" value="'+ item +'" selected>' + item + '</option>'
-
-        } else {
-            menuItem = '<option style="color: #0b0b0b" value="'+ item +'">' + item + '</option>'
-        }
-        dropdown += menuItem;
-    });
-
-    $('.seatNumber').each(function () {
-        $(this).html(dropdown);
-    })
-})
-
-
-
-window.onload = checkPassengerCount;
-
-function checkPassengerCount() {
-    let passCount = $("#passengers").val();
-    if (passCount !== undefined){
-        bookingForm.children('.passengerCount').remove();
-        let passengerList = '';
-        for(let i=0; i<passCount; i++){
-            passengerList += passengerinfo
-        }
-        $('.educational-registration-form').before(start + passengerList + end)
-        $('.seatNumber').each(function () {
-            $(this).html(dropdown);
+    $('.seatNumber').each(function (index) {
+        let currentDropdown = '';
+        selected.forEach(function (item, sIndex) {
+            let isSelected = (index === sIndex) ? 'selected' : '';
+            currentDropdown += `<option style="color: #0b0b0b" value="${item}" ${isSelected}>${item}</option>`;
         });
-    }
-
+        $(this).html(currentDropdown);
+    });
 }
 
-
-$("#passengers").change(function() {
-    bookingForm.children('.passengerCount').remove();
-    let limit = this.value;
-
-    if (!(1 <= limit && limit <= 5)){
-        $("input:checkbox").prop("checked",false);
-        $("input:checkbox").attr("disabled",true);
-    }else if (limit === $("input:checkbox:checked").length.toString()){
-        $("input:checkbox").not(":checked").attr("disabled",true);
-    }else {
-        let bol = $("input:checkbox:checked").length > limit;
-
-        if (bol){
-            $("input:checkbox").prop("checked",!bol);
-            $("input:checkbox").attr("disabled",!bol);
-        }else{
-            $("input:checkbox").attr("disabled",bol);
-        }
-    }
-    let passengerList = '';
-    for(let i=0; i<this.value; i++){
-        passengerList += passengerinfo
-    }
-    $('.educational-registration-form').before(start + passengerList + end)
-    $('.seatNumber').each(function () {
-        $(this).html(dropdown);
-    });
-
-
-
+// Event handler for seat checkbox changes
+$(".plane").on('change', '.seat-check', function () {
+    rebuildSeatDropdowns();
 });
+
+// Event handler for passenger count dropdown changes
+$("#passengers").change(function() {
+    let limit = parseInt(this.value, 10);
+    if (isNaN(limit)) {
+        $('#passenger-details-container').empty();
+        return;
+    }
+
+    // Uncheck seats that exceed the new limit
+    let $checked = $('input.seat-check:checkbox:checked');
+    if ($checked.length > limit) {
+        $checked.slice(limit).prop('checked', false);
+    }
+
+    // Delegate limit enforcement to seats.js enforceLimit()
+    if (typeof enforceLimit === 'function') enforceLimit();
+
+    generatePassengerCards(limit);
+    rebuildSeatDropdowns();
+});
+
+// Run once on load to initialize if there is an existing count
+$(document).ready(function() {
+    let passCount = $("#passengers").val();
+    if (passCount !== undefined && passCount !== "") {
+        let limit = parseInt(passCount, 10);
+        generatePassengerCards(limit);
+        rebuildSeatDropdowns();
+    }
+});

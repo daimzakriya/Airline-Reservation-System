@@ -1,46 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 500</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Fresca' rel='stylesheet'>
-    <style>
-    h1 {
-        font-family: 'Fresca', sans-serif;font-size: 200px;text-align:center;font-weight: 500;
-        background: linear-gradient(to right, orange 0%, orangered  100%);
-        background-clip: text;
-        
-
-    }
-    h2{
-        font-family: 'Fresca', sans-serif;font-size: 100px;text-align:center;
-        background: linear-gradient(to right, orange 0%, orangered 100%);
-        background-clip: text;
-       
-    }
-
-    </style>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Error — Wing Mate</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
 </head>
-
-<body id='main'>
-<main>
-<div class="container py-1 mt-3 pt-5 pb-5" style="width: 100%; height:100%;">
-
-<div class=" card col-md-12 pt-5 pb-5">
-    <div class=" pt-5 pb-4"></div>
-    <h1>500<h1>
-    <h2><i class="fa fa-times fa-x" aria-hidden="true"></i> Internal Server Error</h2>
-    <div class=" pt-5 pb-4"></div>
+<body>
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg-base);background-image:radial-gradient(ellipse 60% 40% at 50% 30%,rgba(239,68,68,0.06),transparent);text-align:center;padding:24px;">
+  <div>
+    <div style="font-family:var(--font-display);font-size:clamp(5rem,20vw,12rem);font-weight:900;line-height:1;background:linear-gradient(135deg,var(--danger),#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;">500</div>
+    <h1 style="font-size:1.8rem;margin-bottom:12px;">Something Went Wrong</h1>
+    <p style="color:var(--text-secondary);max-width:440px;margin:0 auto 32px;">We encountered an internal server error. Our team has been notified. Please try again shortly.</p>
+    <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+      <a href="/" class="wm-btn wm-btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+      <button onclick="location.reload()" class="wm-btn wm-btn-outline"><i class="fas fa-sync"></i> Try Again</button>
+    </div>
+    <div style="margin-top:60px;font-size:0.82rem;color:var(--text-muted);">Error Code: 500 — Internal Server Error</div>
+  </div>
 </div>
-</div>
-</main>
 </body>
+</html>

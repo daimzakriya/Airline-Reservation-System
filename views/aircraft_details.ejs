@@ -1,90 +1,92 @@
-<!-- header-section start -->
-<%- include('_header',{user}) %>
-<!-- header-section end -->
-<!-- register-section start -->
-<%- include('_signup',{user,registrationError}) %>
-<!-- register-section end -->
-<!-- login-section start -->
-<%- include('_login',{user}) %>
-<!-- login-section end -->
+<%- include('_header', {user}) %>
 
-
-    <form class="header-form">
-        <div class="skip"><i class="fas fa-times"></i></div>
-        <div class="header-form-area">
-            <input type="text" placeholder="Search Here">
-            <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
-        </div>
-    </form>
-
-
-    <!-- banner-section start -->
-    <section class="inner-banner-section pt-120 pb-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <div class="inner-banner-content">
-                        <h2 class="title">aircraft details</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- banner-section end -->
-
-
-    <!-- breadcrumb-section start -->
-    <div class="breadcrumb-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Aircraft Models</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+<!-- Hero Banner Section -->
+<section class="wm-hero" style="min-height: 50vh; padding-top: 140px; padding-bottom: 60px;">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content" style="max-width: 800px;">
+    <div class="wm-hero-pill">
+      <span class="wm-hero-pill-dot"></span>
+      Our Fleet
     </div>
-    <!-- breadcrumb-section end -->
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px;">Modern Aircraft Models</h1>
+    <p style="margin-bottom: 0;">
+      Discover the advanced engineering, seating capacities, and range specs of our modern active fleet.
+    </p>
+  </div>
+</section>
 
+<!-- Breadcrumb -->
+<div style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0;">
+  <div class="wm-container">
+    <div style="display: flex; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+      <a href="/" style="color: var(--primary-light); hover:text-decoration: underline;">Home</a>
+      <span>/</span>
+      <span style="color: var(--text-primary);">Aircraft Details</span>
+    </div>
+  </div>
+</div>
 
-    <a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+<!-- Fleet Grid Section -->
+<section class="wm-section-sm">
+  <div class="wm-container">
+    
+    <% if(typeof aircraftDetails !== 'undefined' && aircraftDetails && aircraftDetails.length != 0) { %>
+      <div class="wm-section-header" style="margin-bottom: 48px; text-align: left;">
+        <span class="wm-eyebrow" style="justify-content: flex-start; margin-left: 0;">Fleet Specifications</span>
+        <h2>Active Aircrafts</h2>
+      </div>
 
-
-    <!-- flight-section start -->
-    <section class="flight-section pt-120 pb-120">
-        <div class="container">
-            <div class="row justify-content-center mb-30-none">
-                <% aircraftDetails.forEach(aircraft => {%>
-                    <div class="col-lg-4 col-md-6 col-sm-8 mb-30">
-                        <div class="flight-item">
-                            <div class="flight-thumb">
-                                <img src="<%= aircraft.image_link%>" alt="image">
-                            </div>
-                            <div class="flight-details">
-                                <h3 class="title"><%= aircraft.model_name%></h3>
-                                <h3 class="title"><%= aircraft.variant%></h3>
-                                <ul class="flight-content">
-                                    <li><i class="flaticon-startup"></i><b>Max Passenger Capacity: </b><%= (aircraft.economy_seat_capacity+aircraft.business_seat_capacity+aircraft.platinum_seat_capacity)%></li>
-                                    <li><i class="flaticon-coffee"></i><b>Fuel Capacity: </b><%= aircraft.fuel_capacity%> l</li>
-                                    <li><i class="flaticon-search-interface-symbol"></i><b>Max Load: </b><%= aircraft.max_load%> kg</li>
-                                    <li><i class="flaticon-plane"></i><b>Avg Air Speed: </b><%= aircraft.avg_airspeed%> kmph</li>
-                                    <li><i class="flaticon-internet"></i><b>Manufacturer: </b><%= aircraft.manufacturer_name%></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                <%});%>
+      <div class="wm-grid-3">
+        <% aircraftDetails.forEach(aircraft => { %>
+          <div class="wm-flight-card">
+            
+            <!-- Fleet Image wrapper -->
+            <div class="wm-flight-card-thumb" style="height: 200px;">
+              <img src="<%= aircraft.image_link %>" alt="<%= aircraft.model_name %>" onerror="this.src='/assets/images/Logo/w1.png'">
+              <div class="wm-flight-card-price" style="background: var(--primary-dark); color: #fff; border-color: var(--primary-light);">
+                <%= aircraft.manufacturer_name %>
+              </div>
             </div>
-        </div>
-    </section>
-    <!-- flight-section end -->
 
+            <!-- Specs details -->
+            <div class="wm-flight-card-body" style="padding: 24px;">
+              <h3 style="font-size: 1.3rem; margin-bottom: 4px; font-family: var(--font-display);"><%= aircraft.model_name %></h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em;"><%= aircraft.variant %></p>
+              
+              <div class="wm-flight-meta" style="gap: 10px;">
+                <div class="wm-flight-meta-item" style="justify-content: space-between; width: 100%;">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-users"></i> Max Passengers</span>
+                  <strong style="color: var(--text-primary);"><%= (aircraft.economy_seat_capacity + aircraft.business_seat_capacity + aircraft.platinum_seat_capacity) %></strong>
+                </div>
 
+                <div class="wm-flight-meta-item" style="justify-content: space-between; width: 100%;">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-gas-pump"></i> Fuel Capacity</span>
+                  <strong style="color: var(--text-primary);"><%= aircraft.fuel_capacity.toLocaleString() %> Liters</strong>
+                </div>
 
+                <div class="wm-flight-meta-item" style="justify-content: space-between; width: 100%;">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-weight-hanging"></i> Maximum Load</span>
+                  <strong style="color: var(--text-primary);"><%= aircraft.max_load.toLocaleString() %> kg</strong>
+                </div>
 
+                <div class="wm-flight-meta-item" style="justify-content: space-between; width: 100%;">
+                  <span style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-tachometer-alt"></i> Avg Cruise Speed</span>
+                  <strong style="color: var(--text-primary);"><%= aircraft.avg_airspeed %> km/h</strong>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="wm-alert wm-alert-warning text-center">
+        <i class="fas fa-exclamation-triangle"></i> No active fleet records found in the directory.
+      </div>
+    <% } %>
 
-<%- include('_footer',{user}) %>
+  </div>
+</section>
+
+<%- include('_footer', {user}) %>

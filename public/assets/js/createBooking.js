@@ -93,6 +93,11 @@
                             baseurl = baseurl + '/booking';
                             let url = baseurl + response.url;
                             window.location.href = url;
+                        } else if (response.result === 'error') {
+                            let bookingForm = $('#bookingForm');
+                            bookingForm.find('.reg-error').remove();
+                            bookingForm.prepend('<div class="wm-alert wm-alert-error reg-error" style="margin-bottom: 30px; width: 100%;"><i class="fas fa-exclamation-circle"></i> ' + response.message + '</div>');
+                            $('html, body').animate({ scrollTop: bookingForm.offset().top - 100 }, 500);
                         }
                     },
                     error: function (res) {
@@ -100,11 +105,13 @@
                 });
             } else {
                 let bookingForm = $('#bookingForm');
-                bookingForm.children('.reg-error').remove();
+                bookingForm.find('.reg-error').remove();
+                $('.reg-error').remove();
 
-                $('.educational-registration-form').before('<span class="alert alert-danger reg-error" style="z-index 999; width: 100%">'+error_msgs+'</span>');
-                // $('#map').height('576px');
-                $('.reg-error');
+                bookingForm.prepend('<div class="wm-alert wm-alert-error reg-error" style="margin-bottom: 30px; width: 100%;"><i class="fas fa-exclamation-circle"></i> ' + error_msgs + '</div>');
+                $('html, body').animate({
+                    scrollTop: bookingForm.offset().top - 100
+                }, 500);
             }
 
             function checkIfArrayIsUnique(myArray) {

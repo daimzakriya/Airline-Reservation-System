@@ -1,278 +1,255 @@
-<!-- header-section start -->
-<%- include('_header',{user}) %>
-<!-- header-section end -->
-<!-- register-section start -->
-<%- include('_signup',{user,registrationError}) %>
-<!-- register-section end -->
-<!-- login-section start -->
-<%- include('_login',{user}) %>
-<!-- login-section end -->
+<%- include('_header', {user}) %>
 
-    <form class="header-form">
-        <div class="skip"><i class="fas fa-times"></i></div>
-        <div class="header-form-area">
-            <input type="text" placeholder="Search Here">
-            <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
-        </div>
-    </form>
-
-
-    <!-- banner-section start -->
-    <section class="inner-banner-section pt-120 pb-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <div class="inner-banner-content">
-                        <h2 class="title">booking flight</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- banner-section end -->
-
-
-    <!-- breadcrumb-section start -->
-    <div class="breadcrumb-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">booking</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
+<!-- Hero Banner Section -->
+<section class="wm-hero" style="min-height: 50vh; padding-top: 140px; padding-bottom: 60px;">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content" style="max-width: 800px;">
+    <div class="wm-hero-pill">
+      <span class="wm-hero-pill-dot"></span>
+      Flight Reservation
     </div>
-    <!-- breadcrumb-section end -->
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px;">Secure Your Seat</h1>
+    <p style="margin-bottom: 0;">
+      Provide passenger information and choose your seats interactively.
+    </p>
+  </div>
+</section>
 
+<!-- Breadcrumb -->
+<div style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0;">
+  <div class="wm-container">
+    <div style="display: flex; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+      <a href="/" style="color: var(--primary-light); hover:text-decoration: underline;">Home</a>
+      <span>/</span>
+      <a href="/customer/viewFlights" style="color: var(--primary-light); hover:text-decoration: underline;">Search Flights</a>
+      <span>/</span>
+      <span style="color: var(--text-primary);">Booking</span>
+    </div>
+  </div>
+</div>
 
-    <a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+<section class="wm-section-sm">
+  <div class="wm-container">
+    
+    <% if(typeof registrationError !== 'undefined' && registrationError) { %>
+      <div class="wm-alert wm-alert-error" style="margin-bottom: 30px;">
+        <i class="fas fa-exclamation-circle"></i> <%= registrationError %>
+      </div>
+    <% } %>
 
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 32px; align-items: start; margin-top: 20px;">
+      
+      <!-- Main Reservation Form -->
+      <div>
+        <form class="general-information" id="bookingForm">
+          <input type="hidden" id="schedule_id" value="<%= schedule_id %>">
 
-    <!-- booking-registration-section start -->
-    <section class="booking-registration-section pt-120 pb-120">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <% if(registrationError) {%>
-                    <div class="alert alert-danger" role="alert" style="z-index: 999;">
-                        <%=registrationError%>
-                    </div>
-                    <% } %>
-                    <form class="general-information" id="bookingForm">
-                        <input type="hidden" id="schedule_id" value="<%= schedule_id %>">
+          <!-- 1. Passenger Identity / Main Contact Info -->
+          <div class="wm-card" style="margin-bottom: 24px; padding: 32px;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 24px; font-family: var(--font-display); border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-id-card" style="color: var(--primary-light);"></i> General Contact Information
+            </h3>
 
-                    <%if (!user || user.type == 'guest') { %>
+            <% if (!user || user.type == 'guest') { %>
+              <!-- Guest Fields -->
+              <div class="wm-form-group">
+                <label>Full Name</label>
+                <input type="text" class="wm-input" id="custName" value="<%= custName %>" placeholder="John Doe" required>
+              </div>
 
-                    <div class="booking-registration-form">
-                        <div class="booking-form-area">
-                            <h3 class="title">General information</h3>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Full Name</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control" id="custName" value="<%=custName%>" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Address</label>
-                                    <div class="col-lg-8">
-                                        <textarea name="adress" id="adress" required><%=address%></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Date Of Birth</label>
-                                    <div class="col-lg-8">
-                                        <input type="date" id="custDob" class="form-control" value="<%=custDob%>" required>
-                                    </div>
-                                </div>
+              <div class="wm-form-group">
+                <label>Billing Address</label>
+                <textarea class="wm-textarea" name="adress" id="adress" placeholder="Enter your full address" rows="3" required><%= address %></textarea>
+              </div>
 
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Gender</label>
-                                    <div class="col-lg-8">
-                                        <select class="select-bar" id="custGender" required>
-                                            <option data-display="- Select Gender -">- Select Gender -</option>
-                                            <% if(custGender=='Male') {%>
-                                                <option value="Male" selected>Male</option>
-                                            <%}else{%>
-                                                <option value="Male">Male</option>
-                                            <%}%>
-                                            <% if(custGender=='Female') {%>
-                                                <option value="Female" selected>Female</option>
-                                            <%}else{%>
-                                                <option value="Female">Female</option>
-                                            <%}%>
-                                            <% if(custGender=='Other') {%>
-                                                <option value="Other" selected>Other</option>
-                                            <%}else{%>
-                                                <option value="Other">Other</option>
-                                            <%}%>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" >Passport Number</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" id="custPassport" class="form-control" value="<%=custPassport%>" required>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" >Mobile </label>
-                                    <div class="col-lg-8">
-                                        <input type="tel" id="mobile" class="form-control" value="<%=mobile%>" required>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" >Email</label>
-                                    <div class="col-lg-8">
-                                        <input type="email" id="custEmail" class="form-control" value="<%=custEmail%>" required>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-
-             <%} else { %>
-                        <input type="hidden" id="custID" value="<%=user.customerData.customer_id%>">
-                    <div class="booking-registration-form">
-                        <div class="booking-form-area">
-                            <h3 class="title">General information</h3>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" >Full Name</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control" id="custName" value="<%=user.customerData.first_name%> <%=user.customerData.last_name%>" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Address</label>
-                                    <div class="col-lg-8">
-                                        <textarea class="form-control" name="adress" id="adress" disabled><%=user.customerData.address_line1+"\n"+user.customerData.address_line2+"\n"+user.customerData.city+"\n"+user.customerData.country%></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Date Of Birth</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control" id="custDob" value="<%=user.customerData.dob.substring(0,10)%>" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Gender</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control" id="custGender" value="<%=user.customerData.gender%>" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Passport Number</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control" id="custPassport" value="<%=user.customerData.passport_no%>" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Mobile </label>
-                                    <div class="col-lg-8">
-                                        <input type="tel" class="form-control" id="mobile" value="<%=user.customerData.contact_no%>" disabled>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Email</label>
-                                    <div class="col-lg-8">
-                                        <input type="email" class="form-control" id="custEmail" value="<%=user.customerData.email%>" disabled >
-                                    </div>
-                                </div>
-                            <input type="hidden" id="custType" value="<%=user.customerData.type%>">
-
-                        </div>
-                    </div>
-
-             <%}%>
-
-
-                <div class="booking-registration-form">
-                    <div class="booking-form-area">
-                    <div class="form-group row">
-                        <label class="col-lg-4 col-form-label">No. of Passengers (Max: 5)</label>
-                        <div class="col-lg-8">
-                            <select class="select-bar" id="passengers" required>
-                                <option value="Select">- Select -</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                    </div>
-                    </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="wm-form-group">
+                  <label>Date of Birth</label>
+                  <input type="date" id="custDob" class="wm-input" value="<%= custDob %>" required>
                 </div>
-                <%- include('seats') %>
-
-                        <div class="educational-registration-form">
-                            <div class="booking-form-area">
-                                <div class="row justify-content-center">
-
-                                    <div class="col-lg-12 text-center">
-                                        <button class="cmn-btn" type="submit">Create Booking</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-            </form>
-
-
-
-
-
-
+                <div class="wm-form-group">
+                  <label>Gender</label>
+                  <select class="wm-select select-bar" id="custGender" required>
+                    <option value="">- Select Gender -</option>
+                    <option value="Male" <%= custGender==='Male' ? 'selected' : '' %>>Male</option>
+                    <option value="Female" <%= custGender==='Female' ? 'selected' : '' %>>Female</option>
+                    <option value="Other" <%= custGender==='Other' ? 'selected' : '' %>>Other</option>
+                  </select>
                 </div>
+              </div>
 
+              <div class="wm-form-group">
+                <label>Passport Number</label>
+                <input type="text" id="custPassport" class="wm-input" value="<%= custPassport %>" placeholder="A12345678" required>
+              </div>
 
-
-
-                <div class="col-lg-4 col-sm-8">
-                    <div class="sidebar">
-                        <div class="widget-box mb-30">
-                            <h3 class="caption">Flight details</h3>
-                            <ul class="flight-category">
-                                <li><span class="category-date"><%=   flightInfo.departure_date.toString().substring(0,15)%></span></li>
-                                <li><a href="#"><%= flightInfo.origin%></a><span class="count"><%= flightInfo.departure_time_utc %></span></li>
-                                <hr>
-                                <li><span class="category-date"><%= flightInfo.arrival_date.toString().substring(0,15)%></span></li>
-                                <li><a href="#"><%= flightInfo.destination%></a><span class="count"><%= flightInfo.arrival_time_utc %></span></li></li>
-                            </ul>
-                        </div>
-                        <div class="widget-box mb-30">
-                            <h3 class="caption">Seat Prices</h3>
-                            <div class="recent-flight-area">
-                                <h5 class="title"><a href="#">Platinum</a></h5>
-                                <div class="recent-flight-content d-flex flex-wrap">
-                                    <span class="place">$<%= priceInfo[0].price%></span>
-
-                                </div>
-                            </div>
-                            <div class="recent-flight-area">
-                                <h5 class="title"><a href="#">Business</a></h5>
-                                <div class="recent-flight-content d-flex flex-wrap">
-                                    <span class="place">$<%= priceInfo[1].price%></span>
-                                </div>
-                            </div>
-                            <div class="recent-flight-area">
-                                <h5 class="title"><a href="#">Economy</a></h5>
-                                <div class="recent-flight-content d-flex flex-wrap">
-                                    <span class="place">$<%= priceInfo[2].price%></span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="wm-form-group">
+                  <label>Mobile Number</label>
+                  <input type="tel" id="mobile" class="wm-input" value="<%= mobile %>" placeholder="+1-555-0100" required>
                 </div>
+                <div class="wm-form-group">
+                  <label>Email Address</label>
+                  <input type="email" id="custEmail" class="wm-input" value="<%= custEmail %>" placeholder="you@example.com" required>
+                </div>
+              </div>
+
+            <% } else { %>
+              <!-- Logged-in User Fields (Read-Only) -->
+              <input type="hidden" id="custID" value="<%= user.customerData.customer_id %>">
+              <input type="hidden" id="custType" value="<%= user.customerData.type %>">
+
+              <div class="wm-form-group">
+                <label>Full Name</label>
+                <input type="text" class="wm-input" id="custName" value="<%= user.customerData.first_name %> <%= user.customerData.last_name %>" style="opacity: 0.8;" disabled>
+              </div>
+
+              <div class="wm-form-group">
+                <label>Billing Address</label>
+                <textarea class="wm-textarea" name="adress" id="adress" style="opacity: 0.8;" rows="3" disabled><%= user.customerData.address_line1 + "\n" + user.customerData.address_line2 + "\n" + user.customerData.city + "\n" + user.customerData.country %></textarea>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="wm-form-group">
+                  <label>Date of Birth</label>
+                  <input type="text" class="wm-input" id="custDob" value="<%= user.customerData.dob.substring(0, 10) %>" style="opacity: 0.8;" disabled>
+                </div>
+                <div class="wm-form-group">
+                  <label>Gender</label>
+                  <input type="text" class="wm-input" id="custGender" value="<%= user.customerData.gender %>" style="opacity: 0.8;" disabled>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="wm-form-group">
+                  <label>Passport Number</label>
+                  <input type="text" class="wm-input" id="custPassport" value="<%= user.customerData.passport_no %>" style="opacity: 0.8;" disabled>
+                </div>
+                <div class="wm-form-group">
+                  <label>Mobile Number</label>
+                  <input type="tel" class="wm-input" id="mobile" value="<%= user.customerData.contact_no %>" style="opacity: 0.8;" disabled>
+                </div>
+              </div>
+
+              <div class="wm-form-group" style="margin-bottom:0;">
+                <label>Email Address</label>
+                <input type="email" class="wm-input" id="custEmail" value="<%= user.customerData.email %>" style="opacity: 0.8;" disabled>
+              </div>
+            <% } %>
+          </div>
+
+          <!-- 2. Passenger Counts & Ticket Class Selector -->
+          <div class="wm-card" style="margin-bottom: 24px; padding: 32px;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 24px; font-family: var(--font-display); border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-users" style="color: var(--accent);"></i> Passenger Count
+            </h3>
+            
+            <div class="wm-form-group" style="margin-bottom:0;">
+              <label>No. of Passengers (Maximum: 5)</label>
+              <select class="wm-select select-bar" id="passengers" required>
+                <option value="">- Select count -</option>
+                <option value="1">1 Passenger</option>
+                <option value="2">2 Passengers</option>
+                <option value="3">3 Passengers</option>
+                <option value="4">4 Passengers</option>
+                <option value="5">5 Passengers</option>
+              </select>
             </div>
-        </div>
-    </section>
+          </div>
 
-<%- include('_footer',{user}) %>
+          <!-- Dynamic Passenger Details Cards -->
+          <div id="passenger-details-container"></div>
+
+          <!-- 3. Interactive Cabin Seat Map -->
+          <div class="wm-card" style="margin-bottom: 24px; padding: 32px; overflow-x: auto;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 8px; font-family: var(--font-display); display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-chair" style="color: var(--accent2);"></i> Interactive Seat Map
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 28px;">
+              First select the number of passengers above, then select matching available seats in the layout below.
+            </p>
+
+            <%- include('seats') %>
+          </div>
+
+          <!-- 4. Submit Container -->
+          <div class="wm-card" style="padding: 24px; background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated)); text-align: center;">
+            <button class="wm-btn wm-btn-primary wm-btn-lg" type="submit" style="min-width: 240px;">
+              <i class="fas fa-check-circle"></i> Create Booking
+            </button>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0;">
+              By submitting, you agree to Wing Mate's terms of carriage and scheduling guidelines.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Column: Sidebar Flight Summary -->
+      <div>
+        
+        <!-- Flight Info widget -->
+        <div class="wm-card" style="margin-bottom: 24px; padding: 28px;">
+          <h3 style="font-size: 1.15rem; margin-bottom: 20px; font-family: var(--font-display); border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+            <i class="fas fa-plane-departure" style="color: var(--primary-light); margin-right: 6px;"></i> Flight Details
+          </h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Departure</div>
+              <div style="font-size: 1rem; font-weight: 700; color: var(--text-primary);"><%= flightInfo.origin %></div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);"><%= flightInfo.departure_date.toString().substring(0,15) %> — <%= flightInfo.departure_time_utc %> UTC</div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; color: var(--text-muted);">
+              <div style="flex: 1; height: 1px; background: var(--border);"></div>
+              <i class="fas fa-plane" style="transform: rotate(90deg); font-size: 0.85rem;"></i>
+              <div style="flex: 1; height: 1px; background: var(--border);"></div>
+            </div>
+
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Arrival</div>
+              <div style="font-size: 1rem; font-weight: 700; color: var(--text-primary);"><%= flightInfo.destination %></div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);"><%= flightInfo.arrival_date.toString().substring(0,15) %> — <%= flightInfo.arrival_time_utc %> UTC</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seat Pricing widget -->
+        <div class="wm-card" style="padding: 28px;">
+          <h3 style="font-size: 1.15rem; margin-bottom: 20px; font-family: var(--font-display); border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+            <i class="fas fa-tags" style="color: var(--accent); margin-right: 6px;"></i> Seat Pricing
+          </h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+              <div>
+                <span class="wm-badge wm-badge-accent">Platinum</span>
+              </div>
+              <strong style="color: var(--text-primary); font-size: 1.05rem;">$<%= priceInfo[0].price %></strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+              <div>
+                <span class="wm-badge wm-badge-primary">Business</span>
+              </div>
+              <strong style="color: var(--text-primary); font-size: 1.05rem;">$<%= priceInfo[1].price %></strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+              <div>
+                <span class="wm-badge wm-badge-success">Economy</span>
+              </div>
+              <strong style="color: var(--text-primary); font-size: 1.05rem;">$<%= priceInfo[2].price %></strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<%- include('_footer', {user}) %>

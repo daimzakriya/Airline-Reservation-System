@@ -1,179 +1,124 @@
-<%- include('_staff_header_general',{user}) %>
-<div class="hold-transition sidebar-mini">
-    <div class="container">
-        <h3>Upcoming Flights</h3>
-        <hr>
-        <br>
-        <!--test start-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcoming Flights — Wing Mate Staff</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-staff-layout">
+  <aside class="wm-sidebar">
+    <div class="wm-sidebar-logo"><span class="logo-icon">✈</span>Wing Mate</div>
+    <div class="wm-sidebar-section-title">Operations</div>
+    <a href="/staff/general" class="wm-sidebar-link" id="sidebar-home"><i class="fas fa-home"></i> Home</a>
+    <a href="/staff/general/arrivedFlights" class="wm-sidebar-link" id="sidebar-arrived"><i class="fas fa-plane-arrival"></i> Arrived Flights</a>
+    <a href="/staff/general/upcomingFlightsMain" class="wm-sidebar-link active" id="sidebar-upcoming"><i class="fas fa-plane-departure"></i> Upcoming Flights</a>
+    <div class="wm-sidebar-section-title" style="margin-top:12px;">Account</div>
+    <a href="/staff/edit_profile" class="wm-sidebar-link" id="sidebar-profile"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    <div class="wm-sidebar-bottom">
+      <a href="/staff/logout" class="wm-sidebar-link" id="sidebar-logout" style="color:var(--danger);"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    </div>
+  </aside>
+  <main class="wm-staff-content">
+    <div class="wm-staff-topbar">
+      <div><h1>Upcoming Flights</h1><p style="color:var(--text-muted);font-size:0.88rem;margin-top:4px;">Scheduled incoming & outgoing flights for your airport</p></div>
+      <div class="wm-user-pill">
+        <div class="wm-user-avatar"><%= user.staffData.first_name.charAt(0).toUpperCase() %></div>
+        <span class="wm-user-name"><%= user.staffData.first_name %></span>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="wm-card" style="padding:16px 20px;margin-bottom:24px;">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;">
         <div>
-            <div class="nav-tabs-boxed">
-                <ul class="nav nav-tabs" role="tablist">
-                    <% if((incoming==true && outgoing==false)||(incoming==false && outgoing==false)){%>
-                        
-                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#incomingflights" role="tab"
-                            aria-controls="incomingflights" aria-selected="false">Incoming Flights</a></li>
-                        <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#outgoingflights" role="tab"
-                            aria-controls="outgoingflights" aria-selected="false">Departing Flights</a></li>
-                    <% } else{ %>
-                    
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#incomingflights" role="tab"
-                        aria-controls="incomingflights" aria-selected="false">Incoming Flights</a></li>
-                    <li class="nav-item"><a class="nav-link active " data-toggle="tab" href="#outgoingflights" role="tab"
-                        aria-controls="outgoingflights" aria-selected="false">Departing Flights</a></li>
-                    <% } %>
-                </ul>
-            </div>
-            <div class="tab-content">
-                <% if((incoming==true && outgoing==false)||(incoming==false && outgoing==false)){%>
-                    <div class="tab-pane active" role="tabpanel" id="incomingflights">
-                <% } else{ %>
-                    <div class="tab-pane" role="tabpanel" id="incomingflights">
-                <% } %>
-                    <div class="card mt-3" style="background-color: #c6eaec;"><!--card1 start-->
-                        <div class="card-header">
-                        <h3 class="card-title"></h3>
-                        <%- include('_staff_incoming_dropdown') %>
-                        </div>
-                        
-                        <div class="card-body">
-                            
-                        <% if (error) {%>
-                            <div class="alert alert-danger text-center" role="alert">
-                                <%=error%>
-                            </div>
-                        <% } %>
-
-                        <% if (success) {%>
-                            <div class="alert alert-success text-center" role="alert">
-                                <%=success%>
-                            </div>
-                        <% } %>
-                        
-                        <% for (var i = 0; i < upcomingIncomingFlights.length; i++) { %>
-                                
-                            <!--ongoing flights start-->
-                            <div class="col-lg-12 mb-30">
-                                <div class="flight-search-box">
-                                    <div class="row"><!--row start-->
-                                        <div class="col-lg-4 mb-30"><!--new 1st div-->
-                                            <div class="flight-search-item d-flex flex-wrap">
-                                                <div class="flight-search-thumb">
-                                                    <i class="fa fa-plane" aria-hidden="true"></i>
-                                                    
-                                                </div>
-                                                <div class="flight-search-title">
-                                                    <h5 class="title">Schedule ID: <%= upcomingIncomingFlights[i].schedule_id %></h5>
-                                                </div>
-                                            </div>
-                                            <div class="flight-search-body">
-                                                <h5 class="flight-start"><%= upcomingIncomingFlights[i].departure_time_utc %></h5>
-                                                <h5 class="flight-middle"><%= ("0"+upcomingIncomingFlights[i].duration.hours).slice(-2) %>h<%=  ("0"+upcomingIncomingFlights[i].duration.minutes).slice(-2) %></h5>
-                                                <h5 class="flight-end"> <%= upcomingIncomingFlights[i].arrival_time_utc %></h5>
-                                            </div>
-                                            <div class="flight-place">
-                                                <p><span class="start-place">Departure Time</span></p>
-                                            </div>
-                                        </div><!--new 1st div end-->
-                                        <div class="col-lg-8 mb-30"><!--new 2nd div-->
-                                            <br/><h6>From:  <%= upcomingIncomingFlights[i].origin %> </br> Departing date: <%= upcomingIncomingFlights[i].departure_date %></h6>
-                                            <h6> Arrival date: <%= upcomingIncomingFlights[i].arrival_date %></h6>
-                                            <h6>Aircraft ID: <%= upcomingIncomingFlights[i].aircraft_id %> </h6>
-                                            <!-- <a href="/staff/general/upcomingFlightsMore" class="btn btn-info float-right" >More Details</a> -->
-                                            <form action='/staff/general/moreInfoUpcomingFlight' method=post>
-                                                <button type='submit' class='btn btn-outline-info float-right' >More info</button>
-                                                <input type='hidden' name='aircraft_id' value=' <%= upcomingIncomingFlights[i].aircraft_id %>'>
-                                                <input type='hidden' name='schedule_id' value=' <%= upcomingIncomingFlights[i].schedule_id %>'>
-                                            </form>
-                                        </div><!--new 2nd div-->
-                                </div><!--raw end-->
-                                </div>
-                            </div>
-                            <!--ongoing flights end-->
-
-                        <% } %>
-
-
-                        </div>
-                    </div><!--card1 end-->
-                </div>
-                <% if((incoming==true && outgoing==false)||(incoming==false && outgoing==false)){%>
-                    <div class="tab-pane" role="tabpanel" id="outgoingflights">
-                <% } else{ %>
-                    <div class="tab-pane active" role="tabpanel" id="outgoingflights">
-                <% } %>
-                    <!--card2 start-->
-                        <div class="card mt-3" style="background-color: #b1dfc0;">
-                            <div class="card-header">
-                            <h3 class="card-title"></h3>
-                            <%- include('_staff_outgoing_dropdown') %>
-                            </div>
-                            
-                            <div class="card-body">
-                                
-                        <% if (error) {%>
-                            <div class="alert alert-danger text-center" role="alert">
-                                <%=error%>
-                            </div>
-                        <% } %>
-
-                        <% if (success) {%>
-                            <div class="alert alert-success text-center" role="alert">
-                                <%=success%>
-                            </div>
-                        <% } %>
-                        
-                        <% for (var i = 0; i < upcomingOutgoingFlights.length; i++) { %>
-                                
-                            <!--ongoing flights start-->
-                            <div class="col-lg-12 mb-30">
-                                <div class="flight-search-box">
-                                    <div class="row"><!--row start-->
-                                        <div class="col-lg-4 mb-30"><!--new 1st div-->
-                                            <div class="flight-search-item d-flex flex-wrap">
-                                                <div class="flight-search-thumb">
-                                                    <i class="fa fa-plane" aria-hidden="true"></i>
-                                                    
-                                                </div>
-                                                <div class="flight-search-title">
-                                                    <h5 class="title">Schedule ID: <%= upcomingOutgoingFlights[i].schedule_id %></h5>
-                                                </div>
-                                            </div>
-                                            <div class="flight-search-body">
-                                                <h5 class="flight-start"><%= upcomingOutgoingFlights[i].departure_time_utc %></h5>
-                                                <h5 class="flight-middle"><%= ("0"+upcomingOutgoingFlights[i].duration.hours).slice(-2) %>h<%=  ("0"+upcomingOutgoingFlights[i].duration.minutes).slice(-2) %></h5>
-                                                <h5 class="flight-end"> <%= upcomingOutgoingFlights[i].arrival_time_utc %></h5>
-                                            </div>
-                                            <div class="flight-place">
-                                                <p><span class="start-place">Departure Time</span></p>
-                                            </div>
-                                        </div><!--new 1st div end-->
-                                        <div class="col-lg-8 mb-30"><!--new 2nd div-->
-                                            <br/><h6> Departing date: <%= upcomingOutgoingFlights[i].departure_date %></h6>
-                                            <h6>To:  <%= upcomingOutgoingFlights[i].destination %> </br> Arrival date: <%= upcomingOutgoingFlights[i].arrival_date %></h6>
-                                            <h6>Aircraft ID: <%= upcomingOutgoingFlights[i].aircraft_id %> </h6>
-                                            <!-- <a href="/staff/general/upcomingFlightsMore" class="btn btn-info float-right" >More Details</a> -->
-                                            <form action='/staff/general/moreInfoUpcomingFlight' method=post>
-                                                <button type='submit' class='btn btn-outline-info float-right' >More info</button>
-                                                <input type='hidden' name='aircraft_id' value=' <%= upcomingOutgoingFlights[i].aircraft_id %>'>
-                                                <input type='hidden' name='schedule_id' value=' <%= upcomingOutgoingFlights[i].schedule_id %>'>
-                                            </form>
-                                        </div><!--new 2nd div-->
-                                </div><!--raw end-->
-                                </div>
-                            </div>
-                            <!--ongoing flights end-->
-
-                        <% } %>
-
-                        
-                            </div>
-                        </div><!--card2 end-->
-                </div>
-            </div>
+          <label style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);display:block;margin-bottom:6px;">Filter Incoming by Origin</label>
+          <form action="/staff/general/filterIncoming" method="GET" style="display:flex;gap:8px;">
+            <select class="wm-select" name="origin" style="width:200px;">
+              <option value="">All Origins</option>
+              <% if (airports && airports.length > 0) { airports.forEach(function(ap) { %>
+                <option value="<%= ap.airport_code %>"><%= ap.name %></option>
+              <% }); } %>
+            </select>
+            <button type="submit" class="wm-btn wm-btn-outline wm-btn-sm"><i class="fas fa-filter"></i> Filter</button>
+          </form>
         </div>
+        <div>
+          <label style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);display:block;margin-bottom:6px;">Filter Outgoing by Destination</label>
+          <form action="/staff/general/filterOutgoing" method="GET" style="display:flex;gap:8px;">
+            <select class="wm-select" name="origin" style="width:200px;">
+              <option value="">All Destinations</option>
+              <% if (airports && airports.length > 0) { airports.forEach(function(ap) { %>
+                <option value="<%= ap.airport_code %>"><%= ap.name %></option>
+              <% }); } %>
+            </select>
+            <button type="submit" class="wm-btn wm-btn-outline wm-btn-sm"><i class="fas fa-filter"></i> Filter</button>
+          </form>
+        </div>
+      </div>
+    </div>
 
-        <!--test end-->
+    <div class="wm-grid-2" style="gap:24px;">
+      <!-- Incoming -->
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-plane-arrival" style="color:var(--success);"></i>
+          <h3 style="font-size:0.9rem;">Upcoming Incoming</h3>
+          <% if (incoming) { %><span class="wm-badge wm-badge-success">Filtered</span><% } %>
+        </div>
+        <% if (!upcomingIncomingFlights || upcomingIncomingFlights.length === 0) { %>
+          <div style="text-align:center;padding:40px;color:var(--text-muted);font-size:0.85rem;">No incoming flights found</div>
+        <% } else { %>
+        <table class="wm-table"><thead><tr><th>#</th><th>From</th><th>Date</th><th>ETA</th></tr></thead>
+        <tbody>
+          <% upcomingIncomingFlights.forEach(function(f) { %>
+          <tr>
+            <td><code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:0.78rem;">#<%= f.schedule_id %></code></td>
+            <td><%= f.origin %></td>
+            <td style="font-size:0.82rem;color:var(--text-muted);"><%= new Date(f.departure_date).toLocaleDateString() %></td>
+            <td style="font-size:0.82rem;color:var(--text-muted);"><%= f.arrival_time_utc %></td>
+          </tr>
+          <% }); %>
+        </tbody></table>
+        <% } %>
+      </div>
 
-    </div><!--container div closed-->
+      <!-- Outgoing -->
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-plane-departure" style="color:var(--primary-light);"></i>
+          <h3 style="font-size:0.9rem;">Upcoming Outgoing</h3>
+          <% if (outgoing) { %><span class="wm-badge wm-badge-primary">Filtered</span><% } %>
+        </div>
+        <% if (!upcomingOutgoingFlights || upcomingOutgoingFlights.length === 0) { %>
+          <div style="text-align:center;padding:40px;color:var(--text-muted);font-size:0.85rem;">No outgoing flights found</div>
+        <% } else { %>
+        <table class="wm-table"><thead><tr><th>#</th><th>To</th><th>Date</th><th>ETD</th><th>Details</th></tr></thead>
+        <tbody>
+          <% upcomingOutgoingFlights.forEach(function(f) { %>
+          <tr>
+            <td><code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-size:0.78rem;">#<%= f.schedule_id %></code></td>
+            <td><%= f.destination %></td>
+            <td style="font-size:0.82rem;color:var(--text-muted);"><%= new Date(f.departure_date).toLocaleDateString() %></td>
+            <td style="font-size:0.82rem;color:var(--text-muted);"><%= f.departure_time_utc %></td>
+            <td>
+              <form action="/staff/general/upcomingFlightsMore" method="POST" style="margin:0;">
+                <input type="hidden" name="schedule_id" value="<%= f.schedule_id %>">
+                <input type="hidden" name="aircraft_id" value="<%= f.aircraft_id %>">
+                <button type="submit" class="wm-btn wm-btn-ghost wm-btn-sm" id="details-<%= f.schedule_id %>"><i class="fas fa-info-circle"></i></button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody></table>
+        <% } %>
+      </div>
+    </div>
+  </main>
 </div>
-<%- include('_staff_footer_2') %>
+</body>
+</html>

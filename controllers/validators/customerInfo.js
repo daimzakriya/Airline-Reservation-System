@@ -4,7 +4,7 @@ const CustomerRegInfo = Joi.object(
 ).options({ abortEarly: false }).keys({
     email: Joi.string().email().required(),
     password: Joi.string().min(5).required(),
-    confirmPassword: Joi.string().valid(Joi.ref('password')).required().label('Password Conformation'),
+    confirmPassword: Joi.string().valid(Joi.ref('password')).required().label('Password Confirmation'),
     firstName: Joi.string().required(),
     lastName: Joi.string().required(),
     dob: Joi.string().required(),

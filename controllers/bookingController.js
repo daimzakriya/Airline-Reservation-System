@@ -45,15 +45,21 @@ class BookingController {
 
     static async createBooking(req, res) {
         try {
+            console.log('createBooking req.body:', req.body);
             const booking_id = await BookingService.createBooking(req.body);
+            console.log('createBooking success, booking_id:', booking_id);
             req.session.booking_id = booking_id.insertbooking;
             return res.status(200).send({ result: 'redirect', url: '/payment' });
         } catch (err) {
+            console.error('createBooking error:', err);
+            // Extract friendly error message
+            let errMsg = err.message || String(err);
+            if (errMsg.includes('The selected seats have been taken')) {
+                errMsg = 'The selected seats have already been taken. Please go back and choose different seats.';
+            }
             return res.status(200).send({
-                result: 'redirect',
-                url: `/?registrationError=${err}
-                &custEmail=${req.body.custEmail}&custName=${req.body.custName}&custDob=${req.body.custDob}&custGender=${req.body.custGender}&mobile=${req.body.mobile}&custPassport=${req.body.custPassport}&address=${req.body.address}&schedule_id=${req.body.schedule_id}
-            `,
+                result: 'error',
+                message: errMsg,
             });
         }
     }

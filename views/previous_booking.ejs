@@ -1,190 +1,148 @@
-<!-- header-section start -->
-<%- include('_header',{user}) %>
-<!--link rel="stylesheet" href="/assets/css/ticketStyle.css"-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/0.7.4/tailwind.min.css">
-<!-- header-section end -->
-<!-- register-section start -->
-<%- include('_signup',{user,registrationError}) %>
-<!-- register-section end -->
-<!-- login-section start -->
-<%- include('_login',{user}) %>
-<!-- login-section end -->
+<%- include('_header', {user}) %>
 
-<form class="header-form">
-    <div class="skip"><i class="fas fa-times"></i></div>
-    <div class="header-form-area">
-        <input type="text" placeholder="Search Here">
-        <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
+<!-- Hero Banner Section -->
+<section class="wm-hero" style="min-height: 50vh; padding-top: 140px; padding-bottom: 60px;">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content" style="max-width: 800px;">
+    <div class="wm-hero-pill">
+      <span class="wm-hero-pill-dot"></span>
+      Reservation Details
     </div>
-</form>
-
-
-<!-- banner-section start -->
-<section class="inner-banner-section pt-120 pb-120">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <div class="inner-banner-content">
-                    <h2 class="title">Previous Booking</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px;">Booking Info</h1>
+    <p style="margin-bottom: 0;">
+      Displaying boarding passes and timing logs for booking reference #00<%= bookingDetails[0].booking_id %>.
+    </p>
+  </div>
 </section>
-<!-- banner-section end -->
 
-
-<!-- breadcrumb-section start -->
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">Booking ID</li>
-                        <li class="breadcrumb-item active" aria-current="page"><%= bookingDetails[0].booking_id%></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+<!-- Breadcrumb -->
+<div style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0;">
+  <div class="wm-container">
+    <div style="display: flex; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+      <a href="/" style="color: var(--primary-light); hover:text-decoration: underline;">Home</a>
+      <span>/</span>
+      <a href="/booking/previous-bookings" style="color: var(--primary-light); hover:text-decoration: underline;">History</a>
+      <span>/</span>
+      <span style="color: var(--text-primary);">Booking Details</span>
     </div>
+  </div>
 </div>
-<!-- breadcrumb-section end -->
 
-<a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+<section class="wm-section-sm">
+  <div class="wm-container">
+    <div style="max-width: 800px; margin: 0 auto;">
+      
+      <!-- Actions Panel -->
+      <div class="wm-card" style="padding: 24px; text-align: center; margin-bottom: 40px; background: rgba(255, 255, 255, 0.02); display: flex; justify-content: center; align-items: center;">
+        <!-- Print Receipt Action -->
+        <form action="/booking/payment/success/eTicket" method="POST" style="margin: 0;">
+          <input type="hidden" name="booking_id" value="<%= bookingDetails[0].booking_id %>">
+          <button type="submit" class="wm-btn wm-btn-primary" style="gap: 8px;">
+            <i class="fas fa-print"></i> Print e-Ticket Receipt & Itinerary
+          </button>
+        </form>
+      </div>
 
+      <!-- Boarding Passes -->
+      <div class="wm-section-header" style="margin-bottom: 32px; text-align: left;">
+        <span class="wm-eyebrow" style="justify-content: flex-start; margin-left: 0;">Travel Credentials</span>
+        <h2>Issued Boarding Passes</h2>
+      </div>
 
-<!-- booking-registration-section start -->
-<section class="booking-registration-section pt-120 pb-120">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <form action="/booking/payment/success/eTicket" method="post">
-                    <div class="text-center" >
-                        <input type="hidden" value="<%= bookingDetails[0].booking_id%>"/>
-                        <div class="alert alert-warning" role="alert">
-                            <button type="submit"><h6><i class="fas fa-exclamation-circle"></i> Click here to print e- Ticket Receipt & Itinerary</h6></button>
-                        </div>
-                    </div>
-                </form>
-                <form class="general-information" id="bookingForm" action="create-booking">
+      <% if(bookingDetails && bookingDetails.length != 0) { %>
+        <div style="display: flex; flex-direction: column; gap: 32px;">
+          <% bookingDetails.forEach(function(booking){ %>
+            
+            <!-- Styled Boarding Card -->
+            <div class="wm-card" style="padding: 0; overflow: hidden; border: 1.5px solid var(--border-accent); background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated)); box-shadow: var(--shadow-lg);">
+              
+              <!-- Card Header -->
+              <div style="padding: 16px 28px; background: rgba(255, 255, 255, 0.03); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <span style="font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: var(--text-primary);"><i class="fas fa-plane" style="color: var(--primary-light); margin-right: 8px;"></i> Wing Mate Airlines</span>
+                <span class="wm-badge wm-badge-accent" style="letter-spacing: 0.1em;">Boarding Pass</span>
+              </div>
 
-                    <div class="booking-registration-form">
-                        <div class="booking-form-area">
-                            <% if(bookingDetails && bookingDetails.length!=0) {%>
-                                <% bookingDetails.forEach(function(booking){%>
-                                <div class="flex font-sans justify-center items-center h-screen">
-                                    <div class="w-full max-w-sm mx-4 shadow-lg rounded-lg">
-
-                                        <div class="py-4 px-6 flex justify-between items-end bg-white rounded-lg rounded-b-none">
-                                            <div>
-
-                                            </div>
-                                            <div>
-                                                <span class="uppercase font-bold text-grey-darkest tracking-wide text-sm">Boarding pass</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="flex bg-red justify-around items-center py-16 px-6 sm:px-12 bg-destination" style="background-color: orangered;">
-                                            <div class="flex-1 text-5xl font-bold text-white tracking-wide text-shadow-lg"><%=flight_details.origin%></div>
-                                            <div class="mx-8">
-                                                <img class="h-12" src="http://www.freeiconspng.com/uploads/description-white-plane-icon-2-27.png" alt="" />
-                                            </div>
-                                            <div class="flex-1 text-right text-5xl font-bold text-white tracking-wide text-shadow-lg"><%=flight_details.destination%></div>
-                                        </div>
-
-
-                                        <div class="flex bg-purple-400 px-6 sm:px-12 py-4" style="background-color: indianred;">
-                                            <div class="w-2/5">
-                                                <span class="uppercase text-purple-lighter block tracking-wide mb-1 font-thin text-xs">date</span>
-                                                <span class="uppercase text-white block tracking-wide text-sm"><%=(flight_details.departure_date).toString().substring(0,15)%></span>
-                                            </div>
-                                            <div class="w-1/5">
-                                                <span class="uppercase text-purple-lighter block tracking-wide mb-1 font-thin text-xs"></span>
-                                                <span class="uppercase text-white block tracking-wide text-sm"></span>
-                                            </div>
-                                            <div class="w-2/5">
-                                                <span class="uppercase text-purple-lighter block tracking-wide mb-1 font-thin text-xs">boarding</span>
-                                                <span class="uppercase text-white block tracking-wide text-sm"><%=flight_details.boarding_time_utc%></span>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="py-8 px-6 sm:px-12 bg-white bg-plane rounded-lg rounded-t-none">
-                                            <div class="flex">
-                                                <div class="w-3/5">
-                                                    <div class="mb-3">
-                                                        <h4 class="text-xs uppercase tracking-wide text-grey-darker">Passenger</h4>
-                                                        <p class="font-semibold tracking-wide text-purple-400" class="passenger-name"><%=booking.name %> </p>
-                                                        <p><small></small></p>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <h4 class="text-xs uppercase tracking-wide text-grey-darker">Departure</h4>
-                                                        <p class="font-semibold tracking-wide text-grey-darkest"><%=flight_details.departure_time_utc%> UTC</p>
-                                                    </div>
-                                                    <div class="">
-                                                        <h4 class="text-xs uppercase tracking-wide text-grey-darker">Estimate arrive</h4>
-                                                        <p class="font-semibold tracking-wide text-grey-darkest"><%=flight_details.arrival_time_utc%> UTC</p>
-                                                    </div>
-                                                </div>
-                                                <div class="small-3 columns">
-                                                    <div class="mb-3">
-                                                        <h4 class="text-xs uppercase tracking-wide text-grey-darker">Class</h4>
-                                                        <p class="font-semibold tracking-wide text-grey-darkest"><%=booking.class_name%></p>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <h4 class="text-xs uppercase tracking-wide text-grey-darker">Seat</h4>
-                                                        <p class="font-semibold tracking-wide text-grey-darkest"><%= booking.seat_id %></p>
-                                                    </div>
-                                                    <div class="">
-                                                        <h4 class="text-xs uppercase tracking-wide text-grey-darker">Flight</h4>
-                                                        <p class="font-semibold tracking-wide text-grey-darkest"><%=flight_details.schedule_id%></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <%});%>
-                            <% }else{ %>
-                                <div class=" alert alert-warning text-center">
-                                    <strong>No Flights available</strong>
-                                </div>
-                            <%}%>
-
-
-                        </div>
-                    </div>
-
-
-                </form>
-
-
-
-
-
-
-
-
-
-                <div class="educational-registration-form">
-                    <div class="booking-form-area">
-                        <div class="row justify-content-center">
-
-                            <div class="col-lg-12 text-center">
-                                <a href="/" class="cmn-btn">Home</a>
-                                <a href="/customer/viewFlights" class="cmn-btn">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
+              <!-- Route Block -->
+              <div style="padding: 28px; background: rgba(79, 110, 247, 0.03); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; border-bottom: 1px dashed var(--border);">
+                <div>
+                  <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Origin</div>
+                  <h2 style="font-size: 2.2rem; margin: 4px 0 0; background: none; -webkit-text-fill-color: var(--text-primary); text-shadow: 0 0 20px rgba(79,110,247,0.3);"><%= flight_details.origin %></h2>
                 </div>
+
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; max-width: 180px; position: relative;">
+                  <div style="width: 100%; height: 1px; background: var(--border); position: absolute; top: 50%; z-index: 1;"></div>
+                  <div style="width: 36px; height: 36px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; color: var(--primary-light); position: relative; z-index: 2;">
+                    ✈
+                  </div>
+                </div>
+
+                <div style="text-align: right;">
+                  <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Destination</div>
+                  <h2 style="font-size: 2.2rem; margin: 4px 0 0; background: none; -webkit-text-fill-color: var(--text-primary); text-shadow: 0 0 20px rgba(0,210,255,0.3);"><%= flight_details.destination %></h2>
+                </div>
+              </div>
+
+              <!-- Ticket Timing strip -->
+              <div style="padding: 16px 28px; background: rgba(255, 255, 255, 0.01); border-bottom: 1px solid var(--border); display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;">
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Departure Date</div>
+                  <strong style="color: var(--text-primary); font-size: 0.9rem;"><%= (flight_details.departure_date).toString().substring(0, 15) %></strong>
+                </div>
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Boarding Time</div>
+                  <strong style="color: var(--text-primary); font-size: 0.9rem;"><%= flight_details.boarding_time_utc %> UTC</strong>
+                </div>
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Gate Status</div>
+                  <strong style="color: var(--success); font-size: 0.9rem;">Closed</strong>
+                </div>
+              </div>
+
+              <!-- Passenger info layout -->
+              <div style="padding: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Passenger Name</div>
+                  <strong style="color: var(--text-primary); font-size: 0.95rem; display: block;"><%= booking.name %></strong>
+                </div>
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Travel Class</div>
+                  <strong style="color: var(--primary-light); font-size: 0.95rem; display: block;"><%= booking.class_name %></strong>
+                </div>
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Seat Assignment</div>
+                  <strong style="color: var(--accent); font-size: 1rem; display: block;"><%= booking.seat_id %></strong>
+                </div>
+                <div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 4px;">Flight / Schedule</div>
+                  <strong style="color: var(--text-primary); font-size: 0.95rem; display: block;">#<%= flight_details.schedule_id %></strong>
+                </div>
+              </div>
+
             </div>
+          <% }); %>
         </div>
+      <% } else { %>
+        <div class="wm-alert wm-alert-warning text-center">
+          <i class="fas fa-exclamation-triangle"></i> No boarding pass data found for this booking reference.
+        </div>
+      <% } %>
+
+      <!-- Bottom Actions -->
+      <div style="margin-top: 48px; border-top: 1px solid var(--border); padding-top: 28px; display: flex; justify-content: center; gap: 16px;">
+        <a href="/booking/previous-bookings" class="wm-btn wm-btn-ghost" style="min-width: 140px; justify-content: center;">
+          <i class="fas fa-arrow-left"></i> History
+        </a>
+        <a href="/" class="wm-btn wm-btn-ghost" style="min-width: 140px; justify-content: center;">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <a href="/customer/viewFlights" class="wm-btn wm-btn-primary" style="min-width: 140px; justify-content: center;">
+          Book Flight <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+
     </div>
+  </div>
 </section>
 
-<%- include('_footer',{user}) %>
+<%- include('_footer', {user}) %>

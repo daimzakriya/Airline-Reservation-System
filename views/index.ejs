@@ -1,313 +1,404 @@
-    <!-- header-section start -->
-    <%- include('_header',{user}) %>
-    <!-- header-section end -->
-    <!-- register-section start -->
-    <%- include('_signup',{user,registrationError}) %>
-    <!-- register-section end -->
-    <!-- login-section start -->
-    <%- include('_login',{user}) %>
-    <!-- login-section end -->
+<%- include('_header', {user}) %>
 
-
-    <form class="header-form">
-        <div class="skip"><i class="fas fa-times"></i></div>
-        <div class="header-form-area">
-            <input type="text" placeholder="Search Here">
-            <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
-        </div>
+<!-- Login Modal -->
+<div class="wm-modal-overlay" id="login-modal">
+  <div class="wm-modal">
+    <button class="wm-modal-close" onclick="closeModal('login-modal')"><i class="fas fa-times"></i></button>
+    <div class="wm-auth-logo"><span class="logo">✈ Wing Mate</span></div>
+    <h2>Welcome back</h2>
+    <p class="sub">Sign in to your account to continue</p>
+    <% if (typeof loginError !== 'undefined' && loginError) { %>
+      <div class="wm-alert wm-alert-error"><i class="fas fa-exclamation-circle"></i><%= loginError %></div>
+    <% } %>
+    <form action="/customer/login" method="POST">
+      <div class="wm-form-group">
+        <label for="login-email">Email Address</label>
+        <input class="wm-input" type="email" id="login-email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="wm-form-group">
+        <label for="login-password">Password</label>
+        <input class="wm-input" type="password" id="login-password" name="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="wm-btn wm-btn-primary wm-btn-full" id="login-submit-btn">Sign In</button>
     </form>
+    <div class="wm-auth-footer">
+      Don't have an account? <a href="#" onclick="closeModal('login-modal'); openModal('signup-modal')">Create one</a>
+    </div>
+  </div>
+</div>
 
-
-    <!-- banner-section start -->
-    <section class="banner-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <div class="banner-content">
-                        <h2 class="title">book your air ticket easy & fast</h2>
-                        <p>Stop Searching.  Start Traveling.  The airline that’s different and better.
-                        <br/>
-                        Register with Us to Enjoy Amazing Discounts on Bookings!</p>
-                        <div class="btn-area">
-                            <a href="/about" class="cmn-btn">about us</a>
-                            <a href="/contact" class="cmn-btn-active">Contact us</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Signup Modal -->
+<div class="wm-modal-overlay" id="signup-modal">
+  <div class="wm-modal" style="max-width:560px;">
+    <button class="wm-modal-close" onclick="closeModal('signup-modal')"><i class="fas fa-times"></i></button>
+    <div class="wm-auth-logo"><span class="logo">✈ Wing Mate</span></div>
+    <h2>Create your account</h2>
+    <p class="sub">Join Wing Mate and unlock exclusive flight discounts</p>
+    <% if (typeof registrationError !== 'undefined' && registrationError) { %>
+      <div class="wm-alert wm-alert-error"><i class="fas fa-exclamation-circle"></i><%= registrationError %></div>
+    <% } %>
+    <form action="/customer/register" method="POST" id="create_account_form_submit" class="create-account-form">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>First Name</label>
+          <input class="wm-input" type="text" id="firstName" name="firstName" placeholder="John" value="<%= typeof regfirstName !== 'undefined' ? regfirstName : '' %>" required>
         </div>
-    </section>
-    <!-- banner-section end -->
-
-
-    <a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
-
-
-    <!-- search-widget-area start -->
-    <form id="form" action="customer/ViewFlights">
-        <div class="search-widget-area pt-120">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="search-widget">
-                            
-
-                            <div class="rt-input-group rt-input-group--style">
-                                <div class="single-input  col-rt-in-3">
-                                    <select name="from" id="dropdown" class="select-bar">
-                                        <option value='' selected>--Select FROM Airport--</option>
-                                        <% if(airports && airports.length!=0) {%>
-                                            <% airports.forEach(function(airport){%>
-                                                <option value=<%=airport.airport_code %> ><%= airport.name %>
-                                                </option>
-                                                <%});%>
-                                                    <%}%>
-                                    </select>
-
-                                    <span class="input-iconbadge"><img src="/assets/images/icon-1.png" alt=""
-                                            draggable="false"></span>
-                                </div>
-
-                                <div class="single-input  col-rt-in-3">
-                                    <select name="to" id="dropdown" class="select-bar">
-                                        <option value='' selected>--Select TO Airport--</option>
-                                        <% if(airports && airports.length!=0) {%>
-                                            <% airports.forEach(function(airport){%>
-                                                <option value=<%=airport.airport_code %> ><%= airport.name %>
-                                                </option>
-                                                <%});%>
-                                                    <%}%>
-                                    </select>
-                                    <div class="suggestions"></div>
-                                    <span class="input-iconbadge"><img src="/assets/images/icon-1.png" alt=""
-                                            draggable="false"></span>
-                                </div>
-                            </div>
-
-                            <div class="rt-input-group rt-input-group--style">
-                                <div class="single-input  col-rt-in-4">
-                                    <input type='text' id="booking_date_from" name="booking_date_from"
-                                        class='datepicker-here' data-language='en' placeholder="Departure Date">
-                                    <span class="input-iconbadge"><img src="/assets/images/icon-2.png" alt=""
-                                            draggable="false"></span>
-                                </div>
-
-                                <div class="single-input  col-rt-in-3">
-                                    <form id="mform">
-                                        <button type="submit" value="Submit " class="cmn-btn">Search</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="wm-form-group">
+          <label>Last Name</label>
+          <input class="wm-input" type="text" id="lastName" name="lastName" placeholder="Doe" value="<%= typeof reglastName !== 'undefined' ? reglastName : '' %>" required>
         </div>
+      </div>
+      <div class="wm-form-group">
+        <label>Email Address</label>
+        <input class="wm-input" type="email" id="email" name="email" placeholder="you@example.com" value="<%= typeof regemail !== 'undefined' ? regemail : '' %>" required>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Password</label>
+          <input class="wm-input" type="password" id="myInput" name="password" placeholder="Min 8 chars" required>
+        </div>
+        <div class="wm-form-group">
+          <label>Confirm Password</label>
+          <input class="wm-input" type="password" id="myInputTwo" name="confirmPassword" placeholder="Repeat password" required>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Date of Birth</label>
+          <input class="wm-input" type="date" id="dob" name="dob" value="<%= typeof regdob !== 'undefined' ? regdob : '' %>" required>
+        </div>
+        <div class="wm-form-group">
+          <label>Gender</label>
+          <select class="wm-select" id="gender" name="gender" required>
+            <option value="">Select gender</option>
+            <option value="Male" <%= typeof reggender !== 'undefined' && reggender==='Male' ? 'selected':'' %>>Male</option>
+            <option value="Female" <%= typeof reggender !== 'undefined' && reggender==='Female' ? 'selected':'' %>>Female</option>
+            <option value="Other" <%= typeof reggender !== 'undefined' && reggender==='Other' ? 'selected':'' %>>Other</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Contact No.</label>
+          <input class="wm-input" type="tel" id="contactNo" name="contactNo" placeholder="+1-555-0100" value="<%= typeof regcontactNo !== 'undefined' ? regcontactNo : '' %>" required>
+        </div>
+        <div class="wm-form-group">
+          <label>Passport Number</label>
+          <input class="wm-input" type="text" id="passportNo" name="passportNo" placeholder="A12345678" value="<%= typeof regpassportNo !== 'undefined' ? regpassportNo : '' %>" required>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div class="wm-form-group">
+          <label>Address Line 1</label>
+          <input class="wm-input" type="text" id="addressLine1" name="addressLine1" placeholder="123 Main St" value="<%= typeof regaddressLine1 !== 'undefined' ? regaddressLine1 : '' %>" required>
+        </div>
+        <div class="wm-form-group">
+          <label>City</label>
+          <input class="wm-input" type="text" id="city" name="city" placeholder="New York" value="<%= typeof regcity !== 'undefined' ? regcity : '' %>" required>
+        </div>
+      </div>
+      <div class="wm-form-group">
+        <label>Country</label>
+        <input class="wm-input" type="text" id="country" name="country" placeholder="United States" value="<%= typeof regcountry !== 'undefined' ? regcountry : '' %>" required>
+      </div>
+      <input type="hidden" id="addressLine2" name="addressLine2" value="N/A">
+      <button type="submit" class="wm-btn wm-btn-primary wm-btn-full" id="signup-submit-btn">Create Account</button>
     </form>
+    <div class="wm-auth-footer">
+      Already have an account? <a href="#" onclick="closeModal('signup-modal'); openModal('login-modal')">Sign in</a>
+    </div>
+  </div>
+</div>
 
-    <!-- search-widget-area end -->
+<!-- HERO SECTION -->
+<section class="wm-hero" id="home">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content">
+    <div class="wm-hero-pill wm-animate-fadeup">
+      <span class="wm-hero-pill-dot"></span>
+      Now flying to 10+ countries worldwide
+    </div>
+    <h1 class="wm-animate-fadeup wm-animate-delay-1">Fly Smarter.<br>Travel Further.</h1>
+    <p class="wm-animate-fadeup wm-animate-delay-2">
+      Wing Mate connects you to the world. Book flights in seconds, choose your seats, and experience aviation the way it should be.
+    </p>
+    <div class="wm-hero-actions wm-animate-fadeup wm-animate-delay-3">
+      <a href="/customer/viewFlights" class="wm-btn wm-btn-primary wm-btn-lg" id="hero-book-btn">
+        <i class="fas fa-search"></i> Search Flights
+      </a>
+      <a href="/about" class="wm-btn wm-btn-outline wm-btn-lg" id="hero-about-btn">
+        Our Story <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+    <div class="wm-hero-stats wm-animate-fadeup wm-animate-delay-4">
+      <div>
+        <div class="wm-hero-stat-num">96+</div>
+        <div class="wm-hero-stat-label">Scheduled Flights</div>
+      </div>
+      <div>
+        <div class="wm-hero-stat-num">10</div>
+        <div class="wm-hero-stat-label">Countries Served</div>
+      </div>
+      <div>
+        <div class="wm-hero-stat-num">50K+</div>
+        <div class="wm-hero-stat-label">Passengers Flown</div>
+      </div>
+      <div>
+        <div class="wm-hero-stat-num">24/7</div>
+        <div class="wm-hero-stat-label">Support Available</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-    <!-- service-section start -->
-    <section class="service-section pt-120">
-        <div class="container">
-            <div class="row justify-content-center mb-30-none">
-                <div class="col-lg-4 col-md-6 col-sm-8 mb-30">
-                    <div class="service-item d-flex flex-wrap">
-                        <div class="service-icon">
-                            <i class="flaticon-startup"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">fast & easy booking</h3>
-                            <p>Search for a flight , pick the seats as you wish, complete the payment. It's that easy!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-8 mb-30">
-                    <div class="service-item d-flex flex-wrap">
-                        <div class="service-icon">
-                            <i class="flaticon-internet"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">any time any where</h3>
-                            <p>Taking you to destinations all around the globe everyday. We’re Going Places!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-8 mb-30">
-                    <div class="service-item d-flex flex-wrap">
-                        <div class="service-icon">
-                            <i class="flaticon-audio-headset-of-auriculars-with-microphone-included"></i>
-                        </div>
-                        <div class="service-content">
-                            <h3 class="title">24/7 support</h3>
-                            <p>24/7 online support for your questions and concerns. More than just flying!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- FLIGHT SEARCH WIDGET -->
+<section style="padding: 0 0 96px;" id="search-section">
+  <div class="wm-container">
+    <div class="wm-search-widget" style="margin-top:-40px; position:relative; z-index:10;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+        <i class="fas fa-plane-departure" style="color:var(--primary-light);font-size:1.1rem;"></i>
+        <h3 style="font-size:1rem;font-weight:600;">Find Your Flight</h3>
+      </div>
+      <form action="/customer/viewFlights" method="GET" id="main-flight-search">
+        <div class="wm-search-row">
+          <div class="wm-form-group" style="margin:0;">
+            <label>From</label>
+            <select class="wm-select" name="from" id="from-airport" required>
+              <option value="">Select origin</option>
+              <% if (airports && airports.length > 0) { %>
+                <% airports.forEach(function(airport) { %>
+                  <option value="<%= airport.airport_code %>"><%= airport.name %></option>
+                <% }); %>
+              <% } %>
+            </select>
+          </div>
+          <div class="wm-form-group" style="margin:0;">
+            <label>To</label>
+            <select class="wm-select" name="to" id="to-airport" required>
+              <option value="">Select destination</option>
+              <% if (airports && airports.length > 0) { %>
+                <% airports.forEach(function(airport) { %>
+                  <option value="<%= airport.airport_code %>"><%= airport.name %></option>
+                <% }); %>
+              <% } %>
+            </select>
+          </div>
+          <div class="wm-form-group" style="margin:0;">
+            <label>Departure Date</label>
+            <input type="text" class="wm-input datepicker-here" id="departure-date-input" name="booking_date_from" placeholder="Pick a date" data-language="en" autocomplete="off">
+          </div>
+          <button type="submit" class="wm-btn wm-btn-primary wm-search-submit" id="search-flights-btn">
+            <i class="fas fa-search"></i> Search
+          </button>
         </div>
-    </section>
-    <!-- service-section end -->
+      </form>
+    </div>
+  </div>
+</section>
 
+<!-- SERVICES -->
+<section class="wm-section" style="padding-top:0;">
+  <div class="wm-container">
+    <div class="wm-section-header">
+      <div class="wm-eyebrow">Why Wing Mate</div>
+      <h2>The Smarter Way to Fly</h2>
+      <p>Everything you need for a seamless journey, from search to touchdown.</p>
+    </div>
+    <div class="wm-grid-3">
+      <div class="wm-service-card wm-animate-fadeup">
+        <div class="wm-service-icon"><i class="fas fa-bolt"></i></div>
+        <h3>Fast & Easy Booking</h3>
+        <p>Search flights, pick your seats, and complete payment in under 2 minutes. No stress, no confusion.</p>
+      </div>
+      <div class="wm-service-card wm-animate-fadeup wm-animate-delay-1">
+        <div class="wm-service-icon"><i class="fas fa-globe-americas"></i></div>
+        <h3>Global Destinations</h3>
+        <p>Flying to 10+ countries every day. Wherever you need to go, Wing Mate has you covered.</p>
+      </div>
+      <div class="wm-service-card wm-animate-fadeup wm-animate-delay-2">
+        <div class="wm-service-icon"><i class="fas fa-headset"></i></div>
+        <h3>24/7 Support</h3>
+        <p>Our dedicated support team is available around the clock to assist you with any questions.</p>
+      </div>
+      <div class="wm-service-card wm-animate-fadeup wm-animate-delay-1">
+        <div class="wm-service-icon"><i class="fas fa-tag"></i></div>
+        <h3>Member Discounts</h3>
+        <p>Frequent flyers and Gold members enjoy exclusive pricing on all routes.</p>
+      </div>
+      <div class="wm-service-card wm-animate-fadeup wm-animate-delay-2">
+        <div class="wm-service-icon"><i class="fas fa-shield-alt"></i></div>
+        <h3>Secure Payments</h3>
+        <p>Bank-grade encryption on every transaction. Your payment data is always protected.</p>
+      </div>
+      <div class="wm-service-card wm-animate-fadeup wm-animate-delay-3">
+        <div class="wm-service-icon"><i class="fas fa-ticket-alt"></i></div>
+        <h3>Digital E-Tickets</h3>
+        <p>Receive instant e-tickets with QR codes directly to your email. No printing needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- about-section start -->
-    <section class="about-section pt-120 pb-120">
-        <div class="container-fluid">
-            <div class="row mb-30-none">
-                <div class="col-lg-6 mb-30">
-                    <div class="about-thumb">
-                        <img src="https://d1.awsstatic.com/industry-images-customer-references/Customer-Reference-industry-Airline-2.6e50b6dd96da57191d1ba60c6f76400f61c0ad4c.png" alt="image">
-                    </div>
-                </div>
-                <div class="col-lg-6 mb-30">
-                    <div class="about-content">
-                        <h2 class="title">We are B Airways</h2>
-                        <span class="title-border"></span>
-                        <p>B Airways is an independant functioning, subsidiary of Virgin Airlines. </p>
-                        <p>B Airways, one of the fastest growing airlines in the world, first began flying in 2017 and currently we are flying to more than 10 destinations all around the globe. Within the past three years we have taken more than 50,000 passengers on a journey of like no other. Come see what you’ve been missing. We at B Airways always go the extra smile to make B Airways your best experience. Last year B Airways was awarded the "Most Outstanding Service" Award by BIA-Colombo.</p>
-                        <a href="/about" class="cmn-btn">discover more</a>
-                    </div>
-                </div>
+<!-- UPCOMING FLIGHTS -->
+<% if (upcomingFlights && upcomingFlights.length > 0) { %>
+<section class="wm-section" style="background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);" id="flights">
+  <div class="wm-container">
+    <div class="wm-section-header">
+      <div class="wm-eyebrow">Live Schedule</div>
+      <h2>Upcoming Flights</h2>
+      <p>Browse our upcoming departures and book your seat today.</p>
+    </div>
+    <div class="wm-grid-3">
+      <% upcomingFlights.slice(0, 6).forEach(function(flight, i) { %>
+      <div class="wm-flight-card wm-animate-fadeup" style="animation-delay: <%= i * 0.08 %>s;">
+        <div class="wm-flight-card-thumb">
+          <% if (flight.destination_image) { %>
+            <img src="<%= flight.destination_image %>" alt="<%= flight.destination %>">
+          <% } else { %>
+            <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--bg-elevated),var(--bg-card2));display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-plane" style="font-size:3rem;color:var(--border);"></i>
             </div>
+          <% } %>
+          <div class="wm-flight-card-price">from $<%= flight.price %></div>
         </div>
-    </section>
-    <!-- about-section end -->
-
-
-    <!-- flight-section start -->
-    <% if(upcomingFlights && upcomingFlights.length!=0) {%>
-        <div class="flight-section pt-120 pb-120">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6 text-center">
-                        <div class="section-header">
-                            <h2 class="section-title">Upcoming Flights</h2>
-                            <span class="title-border title-border-center"></span>
-                            <p> Stop Searching. Start Traveling.
-                                The Airline That’s Different and Better.<br/> Our Airline is More Than Planes. It’s People.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center mb-30-none">
-                <% upcomingFlights.forEach(function(flight){%>
-
-
-                    <div class="col-lg-4 col-md-6 col-sm-8 mb-30">
-                        <div class="flight-item">
-                            <div class="flight-thumb">
-                                <img src="<%= flight.destination_image %> " width="350px" height="259px" alt="image">
-                                <h3 class="flight-overlay">from$<%=flight.price%>
-                                </h3>
-                            </div>
-                            <div class="flight-details">
-                                
-                                <form action="/booking" method="post">
-                                <input type="hidden" name="schedule_id" value="<%=flight.schedule_id%>"/>
-
-                                <button type="submit" style="background-color: white;">
-                                <a>
-                                    <h3 class="title">
-                                        <%=flight.origin%>
-                                    </h3>
-                                    <i class="flaticon-exchange"></i>
-                                    <h3 class="title">
-                                        <%=flight.destination%>
-                                    </h3>
-                                </a>
-                                </button>
-                                </form>
-                                <ul class="flight-content">
-                                    <li><i class="flaticon-clock"></i>
-                                        <%=flight.departure_time_utc.toString()+'-----'+flight.arrival_time_utc.toString()%>
-                                    </li>
-                                    <li><i class="flaticon-calendar"></i>
-                                        <%=flight.departure_date.toString().substring(0,15)+'-'+flight.arrival_date.toString().substring(0,15)%>
-                                    </li>
-                                    <li><i class="flaticon-plane"></i> B Airways</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <%});%>
+        <div class="wm-flight-card-body">
+          <div class="wm-flight-route">
+            <div class="wm-flight-city"><%= flight.origin %></div>
+            <div class="wm-flight-arrow"><i class="fas fa-plane" style="font-size:0.8rem;color:var(--primary-light);"></i></div>
+            <div class="wm-flight-city"><%= flight.destination %></div>
+          </div>
+          <div class="wm-flight-meta">
+            <div class="wm-flight-meta-item">
+              <i class="fas fa-calendar"></i>
+              <%= new Date(flight.departure_date).toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'}) %>
             </div>
-            <% }else{ %>
-                <div class="alert alert-warning text-center">
-                    <strong>No Flights available</strong>
-                </div>
-                <%}%>
+            <div class="wm-flight-meta-item">
+              <i class="fas fa-clock"></i>
+              <%= flight.departure_time_utc %> → <%= flight.arrival_time_utc %> UTC
             </div>
+            <div class="wm-flight-meta-item">
+              <i class="fas fa-plane-departure"></i>
+              Wing Mate Airlines
+            </div>
+          </div>
         </div>
-    <!-- flight-section end -->
-
-
-
-    <!-- offer-section start -->
-    <section class="offer-section pt-120">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 pl-0 pr-0">
-                    <div class="offer-thunb">
-                        <img src="assets/images/airlinesSITA.jpg" alt="image">
-                    </div>
-                </div>
-            </div>
+        <div class="wm-flight-card-footer">
+          <span class="wm-badge wm-badge-success"><i class="fas fa-circle" style="font-size:0.5em;"></i> Scheduled</span>
+          <form action="/booking" method="POST" style="margin:0;">
+            <input type="hidden" name="schedule_id" value="<%= flight.schedule_id %>">
+            <button type="submit" class="wm-btn wm-btn-primary wm-btn-sm" id="book-flight-<%= flight.schedule_id %>">
+              Book Now <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
         </div>
-    </section>
-    <!-- offer-section end -->
+      </div>
+      <% }); %>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="/customer/viewFlights" class="wm-btn wm-btn-outline wm-btn-lg" id="view-all-flights-btn">
+        View All Flights <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+<% } %>
 
-
-    <!-- client-section start -->
-    <section class="client-section pt-120 pb-120" id="reviews">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 text-center">
-                    <div class="section-header">
-                        <h2 class="section-title">our happy passengers</h2>
-                        <span class="title-border title-border-center"></span>
-                        <p><b>Are You a Registered Customer of B Airways? We are happy to hear your feedback through <% if (typeof user == 'undefined'){ %>Our Review Page! Register with us to give your reviews.<%} else {%><a href="/customer/createReview" style="color: blue;">Our Review Page!</a><%}%></b></p>
-                    </div>
-                    
-                </div>
-            </div>
-            <% if(reviews && reviews.length!=0) {%>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="client-slider-area">
-                        <div class="client-slider">
-                            <div class="swiper-wrapper">
-                                <% reviews.forEach(function(review){%>
-                                <div class="swiper-slide">
-                                    <div class="client-item d-flex flex-wrap">
-                                        <div class="client-thumb">
-                                            <img src="assets/images/b_x_icon.png" alt="image">
-                                        </div>
-                                        <div class="client-content">
-                                            <h3 class="title"><%= review.first_name %> <%= review.last_name %> </h3>
-                                            <span><%= review.category %> Flyer of B Airways</span>
-                                        </div>
-                                        <p><%= review.review %> </p>
-                        
-                                    </div>
-                                </div>
-                            
-                                <%});%>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <%}else{%>
-                <div class="alert  text-center">
-                    <strong>No Reviews Yet!. Add your views and suggestions to improve our service. Thank you.</strong>
-                </div>
-                <%}%>
-
+<!-- ABOUT BLURB -->
+<section class="wm-section">
+  <div class="wm-container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+      <div class="wm-animate-fadeup">
+        <div class="wm-eyebrow" style="display:inline-flex;align-items:center;gap:8px;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--primary-light);margin-bottom:20px;">
+          <span style="width:28px;height:1px;background:var(--primary);opacity:0.5;display:inline-block;"></span>
+          Our Story
+          <span style="width:28px;height:1px;background:var(--primary);opacity:0.5;display:inline-block;"></span>
         </div>
-    </section>
-    <!-- client-section end -->
+        <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:20px;background:linear-gradient(135deg,#fff 30%,var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">We Are Wing Mate</h2>
+        <p style="color:var(--text-secondary);font-size:1rem;line-height:1.8;margin-bottom:16px;">
+          Wing Mate is one of the fastest-growing airlines in the world, operating across 10 countries and taking over 50,000 passengers on a journey like no other.
+        </p>
+        <p style="color:var(--text-secondary);font-size:1rem;line-height:1.8;margin-bottom:28px;">
+          We always go the extra mile to make your experience the best it can be — recognized with the "Most Outstanding Service" Award. Come discover what you've been missing.
+        </p>
+        <a href="/about" class="wm-btn wm-btn-primary" id="about-cta-btn">
+          Discover More <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="wm-animate-fadeup wm-animate-delay-2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="wm-card" style="text-align:center;padding:28px 20px;">
+          <div style="font-family:var(--font-display);font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">10+</div>
+          <div style="font-size:0.82rem;color:var(--text-muted);margin-top:6px;">Countries Served</div>
+        </div>
+        <div class="wm-card" style="text-align:center;padding:28px 20px;">
+          <div style="font-family:var(--font-display);font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">50K+</div>
+          <div style="font-size:0.82rem;color:var(--text-muted);margin-top:6px;">Passengers</div>
+        </div>
+        <div class="wm-card" style="text-align:center;padding:28px 20px;">
+          <div style="font-family:var(--font-display);font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">96+</div>
+          <div style="font-size:0.82rem;color:var(--text-muted);margin-top:6px;">Scheduled Flights</div>
+        </div>
+        <div class="wm-card" style="text-align:center;padding:28px 20px;">
+          <div style="font-family:var(--font-display);font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">24/7</div>
+          <div style="font-size:0.82rem;color:var(--text-muted);margin-top:6px;">Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- REVIEWS -->
+<section class="wm-section" style="background:var(--bg-card);border-top:1px solid var(--border);" id="reviews">
+  <div class="wm-container">
+    <div class="wm-section-header">
+      <div class="wm-eyebrow">Testimonials</div>
+      <h2>What Our Passengers Say</h2>
+      <% if (!user || user.type === 'guest') { %>
+        <p>Register with us to share your Wing Mate experience.</p>
+      <% } else { %>
+        <p>Enjoyed your flight? <a href="/customer/createReview" style="color:var(--primary-light);font-weight:600;">Leave a review →</a></p>
+      <% } %>
+    </div>
+    <% if (reviews && reviews.length > 0) { %>
+    <div class="wm-grid-3">
+      <% reviews.slice(0, 6).forEach(function(review, i) { %>
+      <div class="wm-review-card wm-animate-fadeup" style="animation-delay:<%= i * 0.1 %>s;">
+        <div class="wm-review-quote">"</div>
+        <p class="wm-review-text"><%= review.review %></p>
+        <div class="wm-review-author">
+          <div class="wm-review-avatar"><%= review.first_name.charAt(0).toUpperCase() %></div>
+          <div>
+            <div class="wm-review-name"><%= review.first_name %> <%= review.last_name %></div>
+            <div class="wm-review-type"><%= review.category %> Member</div>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <div style="text-align:center;padding:60px 0;">
+      <div style="width:80px;height:80px;margin:0 auto 20px;background:var(--bg-elevated);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-comment-alt" style="font-size:2rem;color:var(--text-muted);"></i>
+      </div>
+      <p style="color:var(--text-muted);font-size:1rem;">No reviews yet. Be the first to share your experience!</p>
+    </div>
+    <% } %>
+  </div>
+</section>
 
-<%- include('_footer',{user}) %>
+<%- include('_footer', {user}) %>
+
+<!-- Scripts -->
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/datepicker.min.js"></script>
+<script src="/assets/js/datepicker.en.js"></script>
+<script>
+  if (typeof $ !== 'undefined' && $.fn.datepicker) {
+    $('.datepicker-here').datepicker({ language: 'en', minDate: new Date() });
+  }
+
+  // Auto-open modals from query string
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('loginError')) openModal('login-modal');
+  if (params.get('registrationError')) openModal('signup-modal');
+</script>

@@ -70,9 +70,9 @@ $(function () {
     backgroundColor: 'transparent',
     regionStyle: {
       initial: {
-        fill: 'rgba(255, 255, 255, 0.7)',
+        fill: 'rgba(25, 118, 210, 0.15)', // sky blue tint
         'fill-opacity': 1,
-        stroke: 'rgba(0,0,0,.2)',
+        stroke: 'rgba(26,35,126,0.2)', // deep blue border
         'stroke-width': 1,
         'stroke-opacity': 1
       }
@@ -80,7 +80,7 @@ $(function () {
     series: {
       regions: [{
         values: visitorsData,
-        scale: ['#ffffff', '#0154ad'],
+        scale: ['#e3f2fd', '#1976d2'], // light blue to deep blue
         normalizeFunction: 'polynomial'
       }]
     },
@@ -92,9 +92,9 @@ $(function () {
   })
 
   // Sparkline charts
-  var sparkline1 = new Sparkline($('#sparkline-1')[0], { width: 80, height: 50, lineColor: '#92c1dc', endColor: '#ebf4f9' })
-  var sparkline2 = new Sparkline($('#sparkline-2')[0], { width: 80, height: 50, lineColor: '#92c1dc', endColor: '#ebf4f9' })
-  var sparkline3 = new Sparkline($('#sparkline-3')[0], { width: 80, height: 50, lineColor: '#92c1dc', endColor: '#ebf4f9' })
+  var sparkline1 = new Sparkline($('#sparkline-1')[0], { width: 80, height: 50, lineColor: '#1976d2', endColor: '#e3f2fd' })
+  var sparkline2 = new Sparkline($('#sparkline-2')[0], { width: 80, height: 50, lineColor: '#1976d2', endColor: '#e3f2fd' })
+  var sparkline3 = new Sparkline($('#sparkline-3')[0], { width: 80, height: 50, lineColor: '#1976d2', endColor: '#e3f2fd' })
 
   sparkline1.draw([1000, 1200, 920, 927, 931, 1027, 819, 930, 1021])
   sparkline2.draw([515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921])
@@ -121,24 +121,24 @@ $(function () {
     datasets: [
       {
         label: 'Digital Goods',
-        backgroundColor: 'rgba(60,141,188,0.9)',
-        borderColor: 'rgba(60,141,188,0.8)',
+        backgroundColor: 'rgba(25,118,210,0.9)', // deep blue
+        borderColor: 'rgba(25,118,210,0.8)',
         pointRadius: false,
-        pointColor: '#3b8bba',
-        pointStrokeColor: 'rgba(60,141,188,1)',
+        pointColor: '#1976d2',
+        pointStrokeColor: 'rgba(25,118,210,1)',
         pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(60,141,188,1)',
+        pointHighlightStroke: 'rgba(25,118,210,1)',
         data: [28, 48, 40, 19, 86, 27, 90]
       },
       {
         label: 'Electronics',
-        backgroundColor: 'rgba(210, 214, 222, 1)',
-        borderColor: 'rgba(210, 214, 222, 1)',
+        backgroundColor: 'rgba(227,242,253,1)', // light blue
+        borderColor: 'rgba(227,242,253,1)',
         pointRadius: false,
-        pointColor: 'rgba(210, 214, 222, 1)',
-        pointStrokeColor: '#c1c7d1',
+        pointColor: 'rgba(227,242,253,1)',
+        pointStrokeColor: '#b3c6ff',
         pointHighlightFill: '#fff',
-        pointHighlightStroke: 'rgba(220,220,220,1)',
+        pointHighlightStroke: 'rgba(179,198,255,1)',
         data: [65, 59, 80, 81, 56, 55, 40]
       }
     ]
@@ -183,7 +183,7 @@ $(function () {
     datasets: [
       {
         data: [30, 12, 20],
-        backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+        backgroundColor: ['#1976d2', '#00bcd4', '#3949ab'] // deep blue, accent, secondary
       }
     ]
   }
@@ -216,16 +216,15 @@ $(function () {
         borderWidth: 2,
         lineTension: 0,
         spanGaps: true,
-        borderColor: '#efefef',
+        borderColor: '#1976d2',
         pointRadius: 3,
         pointHoverRadius: 7,
-        pointColor: '#efefef',
-        pointBackgroundColor: '#efefef',
+        pointColor: '#1976d2',
+        pointBackgroundColor: '#1976d2',
         data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
       }
     ]
   }
-
   var salesGraphChartOptions = {
     maintainAspectRatio: false,
     responsive: true,
@@ -235,22 +234,22 @@ $(function () {
     scales: {
       xAxes: [{
         ticks: {
-          fontColor: '#efefef'
+          fontColor: '#3949ab'
         },
         gridLines: {
           display: false,
-          color: '#efefef',
+          color: '#e3f2fd',
           drawBorder: false
         }
       }],
       yAxes: [{
         ticks: {
           stepSize: 5000,
-          fontColor: '#efefef'
+          fontColor: '#3949ab'
         },
         gridLines: {
           display: true,
-          color: '#efefef',
+          color: '#e3f2fd',
           drawBorder: false
         }
       }]

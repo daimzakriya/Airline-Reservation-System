@@ -1,46 +1,54 @@
-<%- include('_staff_header',{user}) %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Login — Wing Mate</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-auth-wrap">
+  <div class="wm-auth-card">
+    <div class="wm-auth-logo">
+      <div class="logo" style="font-family:var(--font-display);font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,#fff,var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">✈ Wing Mate</div>
+      <div style="margin-top:6px;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);font-weight:600;">Staff Portal</div>
+    </div>
 
- <div class="container py-4">
-     <div class="card  rounded shadow-lg">
-        <div class="row card-body">
-            <div class="col-md-6 col-sm-12 text-center">
-                <img src="https://image.freepik.com/free-vector/secure-login-concept-illustration_114360-4582.jpg" alt="Login"
-                    width="80%" />
-                <br>
-            </div>
-            <div class="col-md-6 col-sm-12 align-self-center">
-            
-                <h3 class="text-center">Staff Log In</h3>
-                <form method="POST" action="/staff/login">
-                    <% if (error) {%>
-                        <div class="alert alert-danger text-center" role="alert">
-                            <strong><%=error%></strong>
-                        </div>
-                    <% } %>
-                    <% if (success) {%>
-                        <div class="alert alert-success text-center" role="alert">
-                            <%=success%>
-                        </div>
-                    <% } %>
-                    <div class="form-group">
-                        <label for="empId">Employee ID <small class="text-secondary"> (Bxxxxx) </small></label>
-                        <input type="empId" class="form-control" id="empId" name="empId" placeholder="Enter Your Employee ID" required value="<%=empId%>" maxlength="6">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Your Password" required >
-                    </div>
-    
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </form>
-            </div>
-            
-        </div>
+    <h2>Welcome back</h2>
+    <p class="sub">Sign in with your employee credentials</p>
 
-     </div>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="wm-alert wm-alert-error"><i class="fas fa-exclamation-circle"></i> <%= error %></div>
+    <% } %>
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="wm-alert wm-alert-success"><i class="fas fa-check-circle"></i> <%= success %></div>
+    <% } %>
 
- </div>
+    <form action="/staff/login" method="POST">
+      <div class="wm-form-group">
+        <label for="empId">Employee ID</label>
+        <input class="wm-input" type="text" id="empId" name="empId" placeholder="EMP001" value="<%= typeof empId !== 'undefined' ? empId : '' %>" required>
+      </div>
+      <div class="wm-form-group">
+        <label for="password">Password</label>
+        <input class="wm-input" type="password" id="password" name="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="wm-btn wm-btn-primary wm-btn-full" id="staff-login-btn">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+    </form>
 
-<%- include('_staff_footer') %>
+    <div class="wm-auth-footer">
+      New employee? <a href="/staff/register">Create staff account</a>
+    </div>
+    <div class="wm-auth-footer" style="margin-top:10px;">
+      <a href="/" style="color:var(--text-muted);">← Back to main site</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

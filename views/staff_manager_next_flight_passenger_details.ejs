@@ -1,87 +1,76 @@
-<%- include('_staff_header',{user}) %>
-<div class="container py-4">
-    <div class="text-center">
-        <h3>Passenger Details</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passenger Details — Wing Mate Manager</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-staff-layout">
+  <aside class="wm-sidebar">
+    <div class="wm-sidebar-logo"><span class="logo-icon">✈</span>Wing Mate</div>
+    <a href="/staff/manager" class="wm-sidebar-link" id="sidebar-home"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="/staff/manager/all_flights" class="wm-sidebar-link" id="sidebar-flights"><i class="fas fa-plane"></i> All Flights</a>
+    <a href="/staff/manager/all_general_staff" class="wm-sidebar-link" id="sidebar-staff"><i class="fas fa-users"></i> Staff Directory</a>
+    <a href="/staff/manager/reports" class="wm-sidebar-link active" id="sidebar-reports"><i class="fas fa-chart-bar"></i> Reports</a>
+    <a href="/staff/edit_profile" class="wm-sidebar-link" id="sidebar-profile"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    <div class="wm-sidebar-bottom"><a href="/staff/logout" class="wm-sidebar-link" id="sidebar-logout" style="color:var(--danger);"><i class="fas fa-sign-out-alt"></i> Log Out</a></div>
+  </aside>
+  <main class="wm-staff-content">
+    <div class="wm-staff-topbar">
+      <div><h1>Next Flight — Passenger Details</h1>
+        <a href="/staff/manager/reports" style="color:var(--text-muted);font-size:0.85rem;"><i class="fas fa-arrow-left" style="margin-right:6px;"></i>Back to Reports</a>
+      </div>
     </div>
-    <hr>
-    <% if (error) {%>
-        <div class="alert alert-danger text-center" role="alert">
-            <%=error%>
-        </div>
-    <% } %>
-    <% if (success) {%>
-        <div class="alert alert-success text-center" role="alert">
-            <%=success%>
-        </div>
-    <% } %>
-    <div class="card p-3 border border-dark">
-        <div class="text-center">
-            <h4>Minor Passenger Details</h4>
-        </div>
-        <hr>
-        <div class="p-3">
-            <% if(minorPassengers && minorPassengers.length!=0) {%>
-                    <div style="overflow-x:auto;">
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Passenger Name</th>
-                                    <th scope="col">Passport No</th>
-                                    <th scope="col">Age</th>
-                            </thead>
-                            <tbody>
-    
-                                <% minorPassengers.forEach(function(passenger){%>
-                                    <tr>
-                                        <td><%=passenger.name%></td>
-                                        <td><%=passenger.passport_no%></td>
-                                        <td><%=passenger.age%></td>
-                                    </tr>
-                                <%});%>
-                            </tbody>
-                        </table>
-                    </div>
-                <% }else{ %>
-                    <div class="alert alert-warning text-center">
-                        <strong>No Passengers of Age 18 or Below</strong>
-                    </div>
-                <%}%>
-        </div>
-    </div>
-    <div class="card p-3 border border-dark mt-3">
-        <div class="text-center">
-            <h4>Adult Passenger Details</h4>
-        </div>
-        <hr>
-        <div class="p-3">
-            <% if(adultPassengers && adultPassengers.length!=0) {%>
-                    <div style="overflow-x:auto;">
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Passenger Name</th>
-                                    <th scope="col">Passport No</th>
-                                    <th scope="col">Age</th>
-                            </thead>
-                            <tbody>
-    
-                                <% adultPassengers.forEach(function(passenger){%>
-                                    <tr>
-                                        <td><%=passenger.name%></td>
-                                        <td><%=passenger.passport_no%></td>
-                                        <td><%=passenger.age%></td>
-                                    </tr>
-                                <%});%>
-                            </tbody>
-                        </table>
-                    </div>
-                <% }else{ %>
-                    <div class="alert alert-warning text-center">
-                        <strong>No Passengers Above Age 18</strong>
-                    </div>
-                <%}%>
-        </div>
-    </div>
-</div>
 
-<%- include('_staff_footer') %>
+    <div class="wm-grid-2" style="gap:24px;align-items:start;">
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-user" style="color:var(--primary-light);"></i>
+          <h3 style="font-size:0.9rem;">Adult Passengers (18+)</h3>
+          <span class="wm-badge wm-badge-primary"><%= adultPassengers ? adultPassengers.length : 0 %></span>
+        </div>
+        <table class="wm-table"><thead><tr><th>Name</th><th>Passport</th><th>Age</th><th>Seat</th></tr></thead>
+        <tbody>
+          <% if (adultPassengers && adultPassengers.length > 0) { adultPassengers.forEach(function(p) { %>
+          <tr>
+            <td><strong><%= p.passenger_name || p.name %></strong></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;"><%= p.passenger_passport || p.passport_no %></td>
+            <td><%= p.age %></td>
+            <td><span class="wm-badge wm-badge-muted"><%= p.seat_id %></span></td>
+          </tr>
+          <% }); } else { %>
+          <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">No adult passengers</td></tr>
+          <% } %>
+        </tbody></table>
+      </div>
+
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-child" style="color:var(--accent2);"></i>
+          <h3 style="font-size:0.9rem;">Minor Passengers (Under 18)</h3>
+          <span class="wm-badge wm-badge-accent"><%= minorPassengers ? minorPassengers.length : 0 %></span>
+        </div>
+        <table class="wm-table"><thead><tr><th>Name</th><th>Passport</th><th>Age</th><th>Seat</th></tr></thead>
+        <tbody>
+          <% if (minorPassengers && minorPassengers.length > 0) { minorPassengers.forEach(function(p) { %>
+          <tr>
+            <td><strong><%= p.passenger_name || p.name %></strong></td>
+            <td style="color:var(--text-muted);font-size:0.82rem;"><%= p.passenger_passport || p.passport_no %></td>
+            <td><%= p.age %></td>
+            <td><span class="wm-badge wm-badge-muted"><%= p.seat_id %></span></td>
+          </tr>
+          <% }); } else { %>
+          <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">No minor passengers</td></tr>
+          <% } %>
+        </tbody></table>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

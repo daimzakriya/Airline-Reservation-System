@@ -1,161 +1,127 @@
-<!-- header-section start -->
-<%- include('_header',{user}) %>
-<!-- header-section end -->
-<!-- register-section start -->
-<%- include('_signup',{user,registrationError}) %>
-<!-- register-section end -->
-<!-- login-section start -->
-<%- include('_login',{user}) %>
-<!-- login-section end -->
+<%- include('_header', {user}) %>
 
-<form class="header-form">
-    <div class="skip"><i class="fas fa-times"></i></div>
-    <div class="header-form-area">
-        <input type="text" placeholder="Search Here">
-        <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
+<!-- Hero Banner Section -->
+<section class="wm-hero" style="min-height: 50vh; padding-top: 140px; padding-bottom: 60px;">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content" style="max-width: 800px;">
+    <div class="wm-hero-pill">
+      <span class="wm-hero-pill-dot"></span>
+      Payment Portal
     </div>
-</form>
-
-
-<!-- banner-section start -->
-<section class="inner-banner-section pt-120 pb-120">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <div class="inner-banner-content">
-                    <h2 class="title">booking flight</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px;">Complete Your Booking</h1>
+    <p style="margin-bottom: 0;">
+      Verify passenger pricing breakdown and proceed to secure checkout.
+    </p>
+  </div>
 </section>
-<!-- banner-section end -->
 
-
-<!-- breadcrumb-section start -->
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active" aria-current="page">payment</li>
-                        <li class="breadcrumb-item active" aria-current="page">booking</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+<!-- Breadcrumb -->
+<div style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0;">
+  <div class="wm-container">
+    <div style="display: flex; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+      <a href="/" style="color: var(--primary-light); hover:text-decoration: underline;">Home</a>
+      <span>/</span>
+      <span style="color: var(--text-primary);">Payment Checkout</span>
     </div>
+  </div>
 </div>
-<!-- breadcrumb-section end -->
 
-<a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+<section class="wm-section-sm">
+  <div class="wm-container">
+    <div style="display: flex; justify-content: center;">
+      <div style="width: 100%; max-width: 640px;">
 
+        <% if(typeof dbError !== 'undefined' && dbError) { %>
+          <div class="wm-alert wm-alert-error" style="margin-bottom: 24px;">
+            <i class="fas fa-exclamation-circle"></i> <%= dbError %>
+          </div>
+        <% } %>
 
-<!-- booking-registration-section start -->
-<section class="booking-registration-section pt-120 pb-120">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <% if(dbError) {%>
-                <div class="alert alert-danger" role="alert" style="z-index: 999;">
-                    <%=dbError%>
-                </div>
-                <% } %>
-                <form class="general-information" id="bookingForm" action="create-booking">
-                    <div class="booking-registration-form">
-                        <div class="booking-form-area">
-                            <div class="row justify-content-center">
-                            <h3 class="title">Payment information</h3>
-                            </div>
-                            <table class="table">
-                                <tbody>
-                            <%seat_prices.forEach(function(seat_price) { %>
-                                <tr><td>Seat No: <b><%=seat_price.seat_id%></b> <td> $<%=seat_price.price%></td></tr>
-                            <%})%>
-                            <tr>
-                            <td>Price before discount</td><td> $<%= priceBeforeDiscount%></td>
-                        </tr>
-                        <tr>
-                            <td>Discount percentage </td><td><%=discount_percentage%>%</td>
-                        </tr>
-                        <tr>
-                            <td><h5>Price</h5> </td><td><h5>$<%=price%></h5></td>
-                        </tr>
-<!--                        <tr>-->
-<!--                            <td>-->
-<!--                            <div class="form-group row">-->
-<!--                                <label class="col-lg-4 col-form-label">Price</label>-->
-<!--                            </td>-->
-<!--                            <td>    -->
-<!--                                <div class="col-lg-8">-->
-<!--                                    <input type="text" class="form-control" value="$<%= price%>" disabled>-->
-<!--                                </div>-->
-<!--                            </td>    -->
-<!--                            -->
-<!--                        </tr>    -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="wm-card" style="padding: 32px; margin-bottom: 24px;">
+          <h3 style="font-size: 1.3rem; margin-bottom: 24px; font-family: var(--font-display); border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-receipt" style="color: var(--primary-light);"></i> Payment Breakdown
+          </h3>
 
-
-                </form>
-
-
-
-
-
-                <div class="educational-registration-form">
-                    <div class="booking-form-area">
-                        <div class="row justify-content-center">
-                            <div  class="alert alert-danger" role="alert">
-                                <p>Your booking will be <b>cancelled</b> at browser close or at the end of 10 minuites if the payment is not completed</p>
-                                <p><b>Do not reload this page</b></p>
-                            <div id='seconds-counter' class="alert alert-danger" role="alert" style="text-align: center;">
-                               
-                              </div>
-                            </div>
-
-                            <div class="col-lg-12 text-center">
-                                <div class="row" style="align-items: center;">
-                                    <div class="col-md-6">
-                                <form method="post" action="/booking/payment/success" onsubmit="setSubmitted()">
-                                    <input type="hidden" id="booking_id" value="<%= booking_id %>">
-                                    <button type="submit" class="cmn-btn">Pay</button>
-                                </form>
-                                </div>
-                                <div class="col-md-6">
-                              
-                                <form method="post" action="/booking/payment/cancel">
-                                    <input type="hidden" id="booking_id" value="<%= booking_id %>">
-
-                                    <button type="submit" class="cmn-btn">Cancel</button>
-                                </form>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
+          <div class="wm-table-wrap" style="margin-bottom: 20px;">
+            <table class="wm-table">
+              <thead>
+                <tr>
+                  <th>Detail</th>
+                  <th style="text-align: right;">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% seat_prices.forEach(function(seat_price) { %>
+                  <tr>
+                    <td>Seat No: <strong style="color: var(--text-primary);"><%= seat_price.seat_id %></strong></td>
+                    <td style="text-align: right; color: var(--text-primary);">$<%= seat_price.price %></td>
+                  </tr>
+                <% }); %>
+                <tr style="border-top: 1.5px solid var(--border);">
+                  <td>Price Before Discount</td>
+                  <td style="text-align: right;">$<%= priceBeforeDiscount %></td>
+                </tr>
+                <tr>
+                  <td>Discount Percentage</td>
+                  <td style="text-align: right; color: var(--success);"><%= discount_percentage %>% Off</td>
+                </tr>
+                <tr style="background: var(--bg-glass); border-top: 1.5px solid var(--border-accent);">
+                  <td><h4 style="margin: 0; font-size: 1.1rem; color: var(--text-primary);">Total Price</h4></td>
+                  <td style="text-align: right;"><h4 style="margin: 0; font-size: 1.25rem; color: var(--accent);">$<%= price %></h4></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+
+        <!-- Warning & Checkout Actions -->
+        <div class="wm-card" style="padding: 32px; border-color: var(--border-accent); background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));">
+          <div class="wm-alert wm-alert-warning" style="margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+              <p style="margin: 0; font-weight: 600;">Do not reload or close this page.</p>
+              <p style="margin: 4px 0 0; font-size: 0.8rem; opacity: 0.9;">Unpaid bookings auto-cancel after 10 minutes or when the tab is closed.</p>
+            </div>
+          </div>
+
+          <!-- Countdown Counter -->
+          <div id="seconds-counter" class="wm-alert wm-alert-error" style="justify-content: center; font-size: 1.1rem; font-weight: 700; padding: 12px 18px; margin-bottom: 28px;">
+            00:00
+          </div>
+
+          <div style="display: flex; gap: 16px;">
+            <!-- Pay Form -->
+            <form method="POST" action="/booking/payment/success" onsubmit="setSubmitted()" style="flex: 1;">
+              <input type="hidden" id="booking_id" value="<%= booking_id %>">
+              <button type="submit" class="wm-btn wm-btn-primary wm-btn-full" style="height: 50px;">
+                <i class="fas fa-credit-card"></i> Pay Now
+              </button>
+            </form>
+
+            <!-- Cancel Form -->
+            <form method="POST" action="/booking/payment/cancel" style="flex: 1;">
+              <input type="hidden" id="booking_id" value="<%= booking_id %>">
+              <button type="submit" class="wm-btn wm-btn-danger wm-btn-full" style="height: 50px;">
+                Cancel Booking
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
     </div>
+  </div>
 </section>
 
 <script>
-    function preventBack() {
-        window.history.forward();
-    }
-
-    setTimeout("preventBack()", 0);
-
-    window.onunload = function () { null };
-
+  function preventBack() {
+    window.history.forward();
+  }
+  setTimeout("preventBack()", 0);
+  window.onunload = function () { null };
 </script>
 
 <script src="/assets/js/payment.js"></script>
 
-<%- include('_footer',{user}) %>
+<%- include('_footer', {user}) %>

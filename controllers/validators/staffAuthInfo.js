@@ -7,7 +7,7 @@ const StaffRegInfo = Joi.object(
         .message('"Employee Id" must be of format Bxxxxx')
         .regex(/^[B][0-9]{5}$/)
         .message('Employee ID must be in B99999 format'),
-    category: Joi.string().required().valid('admin', 'manager', 'general').label('Employee Type'),
+    category: Joi.string().required().valid('manager', 'general').label('Employee Type'),
     password: Joi.string().trim().min(5).max(20)
         .required()
         .label('Password'),

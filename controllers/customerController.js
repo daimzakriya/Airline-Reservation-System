@@ -16,13 +16,22 @@ class CustomerController {
             req.session.user = {};
             req.session.user.type = customer.type;
             req.session.user.customerData = customer;
-            return res.status(200).send({ result: 'redirect', url: '/' });
+            
+            if (req.xhr) {
+                return res.status(200).send({ result: 'redirect', url: '/' });
+            } else {
+                return res.redirect('/');
+            }
         } catch (err) {
-            return res.status(200).send({
-                result: 'redirect',
-                url: `/?registrationError=${err}
-                &email=${req.body.email}&firstName=${req.body.firstName}&lastName=${req.body.lastName}&dob=${req.body.dob}&gender=${req.body.gender}&contactNo=${req.body.contactNo}&passportNo=${req.body.passportNo}&addressLine1=${req.body.addressLine1}&addressLine2=${req.body.addressLine2}&city=${req.body.city}&country=${req.body.country}#signup`,
-            });
+            const redirectUrl = `/?registrationError=${encodeURIComponent(err.message || err)}&email=${encodeURIComponent(req.body.email || '')}&firstName=${encodeURIComponent(req.body.firstName || '')}&lastName=${encodeURIComponent(req.body.lastName || '')}&dob=${encodeURIComponent(req.body.dob || '')}&gender=${encodeURIComponent(req.body.gender || '')}&contactNo=${encodeURIComponent(req.body.contactNo || '')}&passportNo=${encodeURIComponent(req.body.passportNo || '')}&addressLine1=${encodeURIComponent(req.body.addressLine1 || '')}&addressLine2=${encodeURIComponent(req.body.addressLine2 || '')}&city=${encodeURIComponent(req.body.city || '')}&country=${encodeURIComponent(req.body.country || '')}#signup`;
+            if (req.xhr) {
+                return res.status(200).send({
+                    result: 'redirect',
+                    url: redirectUrl,
+                });
+            } else {
+                return res.redirect(redirectUrl);
+            }
         }
     }
 

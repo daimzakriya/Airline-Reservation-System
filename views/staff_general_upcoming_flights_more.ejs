@@ -1,84 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Details — Wing Mate Staff</title>
+  <link rel="shortcut icon" href="/assets/images/Logo/tab_logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="/assets/css/wingmate.css">
+</head>
+<body>
+<div class="wm-staff-layout">
+  <aside class="wm-sidebar">
+    <div class="wm-sidebar-logo"><span class="logo-icon">✈</span>Wing Mate</div>
+    <a href="/staff/general" class="wm-sidebar-link" id="sidebar-home"><i class="fas fa-home"></i> Home</a>
+    <a href="/staff/general/arrivedFlights" class="wm-sidebar-link" id="sidebar-arrived"><i class="fas fa-plane-arrival"></i> Arrived Flights</a>
+    <a href="/staff/general/upcomingFlightsMain" class="wm-sidebar-link active" id="sidebar-upcoming"><i class="fas fa-plane-departure"></i> Upcoming Flights</a>
+    <a href="/staff/edit_profile" class="wm-sidebar-link" id="sidebar-profile"><i class="fas fa-user-edit"></i> Edit Profile</a>
+    <div class="wm-sidebar-bottom"><a href="/staff/logout" class="wm-sidebar-link" id="sidebar-logout" style="color:var(--danger);"><i class="fas fa-sign-out-alt"></i> Log Out</a></div>
+  </aside>
+  <main class="wm-staff-content">
+    <div class="wm-staff-topbar">
+      <div>
+        <h1>Flight Details</h1>
+        <a href="/staff/general/upcomingFlightsMain" style="color:var(--text-muted);font-size:0.85rem;"><i class="fas fa-arrow-left" style="margin-right:6px;"></i>Back to Upcoming Flights</a>
+      </div>
+    </div>
 
-<%- include('_staff_header_general',{user}) %>
-<div class="hold-transition sidebar-mini">
-    <div class="container">
-        <div class="card">
-            <div class="card-body">
-                <h3>Information</h3>
-                </br>
-                <% if (error) {%>
-                    <div class="alert alert-danger text-center" role="alert">
-                        <%=error%>
-                    </div>
-                <% } %>
+    <div class="wm-grid-2" style="gap:24px;align-items:start;">
+      <!-- Aircraft Info -->
+      <div class="wm-card">
+        <h3 style="font-size:0.95rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;"><i class="fas fa-plane" style="color:var(--primary-light);"></i> Aircraft Information</h3>
+        <% if (moreInfoGeneral && moreInfoGeneral.length > 0) { %>
+          <% const info = moreInfoGeneral[0]; %>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="wm-flex-between"><span style="color:var(--text-muted);font-size:0.85rem;">Model</span><strong><%= info.model_name %> <%= info.variant %></strong></div>
+            <div class="wm-divider" style="margin:4px 0;"></div>
+            <div class="wm-flex-between"><span style="color:var(--text-muted);font-size:0.85rem;">Manufacturer</span><span><%= info.manufacturer_name %></span></div>
+            <div class="wm-flex-between"><span style="color:var(--text-muted);font-size:0.85rem;">Economy Seats</span><span><%= info.economy_seat_capacity %></span></div>
+            <div class="wm-flex-between"><span style="color:var(--text-muted);font-size:0.85rem;">Business Seats</span><span><%= info.business_seat_capacity %></span></div>
+            <div class="wm-flex-between"><span style="color:var(--text-muted);font-size:0.85rem;">Platinum Seats</span><span><%= info.platinum_seat_capacity %></span></div>
+          </div>
+        <% } else { %>
+          <p style="color:var(--text-muted);">No aircraft info available.</p>
+        <% } %>
+      </div>
 
-                <% if (success) {%>
-                    <div class="alert alert-success text-center" role="alert">
-                        <%=success%>
-                    </div>
-                <% } %>
-                <div id="accordion">
-                    <div class="card">
-                      <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            General Details
-                          </button>
-                        </h5>
-                      </div>
-                  
-                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
-                          <li>Model name: <%= moreInfoGeneral.model_name %></li>
-                          <li>Variant: <%= moreInfoGeneral.variant %></li>
-                          <li>Economic Seat Capacity: <%= moreInfoGeneral.economy_seat_capacity %></li>
-                          <li>Business Seat Capacity: <%= moreInfoGeneral.business_seat_capacity %></li>
-                          <li>Platinum Seat Capacity: <%= moreInfoGeneral.platinum_seat_capacity %></li>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card">
-                      <div class="card-header" id="headingTwo">
-                        <h5 class="mb-0">
-                          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Passenger Details
-                          </button>
-                        </h5>
-                      </div>
-                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                      <th scope="col">Seat id</th>
-                                      <th scope="col">Passenger name</th>
-                                      <th scope="col">Passenger passport</th>
-                                      <th scope="col">Booked person name</th>
-                                      <th scope="col">Booked person email</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                        <% for (var i = 0; i <moreInfoPassenger.length; i++) { %>
-                                            <tr>
-                                            <th scope="row"><%= moreInfoPassenger[i].seat_id %></th>
-                                            <td><%= moreInfoPassenger[i].passenger_name %></td>
-                                            <td><%= moreInfoPassenger[i].passenger_passport %></td>
-                                            <td><%= moreInfoPassenger[i].booked_name %></td>
-                                            <td><%= moreInfoPassenger[i].email %></td>
-                                            </tr>
-                                        <% } %>
-                                  </tbody>
-                              </table>
-                        </div>
-                      </div>
-                </div>
-
-
-
-            </div><!--card body end-->
-          </div><!--card end-->
-    </div><!--container div closed-->
+      <!-- Passenger Manifest -->
+      <div class="wm-card" style="padding:0;overflow:hidden;">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);">
+          <h3 style="font-size:0.95rem;display:flex;align-items:center;gap:8px;"><i class="fas fa-users" style="color:var(--accent2);"></i> Passenger Manifest</h3>
+        </div>
+        <% if (!moreInfoPassenger || moreInfoPassenger.length === 0) { %>
+          <div style="text-align:center;padding:40px;color:var(--text-muted);">No passenger data available</div>
+        <% } else { %>
+        <table class="wm-table"><thead><tr><th>Name</th><th>Passport</th><th>Seat</th></tr></thead>
+        <tbody>
+          <% moreInfoPassenger.forEach(function(p) { %>
+          <tr>
+            <td><%= p.passenger_name || p.name %></td>
+            <td style="font-size:0.82rem;color:var(--text-muted);"><%= p.passenger_passport || p.passport_no %></td>
+            <td><span class="wm-badge wm-badge-primary"><%= p.seat_id %></span></td>
+          </tr>
+          <% }); %>
+        </tbody></table>
+        <% } %>
+      </div>
+    </div>
+  </main>
 </div>
-<%- include('_staff_footer') %>
-
-
+</body>
+</html>

@@ -1,112 +1,96 @@
-<!-- header-section start -->
-<%- include('_header',{user}) %>
-<!-- header-section end -->
-<!-- register-section start -->
-<%- include('_signup',{user,registrationError}) %>
-<!-- register-section end -->
-<!-- login-section start -->
-<%- include('_login',{user}) %>
-<!-- login-section end -->
+<%- include('_header', {user}) %>
 
-<form class="header-form">
-    <div class="skip"><i class="fas fa-times"></i></div>
-    <div class="header-form-area">
-        <input type="text" placeholder="Search Here">
-        <button type="submit"><i class="flaticon-search-interface-symbol"></i></button>
+<!-- Hero Banner Section -->
+<section class="wm-hero" style="min-height: 50vh; padding-top: 140px; padding-bottom: 60px;">
+  <div class="wm-hero-bg"></div>
+  <div class="wm-hero-grid"></div>
+  <div class="wm-hero-content" style="max-width: 800px;">
+    <div class="wm-hero-pill">
+      <span class="wm-hero-pill-dot"></span>
+      Traveler Voice
     </div>
-</form>
-
-
-<!-- banner-section start -->
-<section class="inner-banner-section pt-120 pb-120">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <div class="inner-banner-content">
-                    <h2 class="title">Customer Review</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 16px;">Write a Review</h1>
+    <p style="margin-bottom: 0;">
+      Share your flying experience with Wing Mate and help us elevate our service.
+    </p>
+  </div>
 </section>
-<!-- banner-section end -->
 
-
-<!-- breadcrumb-section start -->
-<div class="breadcrumb-section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Customer Review</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+<!-- Breadcrumb -->
+<div style="background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0;">
+  <div class="wm-container">
+    <div style="display: flex; gap: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+      <a href="/" style="color: var(--primary-light); hover:text-decoration: underline;">Home</a>
+      <span>/</span>
+      <span style="color: var(--text-primary);">Write a Review</span>
     </div>
+  </div>
 </div>
-<!-- breadcrumb-section end -->
 
+<section class="wm-section-sm">
+  <div class="wm-container">
+    <div style="display: flex; justify-content: center;">
+      <div style="width: 100%; max-width: 600px;">
+        
+        <% if(typeof registrationError !== 'undefined' && registrationError) { %>
+          <div class="wm-alert wm-alert-error" style="margin-bottom: 24px;">
+            <i class="fas fa-exclamation-circle"></i> <%= registrationError %>
+          </div>
+        <% } %>
 
-<a href="#" class="scrollToTop"><i class="fas fa-angle-up"></i></a>
+        <% if (user && user.type == 'registered') { %>
+          <div class="wm-card" style="padding: 32px;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 24px; font-family: var(--font-display); border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+              <i class="fas fa-edit" style="color: var(--primary-light);"></i> Share Your Journey
+            </h3>
 
- <!-- booking-registration-section start -->
- <section class="booking-registration-section pt-120 pb-120">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <% if(registrationError) {%>
-                <div class="alert alert-danger" role="alert" style="z-index: 999;">
-                    <%=registrationError%>
-                </div>
-                <% } %>
-                <form class="comment-form" id="reviewForm" action="/customer/createReview/created" method="post">
-                <%if (!user || user.type == 'registered') { %>
-                    
-                    <div class="">
-                        <div class="leave-comment">
-                            <h3 class="title">Add Your Review Here</h3>
-                                <% if(dbError) {%>
-                                    <div class="alert alert-warning">
-                                        <%= dbError %> 
-                                    </div>
-                                <% } %>
-                            
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" >Full Name</label>
-                                    <div class="col-lg-8">
-                                        <input type="text" class="form-control" id="custName" value="<%=user.customerData.first_name%> <%=user.customerData.last_name%>" disabled>
-                                        <input type="hidden" class="form-control" id="custID" name="custID" value="<%=user.customerData.customer_id%>">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label">Review(500 characters)</label>
-                                    <div class="col-lg-8">
-                                        <textarea class="form-control" name="review" id="review" required></textarea>
-                                    </div>
-                                </div>
-                        
-                    
-                   
-                                <div class="col-lg-12 form-group">
-                                    <button class="cmn-btn" type="submit">Post Review</button>
-                                </div>
-                                </div>
-                               
-                            
-                    </div>
-                </form>
-                
-                   <% }else{ %>  
-                    <div class="">
-                        <h3 class="title">Register with us now!</h3>
-                    </div>
-                    <% } %>     
-                  
+            <% if(typeof dbError !== 'undefined' && dbError) { %>
+              <div class="wm-alert wm-alert-warning" style="margin-bottom: 20px;">
+                <i class="fas fa-exclamation-triangle"></i> <%= dbError %> 
+              </div>
+            <% } %>
+
+            <form id="reviewForm" action="/customer/createReview/created" method="POST">
+              <input type="hidden" id="custID" name="custID" value="<%= user.customerData.customer_id %>">
+
+              <div class="wm-form-group">
+                <label>Passenger Name</label>
+                <input type="text" class="wm-input" id="custName" value="<%= user.customerData.first_name %> <%= user.customerData.last_name %>" style="opacity: 0.8;" disabled>
+              </div>
+
+              <div class="wm-form-group">
+                <label>Your Review (Max 500 characters)</label>
+                <textarea class="wm-textarea" name="review" id="review" placeholder="Describe your boarding, cabin service, and overall travel experience..." rows="6" maxlength="500" required></textarea>
+              </div>
+
+              <div style="text-align: center; margin-top: 32px;">
+                <button class="wm-btn wm-btn-primary" type="submit" style="min-width: 180px;">
+                  Post Review
+                </button>
+              </div>
+            </form>
+          </div>
+
+        <% } else { %>
+          <!-- User must log in/register first -->
+          <div class="wm-card" style="padding: 40px; text-align: center; border-color: var(--border);">
+            <div style="width: 56px; height: 56px; background: rgba(79, 110, 247, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--primary-light); margin: 0 auto 20px;">
+              <i class="fas fa-star-half-alt"></i>
             </div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 12px;">Registered Members Only</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">
+              Please log in or register an account to share reviews and access exclusive frequent flyer status tags.
+            </p>
+            <div style="display: flex; gap: 14px; justify-content: center;">
+              <button class="wm-btn wm-btn-ghost" onclick="openModal('login-modal')" style="flex: 1; justify-content: center;">Log In</button>
+              <button class="wm-btn wm-btn-primary" onclick="openModal('signup-modal')" style="flex: 1; justify-content: center;">Create Account</button>
             </div>
-            </div>
-            </section>
-<%- include('_footer',{user}) %>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('_footer', {user}) %>

@@ -1,4 +1,4 @@
-INSERT INTO organizational_info VALUES ('B Airways','+61396906345','info@bairways.com','314, 3rd Floor, Gotham Towers', 'Melbourne, Victoria', 'Australia','2229993949');
+INSERT INTO organizational_info VALUES ('DBZ AIRWAYS', '+92 300 1234567', 'support@dbzairways.com', 'Suite 501, Skyview Plaza', 'Islamabad', 'Pakistan');
 
 ---------------------INSERT CUSTOMER CATEGORY---------------------
 INSERT INTO customer_category(cat_name,discount_percentage,min_bookings) VALUES ('General',0,0);
@@ -319,3 +319,8 @@ CALL scheduleFlights('B002',8,'2024-03-08','22:30:00');
 CALL scheduleFlights('B019',8,'2024-03-09','20:00:00');
 CALL scheduleFlights('B002',8,'2024-03-10','22:30:00');
 CALL scheduleFlights('B019',8,'2024-03-11','20:00:00');
+
+---------------------INSERT SEED SYSTEM ADMIN-----------------------
+CALL registerStaff('B00001', 'admin', '$2b$10$8midsgSjyCSVd1YhgmQYd.tTC5Xov1e5/8FfLRsVU8e0zKZFrfAje', 'System', 'Admin', '923001234567', 'admin@dbzairways.com', '1985-01-01', 'Male', 'Pakistan', NULL);
+CALL registerStaff('B00002', 'admin', '$2b$10$8midsgSjyCSVd1YhgmQYd.tTC5Xov1e5/8FfLRsVU8e0zKZFrfAje', 'Muhammad Daim', 'Zakriya', '923234865292', 'daimzakriya@gmail.com', '2004-10-23', 'Male', 'Pakistan', NULL);
+

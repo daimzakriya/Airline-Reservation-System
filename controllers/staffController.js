@@ -26,7 +26,7 @@ class StaffController {
             });
         } catch (e) {
             console.log(e);
-            res.send(500).render('500');
+            res.status(500).render('500');
         }
     }
 
@@ -47,7 +47,7 @@ class StaffController {
             });
         } catch (e) {
             console.log(e);
-            res.send(500).render('500');
+            res.status(500).render('500');
         }
     }
 
