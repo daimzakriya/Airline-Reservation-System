@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lakshan-Banneheke/Airline-Reservation-System.git"
+    "url": "git+https://github.com/daimzakriya/Airline-Reservation-System.git"
   },
   "keywords": [
     "database",
@@ -20,12 +20,12 @@
     "reservation",
     "system"
   ],
-  "author": "Avishka,Dhaura,Thushani,Lakshan,Shashini",
+  "author": "Daim Bin Zakriya",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lakshan-Banneheke/Airline-Reservation-System/issues"
+    "url": "https://github.com/daimzakriya/Airline-Reservation-System/issues"
   },
-  "homepage": "https://github.com/Lakshan-Banneheke/Airline-Reservation-System#readme",
+  "homepage": "https://github.com/daimzakriya/Airline-Reservation-System#readme",
   "dependencies": {
     "@joi/date": "^2.1.0",
     "bcrypt": "^5.1.0",

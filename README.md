@@ -83,7 +83,7 @@ Now you are done with the database setup.
 First clone this project directory.
 
 ```bash
-git clone https://github.com/Lakshan-Banneheke/Airline-Reservation-System.git
+git clone https://github.com/daimzakriya/Airline-Reservation-System.git
 ```
 
 Install
