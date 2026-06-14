@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const helmet = require('helmet');
 const pgConnect = require('connect-pg-simple');
+const path = require('path');
 
 /* Make all variables from our .env file available in our process */
 require('dotenv').config();
@@ -14,6 +15,7 @@ const app = express();
 app.use(helmet({ contentSecurityPolicy: false }));
 
 /* set view engine */
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 /* setup middleware and configs */
@@ -21,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const dotenv = require('dotenv').config()
 /* setup static files */
-app.use(express.static('./public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 /* session set up */
 app.use(session({
